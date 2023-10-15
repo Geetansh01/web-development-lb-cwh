@@ -1,0 +1,16 @@
+/******************Week 1*************************/
+    L18 : HTML Basics
+          1)HTML, Tags, comments
+          2)HTML Text Element
+                1)Block Element
+                2)Inline Element
+          3)Heading Tag
+          4)paragraph Tag
+          5)DIV tag
+          6)Empty tag/ Self closing tag (eg: <br/> tag)
+          7)List in HTML
+                1)Ordered List
+                2)Unordered List
+                3)Description List
+          8)Attributes in html Tags
+          9)meta tag
