@@ -32,5 +32,22 @@
             -nodeJS
             -php
             -ruby on rails
-      
-/********Tut 2**************/
+
+/********Tut 3**************/
+      How to view websites on your phone
+
+/********Tut 5**************/
+      1)Image Tag
+            1)For the attribute of height & width, always set either 1 of them and the other will automatically adjust. 
+            These will be later finetuned by css but setting 1 of them in html helps in reducing CLS (so better SEO).
+            2)Values of width & height Attributes are in pixels 
+      2)Table tag
+
+/********Tut 6**************/
+      1) 3 SEO Web Vitals
+            -CLS (Cumulative layout Shift) 
+            -LCD (Largest Contentful Paint) 
+            -FID (First Input Delay)
+            ref : https://web.dev/articles/vitals
+            1)LightHouse Report
+      2)form tag
