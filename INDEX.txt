@@ -50,4 +50,9 @@
             -FID (First Input Delay)
             ref : https://web.dev/articles/vitals
             1)LightHouse Report
+
+/********Tut 7**************/
       2)form tag
+
+/********Tut 8**************/
+      1)Inline and block Elements
