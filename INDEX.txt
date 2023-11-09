@@ -56,3 +56,19 @@
 
 /********Tut 8**************/
       1)Inline and block Elements
+
+/********Tut 9**************/
+      1)Id & Class attributes 
+
+/********Tut 10**************/
+      2)audio, video, svg, iframe tags
+
+/********Tut 11**************/
+      Semantic tags
+
+/********Tut 13**************/
+      1)HTML Entities
+            &nbsp;
+            &copy; etc..
+      2)pre tag
+      3)code tag
