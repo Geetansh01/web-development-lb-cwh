@@ -84,3 +84,13 @@
             -using style attribute
       2)Internal
       3)External
+
+/********Tut 17**************/
+      Selectors in CSS:
+      1)Element Selector
+      2)Class selector
+      3)ID selector
+      4)Child Selector
+      5)Descendant Selector
+      6)Universal Selector
+      7)Pseudo Selector (pseudo class in CSS)

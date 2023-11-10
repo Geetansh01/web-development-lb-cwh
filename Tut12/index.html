@@ -4,24 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz</title>
+    <style>
+        td{
+            border: solid palevioletred;
+            border-width: thick;
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>Quiz : Videos and Audios</h1>
     </header>
     <main>
-        <div>
-            <video poster="thumbnail.jpg" width="300" height="200" src="1.mp4" controls></video>
-        </div>
-        <div>
-            <audio src="1.mp3" controls></audio>
-        </div>
-        <div>
-            <video height="200" src="2.mp4" controls></video>
-        </div>
-        <div>
-            <audio src="2.mp3" controls></audio>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Video</th>
+                    <th>Audio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <video poster="thumbnail.jpg" width="200" height="200" src="1.mp4" controls></video>
+                    </td>
+                    <td>
+                        <audio src="1.mp3" controls></audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <video height="200" src="2.mp4" controls></video>
+                    </td>
+                    <td>
+                        <audio src="2.mp3" controls></audio>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </main>
     <!-- <footer></footer> -->
 </body>

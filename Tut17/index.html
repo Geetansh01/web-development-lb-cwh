@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Selectors</title>
+    <style>
+        /* Element Selector */
+        div{
+            color: red;
+            background-color: greenyellow;
+        }
+
+        /* Class Selector */
+        .frari{
+            color: brown;
+            background-color: aquamarine;
+        }
+
+        /* ID Selector */
+        #audi{
+            color: blue;
+            background-color: bisque;
+        }
+
+        /* Child Selector */
+        div > p{
+            color: orangered;
+            background-color: maroon;
+        }
+        
+        /* Descendant Selector */
+        div p{
+            color: white;
+            background-color: black;
+        }
+
+        /* Universal Selector */
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Pseudo Selector */
+        a:link{
+            color: green;
+        }
+        a:visited{
+            color: red;
+        }
+        a:active{
+            background-color: aqua;
+        }
+        a:hover{
+            background-color: rgb(220, 7, 239);
+        }
+        p:first-child{
+            background-color: rgb(96, 96, 41);
+        }
+
+    </style>
+</head>
+<body>
+    <div>i am div 1</div>
+    <div class="frari">i am div 2</div>
+    <div id="audi">i am div 2</div>
+    <div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur autem laborum voluptatum quae harum reprehenderit itaque adipisci</p>
+        <p>This p is not 1st child of it's parent tag</p>
+    </div>
+    <div>
+        <article>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime amet quidem veniam vitae corrupti autem labore porro? Saepe animi veritatis et ipsa tempore.</p>
+        </article>
+    </div>
+    <a href="http://google.com">Google</a>
+    <a href="http://facebook2.com">Facebook2</a>
+</body>
+</html>
