@@ -72,3 +72,15 @@
             &copy; etc..
       2)pre tag
       3)code tag
+
+/********Tut 14**************/
+      CSS starts
+      1)style tag
+      2)selectors
+
+/********Tut 15**************/
+      3 ways to add css to your HTML :
+      1)Inline CSS
+            -using style attribute
+      2)Internal
+      3)External
