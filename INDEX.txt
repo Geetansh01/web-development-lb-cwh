@@ -94,3 +94,15 @@
       5)Descendant Selector
       6)Universal Selector
       7)Pseudo Selector (pseudo class in CSS)
+
+/********Tut 18**************/
+      CSS Box Model:
+      1)Element, Padding, border, margin
+      Tip: Always set "box-sizing" to "border-box" to lay out elements. 
+      This makes dealing with the sizes of elements much easier
+
+/********Tut 19**************/
+      Fonts in CSS
+            1)font-family - fallback fonts {Recommended to include a generic Font Family like "Times New Roman" Family}
+            2)font-style, font-weight etc...
+            3)Google Fonts 
