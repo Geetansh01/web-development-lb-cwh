@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS</title>
+    <style>
+        /* Specificity = 0 */
+        *{
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        /* Specificity = 1 */
+        h1{
+            color: brown;
+        }
+        /* Specificity = 10 */
+        .A{
+            color: rebeccapurple;
+        }
+        /* Specificity = 10 */
+        .B{
+            color: orangered;
+        }
+        /* Specificity = 1 + 10 +10 = 21 */
+        /* Max Specificity So this will be applied */
+        h1.D.C{
+            color: grey;
+        }
+        /* Specificity = 10 */
+        h1[custom_attribute="Saitama"]{
+            color: blue;
+        }
+        /*
+        Question : Calculate Specificity
+
+        a.harryclass.rohan-class[href]:hover {
+            color: red;
+        } 
+
+        Ans : 1+10+10+10+10 = 41
+        */
+
+
+    </style>
+</head>
+<body>
+    <h1 custom_attribute="Saitama" class="A B C D">CSS Specificity and cascading</h1>
+</body>
+</html>
