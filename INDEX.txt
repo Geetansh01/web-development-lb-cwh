@@ -144,3 +144,7 @@
                   3)Origin
                   4)Importance: some CSS rules are weighted more heavily than others, especially with the " !important " rule type
 
+/********Tut 22**************/
+      1)Measurements Units in CSS
+            1)px 
+            2)vw
