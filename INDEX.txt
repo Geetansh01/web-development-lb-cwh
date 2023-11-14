@@ -145,6 +145,11 @@
                   4)Importance: some CSS rules are weighted more heavily than others, especially with the " !important " rule type
 
 /********Tut 22**************/
-      1)Measurements Units in CSS
+      1)Measurement Units in CSS
             1)px 
-            2)vw
+            2)vw, vh
+            3)em
+            4)rem (root element : html)
+            5)vmin, vmax
+            6)% units (width: 50%; means 50% the width of parent element)
+      2)min-height, min-width, max-height, max-width
