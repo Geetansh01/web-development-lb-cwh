@@ -99,8 +99,9 @@
 /********Tut 18**************/
       CSS Box Model:
       1)Element, Padding, border, margin
-      Tip: Always set "box-sizing" to "border-box" to lay out elements. 
+      Tip: 1)Always set "box-sizing" to "border-box" to lay out elements. 
       This makes dealing with the sizes of elements much easier
+      2)Margin collapse only happens to block elements
 
 /********Tut 19**************/
       1)Fonts in CSS
@@ -153,3 +154,17 @@
             5)vmin, vmax
             6)% units (width: 50%; means 50% the width of parent element)
       2)min-height, min-width, max-height, max-width
+
+/********Tut 23**************/
+      CSS Display Properties:
+      1)U can set "display: " style as:
+            1)inline (To make block elements inline)
+            2)inline-block
+
+                  Tip : 1)Inline elements don't respect Top padding and Top margin. Use "inline-block" for that.
+                  2)Inline elements don't respect width. Use "inline-block" for that.
+
+            3)none
+            4)flex (More details in flex-box Tutorial)
+            5)grid
+      2)visibility
