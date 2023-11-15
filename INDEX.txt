@@ -186,3 +186,7 @@
               (There was also a shorthand syntax!)
       2)Basic nav bar (Navigation bar)
       
+/********Tut 26**************/
+      1)More on CSS overflow
+      2)overflow-x, overflow-y etc.
+      3)white-space: nowrap;

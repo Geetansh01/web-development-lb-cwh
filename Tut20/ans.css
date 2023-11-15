@@ -1,4 +1,8 @@
-p:first-child{
+/* div > p:first-child{
+    background-color: yellow;
+    color: red
+} */
+div > p:nth-child(1){
     background-color: yellow;
     color: red
 }
