@@ -168,3 +168,21 @@
             4)flex (More details in flex-box Tutorial)
             5)grid
       2)visibility
+
+/********Tut 24**************/
+      1)Box Shadow syntax: " box-shadow: h-offset v-offset blur spread color inset; "
+      2)Text Shadow syntax: " text-shadow: h-offset v-offset blur color; "
+      3)outline, outline-offset
+      4)border-radius
+
+/********Tut 25**************/
+      1)list styling using CSS
+            Tip : 1)" list-style: " can make a ul list look like ol
+                  2)A li will have the following display property
+                        " display: list-item; "
+                  This gives the li a "marker" and "text"
+            
+            1)list-style, list-style-position, list-style-type, list-style-image 
+              (There was also a shorthand syntax!)
+      2)Basic nav bar (Navigation bar)
+      
