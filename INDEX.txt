@@ -190,3 +190,12 @@
       1)More on CSS overflow
       2)overflow-x, overflow-y etc.
       3)white-space: nowrap;
+
+/********Tut 28**************/
+      POsition in CSS
+      1)position : relative, absolute, static
+      2)position : absolute; 
+        Tip: 1)Element will find it's nearest positioned parent (means any position except static position) and sit relative to it (in worst case, it sits relative to <html> element)
+             2)WARNING : transform, filter, or perspective properties can also make an element appear as positioned 
+      3)position : fixed (Used for Annoying ADs)
+      3)position : sticky (Used for Nav Bar)

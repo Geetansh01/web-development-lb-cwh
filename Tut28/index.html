@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position in CSS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            border: 2px solid black;
+            height: 85vh;
+            width: 40vw;
+            margin: 2px;
+            padding: 12px;
+            box-sizing: border-box;
+        }
+
+        .box1 {
+            background-color: aqua;
+            height: 100px;
+            width: 100%;
+            margin: 0;
+            position: sticky;
+            top: 0px;
+        }
+
+        .box2 {
+            background-color: aquamarine;
+            position: fixed;
+            top: 77vh;
+            left: 28vw;
+            height: 22vh;
+        }
+
+        .box3 {
+            background-color: blueviolet;
+        }
+
+        .box4 {
+            background-color: brown;
+        }
+
+        .parent {
+            /* Exception: transform, filter, or perspective properties can also make an element appear as positioned */
+            border: 2px solid black;
+            margin: 20px;
+            padding: 12px;
+            /* position: relative;
+            top: 12px;
+            left: 12px; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="box box1">USEFULL NAV BAR</div>
+        <div class="box box2">ANNOYING AD BANNER</div>
+        <div class="box box3"></div>
+        <div class="box box4"></div>
+    </div>
+</body>
+
+</html>
