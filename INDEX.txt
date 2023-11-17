@@ -18,7 +18,7 @@
 /**********************CWH Starts*****************************/
 /********Tut 1**************/
       1)Basic OverView
-      2)FontEnd
+      2)FrontEnd
             -HTML
             -CSS
             -JavaScript
