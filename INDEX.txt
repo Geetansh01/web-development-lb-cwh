@@ -199,3 +199,23 @@
              2)WARNING : transform, filter, or perspective properties can also make an element appear as positioned 
       3)position : fixed (Used for Annoying ADs)
       3)position : sticky (Used for Nav Bar)
+
+/**********Tut30************/
+      Variables in CSS
+      1):root{
+            --color : rgb(195, 2, 195);
+            --seccolor : rgb(179, 107, 179);
+            etc...
+        }
+      Tip : Use this to quicly change the theme of website by setting GLOBAL variables (Say for primary and secondary colors)
+
+/**********Tut31************/
+      Media Queries in CSS
+      1)Syntax : 
+            @media not|only mediatype and (expressions) {
+                  CSS-Code;
+            }
+      2)Most Common usage: 
+            @media only screen and (max-width : 400px) {
+                  CSS-Code;
+            }
