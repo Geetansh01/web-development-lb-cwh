@@ -219,3 +219,11 @@
             @media only screen and (max-width : 400px) {
                   CSS-Code;
             }       
+
+/**********Tut34************/
+      Float & Clear in CSS
+      1)Flex-box has mostly reduced the usage of these styles today.
+      2)float: right; (use "display: flow-root;" with container of floating element to account for overflow of floating element)
+      3)clear: right/left/both
+
+      Tip: Don't use float and clear 😂

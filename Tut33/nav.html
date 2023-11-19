@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nav Bar</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            
+        }
+        :root{
+            --color : orangered;
+            --seccolor : orange;
+        }
+        /* :root{
+            --color : rgb(55, 22, 224);
+            --seccolor : rgb(0, 174, 255);
+        } */
+        nav{
+            background-color: var(--color);
+            padding: 3px;
+        }
+        nav ul{
+            background-color: var(--seccolor);
+            display: flex;
+        }
+        nav ul li{
+            display: list-item;
+            list-style: inside none;
+            margin: 2px 7px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li>Home</li>
+            <li>About</li>
+            <li>Contact Us</li>
+        </ul>
+    </nav>
+</body>
+</html>
