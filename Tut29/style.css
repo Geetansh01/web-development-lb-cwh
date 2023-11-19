@@ -21,21 +21,22 @@ body{
     height: 5%;
     width: 19%;
     margin: 0;
-    padding: 5px;
-    /* position: relative;
-    top: -15px;
-    left: -141px; */
+    padding: 4px 6px;
+    position: relative;
+    left: 7px;
     border-radius: 15px;
+    font-size: 14px;
 }
 .card.round_box2{
     height: 5%;
     width: 15%;
     margin: 0;
-    padding: 5px;
+    padding: 4px 6px;
     position: relative;
     top: -26px;
     left: 80px;
     border-radius: 15px;
+    font-size: 14px;
 }
 div.card>h1{
     color: black;
