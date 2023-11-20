@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>More on CSS Selectors</title>
+		<style>
+			/* .box::first-line {
+				background-color: blanchedalmond;
+			}
+			p::first-line {
+				background-color: blueviolet;
+			}
+			.boxes * {
+				border: 2px solid black;
+			} */
+
+			/* Grouping Selectors */
+			/* p,
+			.box,
+			[car="BMW"] {
+				background-color: aquamarine;
+			} */
+
+			/* .box:nth-child(odd) {
+				background-color: saddlebrown;
+			} */
+
+			/* .box:nth-last-child(1) {
+				background-color: orangered;
+			} */
+
+			/* .boxes::before {
+				content: "Befooooooooooooooooooooooooore";
+				background-color: blanchedalmond;
+			}
+			.boxes::after {
+				content: "Afteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer";
+				background-color: blanchedalmond;
+			} */
+
+			::selection {
+				background-color: blanchedalmond;
+				color: orangered;
+			}
+			input::placeholder {
+				color: brown;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="boxes">
+			<div car="BMW" class="box">
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Distinctio
+				debitis, placeat iste sunt soluta, dolorem minus quasi pariatur quidem
+				voluptatibus facilis necessitatibus vel.
+			</div>
+			<div class="box">
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, soluta
+				quas! Est ipsam adipisci eaque corrupti tenetur reiciendis ad cumque in
+				iste neque!
+			</div>
+			<div class="box">box3</div>
+		</div>
+		<p>
+			Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero, animi non.
+			Dignissimos dolorem unde eligendi voluptates? Itaque rerum totam ea vero
+			necessitatibus? Eius ad deleniti aliquam accusamus odio velit veniam
+			provident blanditiis dolore, labore optio magnam id sapiente cupiditate
+			molestias exercitationem tenetur autem vitae et.
+		</p>
+		<input type="text" placeholder="Ur Name Goes here" />
+	</body>
+</html>
