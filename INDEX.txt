@@ -95,6 +95,7 @@
       6)Universal Selector
       7)Pseudo Selector (pseudo class in CSS)
       8)attribute selector (Srch online)
+      9)Pseudo-element selector (see Tut35)
 
 /********Tut 18**************/
       CSS Box Model:
@@ -227,3 +228,20 @@
       3)clear: right/left/both
 
       Tip: Don't use float and clear 😂
+
+/**********Tut35************/
+      More on CSS Selectors
+      1)pseudo-element Selector ( p::first-line{...}, ::selection, input::placeholder )
+      2)One more way to use universal selector ( .boxes *{...} )
+      3)Grouping Selectors("," separated)
+      4).box:nth-child(odd), .box:nth-last-child(1) etc.
+      5)Inserting pseudo-elements dynamically using CSS
+            1)	.boxes::before{
+				content: "Befooooooooooooooooooooooooore";
+				background-color: blanchedalmond;
+			}
+
+                  This will insert pseudo-element before the main content of ".boxes"
+            2).boxes::after{...}
+      6).box::selection
+      7)input tag
