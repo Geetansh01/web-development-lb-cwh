@@ -245,3 +245,27 @@
             2).boxes::after{...}
       6).box::selection
       7)input tag
+
+/**********Tut37************/
+      CSS Flex Box
+      1)To align elements in the centre, set the following styles to the " parent container "
+            display: flex;
+            justify-content: center;
+            align-items: center;
+      
+      Tip: Most of the times u will use Flex box to align in centre 😉
+
+      2)Other options:
+            justify-content: flex-end, flex-start, space-between, space-around etc.
+            align-items: flex-start, flex-end,  etc.
+      3)flex-direction: row, column, row-reverse, column-reverse 
+      4)Axes in Flex box(can change depending on " flex-direction "):
+            1)Main Axis : Axis along which items are layed 
+            2)Cross Axis : Axis perpendicular to direction in which items are layed
+      
+      " justify-content " works along the main axis.
+      5)Terminologies: Main start, Main end, Cross start, Cross end, Main size, Cross size
+      6)flex-wrap: wrap;
+      7)align-content: center; ( When content is wrapping in multiple lines(i.e "flex-direction is row" AND "flex-wrap is wrap" ) and needs to be centered along the Cross Axis).
+       
+       Tip: There is NO " justify-items " in flex box 🙂
