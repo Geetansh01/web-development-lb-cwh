@@ -280,3 +280,16 @@
             2)flex-grow (Basically to fill the remaining space on the main axis)
             3)flex-shrink
             4)align-self
+
+/**********Tut38************/
+      CSS Grid
+      1)Container Properties (Applied on the parent container containing the items) :
+            1)grid-template-columns
+            2)Terminologies : 
+                  1)grid line, grid cell
+                  2)grid track, grid area
+                  3)grid-template-rows, grid-template-cloumns
+      
+      2)Item Properties:
+            1)"grid-row-start: 1;"," grid-row-end: 2;", (Shorthand is " grid row: 1/2; ")
+            2)grid-column-start, grid-column-end (shorthand is "grid column")
