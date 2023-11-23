@@ -246,7 +246,7 @@
       6).box::selection
       7)input tag
 
-/**********Tut37************/
+/**********Tut38************/
       CSS Flex Box
       1)Container Properties (Applied on the parent container containing the items) :
             1)To align elements in the centre, set the following styles to the " parent container "
@@ -281,15 +281,32 @@
             3)flex-shrink
             4)align-self
 
-/**********Tut38************/
+/**********Tut39************/
       CSS Grid
       1)Container Properties (Applied on the parent container containing the items) :
             1)grid-template-columns
+                  Tip: 1)Insted of writing " grid-template-columns: 1fr 1fr 1fr ", write "grid-template-columns: repeat(3, 1fr); "
+                  2)minmax(x, y) : a general function, multiple uses throughout CSS
             2)Terminologies : 
                   1)grid line, grid cell
                   2)grid track, grid area
                   3)grid-template-rows, grid-template-cloumns
+            3)naming grid lines
+            4)Two major ways to use grid:
+                  1)Using grid rows and columns (and then placing items in the cells)
+                  2)using grid areas
+            5)fr (a unit, full form : fraction)
+            6)gap, row-gap, column-gap
+                  Tip: Don't use padding/ margin in flexbox or grid, use gap instead ✌
+            7)justify-items (for horizontal), align-items (for vertical)
+                  Tip: 1)shorthand: "place-items: center;" means "justify-items: center;" && "align-items: center;"😊 
+            8)justify-content, align-content 
+                  1)These are used to arrange the whole grid inside the grid container (rather than arranging the items inside the grid which is done by "justify-items", "align-items")
+                  2)Useful when grid is smaller than the container containing the grid
+                  4)shorthand: "place-content: center;" means "justify-content: center;" && "align-content: center;"    
+                    similarly "place
       
       2)Item Properties:
             1)"grid-row-start: 1;"," grid-row-end: 2;", (Shorthand is " grid row: 1/2; ")
             2)grid-column-start, grid-column-end (shorthand is "grid column")
+            3)align-self, justify-self (these apply to individual items in contrast to "align-items" and "justify-items" which apply to all the items in the grid)
