@@ -269,7 +269,8 @@
             6)flex-wrap: wrap;
             7)align-content: center; ( When content is wrapping in multiple lines(i.e "flex-direction is row" AND "flex-wrap is wrap" ) and needs to be centered along the Cross Axis).
             
-            Tip: There is NO " justify-items " in flex box 🙂
+                  Tip: There is NO " justify-items " in flex box 🙂
+                  
             8)Shorthand to set "flex-direction" and "flex-wrap" :
                   flex-flow: <flex-direction> <flex-wrap>
                   eg. flex-flow: row wrap;

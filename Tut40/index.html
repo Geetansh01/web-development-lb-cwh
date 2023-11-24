@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NavBar</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        header {
+            height: 14vh;
+            box-sizing: border-box;
+        }
+
+        header>nav {
+            height: 100%;
+        }
+
+        header>nav>ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            height: 100%;
+            width: 100%;
+        }
+
+        header>nav>ul>li {
+            display: list-item;
+            list-style: inside none;
+            font-size: 18px;
+
+        }
+
+        .logo {
+            height: 80%;
+        }
+
+        li.gap {
+            width: 34%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="logo">
+                    <img height="100%" class="logo"
+                        src="https://www.ultraedit.com/wp-content/uploads/2023/01/Dark-logo.png" alt="logo">
+
+                </li>
+                <li class="gap"></li>
+                <li>Product
+                    <span class="material-symbols-outlined">
+                        expand_more
+                    </span>
+                </li>
+                <li>Pricing
+                    <span class="material-symbols-outlined">
+                        expand_more
+                    </span>
+                </li>
+                <li>Resources
+                    <span class="material-symbols-outlined">
+                        expand_more
+                    </span>
+                </li>
+                <li>About Us
+                    <span class="material-symbols-outlined">
+                        expand_more
+                    </span>
+                </li>
+            </ul>
+        </nav>
+    </header>
+</body>
+
+</html>
+
+<!-- 
+    https://www.ultraedit.com/wp-content/uploads/2023/01/Dark-logo.png
+
+ -->
