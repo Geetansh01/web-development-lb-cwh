@@ -67,6 +67,9 @@
       Semantic tags
 
 /********Tut 13**************/
+      Exercise
+
+/********Tut 13**************/
       1)HTML Entities
             &nbsp;
             &copy; etc..
@@ -120,6 +123,9 @@
                   -RGB 
                   -RGBA
                   -HSL
+
+/********Tut 20**************/
+      Exercise
 
 /********Tut 21**************/
       1)CSS Specificity and Cascade
@@ -192,6 +198,9 @@
       2)overflow-x, overflow-y etc.
       3)white-space: nowrap;
 
+/********Tut 29**************/
+      Exercise
+
 /********Tut 28**************/
       POsition in CSS
       1)position : relative, absolute, static
@@ -222,6 +231,9 @@
             }       
 
 /**********Tut34************/
+      Exercise
+
+/**********Tut34************/
       Float & Clear in CSS
       1)Flex-box has mostly reduced the usage of these styles today.
       2)float: right; (use "display: flow-root;" with container of floating element to account for overflow of floating element)
@@ -245,6 +257,9 @@
             2).boxes::after{...}
       6).box::selection
       7)input tag
+
+/**********Tut38************/
+      Exercise
 
 /**********Tut38************/
       CSS Flex Box
@@ -311,3 +326,20 @@
             1)"grid-row-start: 1;"," grid-row-end: 2;", (Shorthand is " grid row: 1/2; ")
             2)grid-column-start, grid-column-end (shorthand is "grid column")
             3)align-self, justify-self (these apply to individual items in contrast to "align-items" and "justify-items" which apply to all the items in the grid)
+
+/**********Tut41************/
+      Exercise
+
+/**********Tut42************/
+      CSS Transforms
+      1)transform: rotate(45deg) ( or rotate(0.25 turn) )
+                                 ( or rotateX(45deg) similarly y and z axis)
+      2)scale(1.2) (scaleX, similarly for y and z axis)
+      3)skew(), skewX() (similarly skewY()) 
+            Tip: NO skewZ() is there ❌
+      4)translateX(100%) (100% means 100% of the width of the element on which translate is applied and NOT the width of parent!)
+      5)Multiple transforms in one { transform: rotate(0.25turn) skewX(10deg) translateX(100%); }
+      6)transform-origin
+
+/**********Tut44************/
+      Exercise
