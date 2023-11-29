@@ -354,3 +354,58 @@
       
       2)Shorthand to combine above 4
             transition: transform 4s ease-in-out 1s;
+
+/**********Tut46************/
+      CSS Animations
+      1)Two synatxes to set keyframes of animation:
+            1)
+        @keyframes GeetanshKiAnimation{
+            from{
+                background-color: rgb(255, 0, 153);
+            }
+            to{
+                background-color: blue;
+                transform: translateX(1000px);
+            }
+        }
+
+            2)
+        @keyframes Animation2 {
+            0%{
+                transform: rotate(0deg);
+            }
+            20%{
+                transform: rotate(90deg);
+            }
+            40%{
+                transform: rotate(180deg);
+            }
+            60%{
+                transform: rotate(270deg);
+            }
+            80%{
+                transform: rotate(360deg);
+            }
+            100%{
+                transform: rotate(0deg);
+            }
+        }
+
+      2)There are many different properties for animation, like:
+            animation-name: geetanshKiAnimation;
+            animation-duration: 1s;
+            animation-iteration-count: 2;
+            animation-timing-function: ease-in-out;
+            animation-delay: 1s;
+            animation-direction: normal; (or alternate, reverse etc.)
+            animation-play-state: paused; (We actually use JS to pause our Animations)
+            animation-fill-mode: forwards; (used rarely 😁)
+
+
+      3)Shorthand for above properties:
+               animation: name duration timing-function delay iteration-count direction fill-mode;
+
+      4)To apply multiple comma separated animation using shorthand:
+                  animation: GeetanshKiAnimation 4s ease-in-out 1s infinite,
+                             Animation2 4s ease-in-out 1s infinite;
+
