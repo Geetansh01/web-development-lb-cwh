@@ -57,6 +57,7 @@ main {
     gap: 25px;
 }
 
+
 .download-buttons>.language-box {
     display: flex;
     justify-content: center;
@@ -65,6 +66,7 @@ main {
     border-radius: 10px;
     flex-wrap: wrap;
     gap: 16px;
+
 }
 
 .download-buttons>.language-box>.language-name {
@@ -95,6 +97,21 @@ main {
     border-radius: 2px;
     width: 38%;
     height: 37px;
+}
+@media only screen and (max-width: 928px){
+    .downloads_heading{
+        width: 100%;
+    }
+    .download-buttons{
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+    .download-buttons>.language-box>.bit64{
+        width: 100%;
+    }
+    .download-buttons>.language-box>.bit32{
+        width: 100%;
+    }
 }
 .download-buttons span>a{
     color: white;
