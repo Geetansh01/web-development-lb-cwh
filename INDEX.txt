@@ -343,3 +343,14 @@
 
 /**********Tut44************/
       Exercise
+
+/**********Tut45************/
+      CSS Transition property
+      1)4 Different parts:
+            transition-property: transform;
+            transition-duration: 4s;
+            transition-timing-function: ease-in-out;
+            transition-delay: 1s;
+      
+      2)Shorthand to combine above 4
+            transition: transform 4s ease-in-out 1s;

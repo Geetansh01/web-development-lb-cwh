@@ -100,17 +100,17 @@ main {
 }
 @media only screen and (max-width: 928px){
     .downloads_heading{
-        width: 100%;
+        width: 90%;
     }
     .download-buttons{
         grid-template-columns: 1fr;
-        width: 100%;
+        width: 90%;
     }
     .download-buttons>.language-box>.bit64{
-        width: 100%;
+        width: 90%;
     }
     .download-buttons>.language-box>.bit32{
-        width: 100%;
+        width: 90%;
     }
 }
 .download-buttons span>a{
