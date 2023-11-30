@@ -2,3 +2,6 @@
 1)https://developer.mozilla.org/en-US/
 2)https://fonts.google.com/
 3)https://www.codewithharry.com/
+
+/************ Icons ****************/
+1)https://hugeicons.pro/
