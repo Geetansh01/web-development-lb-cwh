@@ -5,3 +5,6 @@
 
 /************ Icons ****************/
 1)https://hugeicons.pro/
+
+/************ SEO ****************/
+1)https://web.dev/articles/vitals
