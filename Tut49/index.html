@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Object fit and Object Cover</title>
+    <style>
+        .container{
+            height: 800px;
+            width: 800px;
+            border: 2px solid black;
+            padding: 20px;
+            background: url(https://interactive-examples.mdn.mozilla.net/media/examples/moon.jpg);
+            background-position: top left;
+            background-repeat: repeat-x;
+            background-clip: content-box;
+        }
+        img{
+            height: 400px;
+            width: 400px;
+            border: 2px solid red;
+            object-fit: cover;
+            object-position: top left;
+            /* object-position: 10px 20px; */
+            /* object-position: 50% 50%; */
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- <img src="https://wallpapercave.com/wp/wp2599594.jpg" alt="flower"> -->
+    </div>
+</body>
+</html>

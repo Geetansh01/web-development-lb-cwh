@@ -409,3 +409,34 @@
                   animation: GeetanshKiAnimation 4s ease-in-out 1s infinite,
                              Animation2 4s ease-in-out 1s infinite;
 
+/**********Tut48************/
+      Exercise
+
+/**********Tut49************/
+      CSS Object fit and Object Cover
+      1)object-fit: 
+            -cover (Most Used)
+            -contain (Most Used)
+            -none
+            -fill (default)
+      2)object-position: 
+            which part of image to show when unable to see full image:
+                  -bottom left
+                  -top right
+                  -left etc.
+                  -50% 50%
+            
+            Setting image's position whithin it's space
+                  -10px 20px (right, top)
+
+            Tip : use this with " object-fit: cover OR none" for desired effect 😊
+      3)If you want to set image as a background (this also prevents noobs from being able to download the image 🤓)
+            background: url( "Image URL Here" );
+            background-position: top left; (top left means top left part of the image will be visible as background : useful when the entire image is too large)
+
+            background-repeat: no-repeat; (or repeat-x, repeat-x)
+            (when the image is small, it is repeated to fill the background, use this property to control that)
+
+            background-clip: content-box; (OR border-box, padding-box)
+
+
