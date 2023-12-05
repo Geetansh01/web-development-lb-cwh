@@ -1,23 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.box {
+				height: 121px;
+				width: 121px;
+				background-color: red;
+				border-radius: 70px;
+				position: absolute;
+				bottom: 0%;
+				left: 0%;
+				/* CWH Solution */
+				animation: animateX 3s linear infinite,
+					animateY 0.5s ease-out infinite alternate;
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .box {
-            height: 121px;
-            width: 121px;
-            background-color: red;
-            border-radius: 70px;
-            position: absolute;
-            bottom: 0px;
-            left: 0px; 
-            animation: bounce 2s linear infinite forwards;
-        }
-        
-        @keyframes bounce{
+				/* My Solution */
+				/* animation: bounce 2s linear infinite forwards; */
+			}
+
+			@keyframes animateX {
+				from {
+					left: 0%;
+				}
+				to {
+					left: 100%;
+				}
+			}
+
+			@keyframes animateY {
+				form {
+					bottom: 0%;
+				}
+				to {
+					bottom: 30%;
+				}
+			}
+
+			/* @keyframes bounce{
             0%{
                 transform: translateY(0%) translateX(0%);
             }
@@ -52,48 +74,27 @@
                 transform: translateY(0%) translateX(150%);
             }
 
-        }
-
-        /* @keyframes bounce2{
-            0%{
-                transform: translateY(0%) translateX(0%);
-            }
-            20%{
-                transform: translateY(-100%) translateX(30%);
-            }
-            40%{
-                transform: translateY(-150%) translateX(60%);
-            }
-            60%{
-                transform: translateY(-150%) translateX(90%);
-            }
-            80%{
-                transform: translateY(-100%) translateX(120%);
-            }
-            100%{
-                transform: translateY(0%) translateX(150%);
-            }
         } */
 
-        .container {
-            position: relative;
-            height: 80vh;
-            width: 80vw;
-            background-color: blue;
-        }
- 
-    </style>
-</head>
+			.container {
+				position: relative;
+				height: 80vh;
+				width: 80vw;
+				background-color: blue;
+			}
+		</style>
+	</head>
 
-<body>
-    <div class="container">
-
-        <div class="box bounce">
-        </div>
-    </div>
-    <!-- 
-   
-     -->
-</body>
-
+	<body>
+		<div class="container">
+			<div class="box bounce"></div>
+		</div>
+	</body>
 </html>
+
+<!--
+    Mistakes realised after watching soln video (Tut 51):
+    1)I tried maipulating motion using " transform : translate() in X and Y axis " but translate() works on the dimensions of the element!
+
+    What was needed was to manipulate the position of the element w.r.t the parent, so should have maipulated the position directly in animation.
+ -->

@@ -258,7 +258,7 @@
       6).box::selection
       7)input tag
 
-/**********Tut38************/
+/**********Tut37************/
       Exercise
 
 /**********Tut38************/
@@ -439,4 +439,14 @@
 
             background-clip: content-box; (OR border-box, padding-box)
 
+/**********Tut 50************/
+      CSS Filters
+      
+      You can apply these styles on different html elements:
+      1)blur(10px)
+      2)grayscale(10%)
+      3)opacity(1) [0 to 1, 1 being fully visible]
+       etc.
+      4)combining multiple Filters
+            filter: grayscale(10%) brightness(20%);
 
