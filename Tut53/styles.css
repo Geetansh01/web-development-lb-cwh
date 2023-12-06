@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --pri_color: rgb(206, 1, 1);
+    --sec_color: rgb(110, 8, 8);
+}
+
+header {
+    background-image: url(assets/images/main_background.jpg);
+    height: 50vw;
+    display: flex;
+    justify-content: center;
+}
+
+header>nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+    width: 75%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+nav>.logo {
+    height: 38px;
+}
+
+nav>ul {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 30px;
+}
+
+nav>ul li {
+    list-style: none;
+}
+
+nav>ul li>button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+}
+
+.sign_in {
+    border: none;
+    background-color: red;
+    height: 33px;
+    width: 72px;
+    border-radius: 3px;
+    font-size: 15px;
+    color: white;
+}
+
+.language_selector {
+    border: 1px solid white;
+    background-color: #00000029;
+    height: 33px;
+    width: 120px;
+    border-radius: 3px;
+    font-size: 15px;
+    color: white;
+}
