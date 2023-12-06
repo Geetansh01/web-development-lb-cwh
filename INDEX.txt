@@ -450,3 +450,10 @@
       4)combining multiple Filters
             filter: grayscale(10%) brightness(20%);
 
+/**********Tut 52************/
+      Figma Intro Basic
+
+/**********Tut 52************/
+      Netflix Clone (Exercise)
+
+      

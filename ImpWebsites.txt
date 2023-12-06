@@ -6,5 +6,8 @@
 /************ Icons ****************/
 1)https://hugeicons.pro/
 
+/************ Design ****************/
+1)https://www.figma.com/
+
 /************ SEO ****************/
 1)https://web.dev/articles/vitals
