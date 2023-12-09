@@ -4,15 +4,21 @@
 }
 
 :root {
-    --pri_color: rgb(206, 1, 1);
+    --pri_color: red;
     --sec_color: rgb(110, 8, 8);
 }
 
 header {
     background-image: url(assets/images/main_background.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #00000087;
+    background-blend-mode: darken;
     height: 50vw;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 header>nav {
@@ -49,7 +55,7 @@ nav>ul li>button{
 
 .sign_in {
     border: none;
-    background-color: red;
+    background-color: var(--pri_color);
     height: 33px;
     width: 72px;
     border-radius: 3px;
@@ -58,11 +64,62 @@ nav>ul li>button{
 }
 
 .language_selector {
-    border: 1px solid white;
-    background-color: #00000029;
+    border: 1px solid grey;
+    background-color: #0000008c;
     height: 33px;
     width: 120px;
     border-radius: 3px;
     font-size: 15px;
     color: white;
+}
+
+.membership-prompt{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family : Arial, Helvetica, sans-serif;
+    gap: 16px;
+    margin-top: 179px;
+}
+
+.membership-prompt > h1{
+    font-weight: 900;
+    font-size: 44px;
+}
+
+.signup-form>div{
+    display: flex;
+    gap: 17px;
+}
+
+.signup-form #email{
+    padding: 0px 20px;
+    border: 1px solid grey;
+    border-radius: 2px;
+    background-color: #0000008c;
+    color: white;
+    height: 57px;
+    width: 391px;
+    box-sizing: border-box;
+}
+
+.signup-form #email::placeholder{
+    color: grey;
+    font-size: 18px;
+}
+
+.signup-form #get-started{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: var(--pri_color);
+    height: 57px;
+    width: 179px;
+    border-radius: 3px;
+    font-size: 22px;
+    color: white;
+    box-sizing: border-box;
 }

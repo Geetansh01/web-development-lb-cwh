@@ -202,7 +202,7 @@
       Exercise
 
 /********Tut 28**************/
-      POsition in CSS
+      Position in CSS
       1)position : relative, absolute, static
       2)position : absolute; 
         Tip: 1)Element will find it's nearest positioned parent (means any position except static position) and sit relative to it (in worst case, it sits relative to <html> element)
@@ -455,5 +455,9 @@
 
 /**********Tut 52************/
       Netflix Clone (Exercise)
+
+      New Things used:
+      1)background-size: cover;
+      2)changing color of svg (fill="red" inside the .svg file)
 
       
