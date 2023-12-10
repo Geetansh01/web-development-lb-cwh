@@ -8,6 +8,10 @@
     --sec_color: rgb(110, 8, 8);
 }
 
+body{
+    background-color: black;
+}
+
 header {
     background-image: url(assets/images/main_background.jpg);
     background-position: center center;
@@ -15,7 +19,7 @@ header {
     background-size: cover;
     background-color: #00000087;
     background-blend-mode: darken;
-    height: 50vw;
+    height: 713px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -82,11 +86,17 @@ nav>ul li>button{
     font-family : Arial, Helvetica, sans-serif;
     gap: 16px;
     margin-top: 179px;
+    padding: 22px;
 }
 
 .membership-prompt > h1{
     font-weight: 900;
     font-size: 44px;
+    text-align: center;
+}
+
+.membership-prompt p{
+    text-align: center;
 }
 
 .signup-form>div{
