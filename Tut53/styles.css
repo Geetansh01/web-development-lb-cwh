@@ -33,6 +33,7 @@ header>nav {
     width: 75%;
     padding: 20px;
     box-sizing: border-box;
+    margin-bottom: 179px;
 }
 
 nav>.logo {
@@ -85,7 +86,6 @@ nav>ul li>button{
     color: white;
     font-family : Arial, Helvetica, sans-serif;
     gap: 16px;
-    margin-top: 179px;
     padding: 22px;
 }
 
@@ -95,8 +95,14 @@ nav>ul li>button{
     text-align: center;
 }
 
-.membership-prompt p{
+.membership-prompt>p:nth-child(2){
     text-align: center;
+    font-size: 24px;
+}
+
+.membership-prompt>p:nth-child(3){
+    text-align: center;
+    font-size: 20px;
 }
 
 .signup-form>div{
@@ -132,4 +138,142 @@ nav>ul li>button{
     font-size: 22px;
     color: white;
     box-sizing: border-box;
+}
+
+.enjoy-on-tv-section{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 24px;
+    color: white;
+}
+
+.enjoy-on-tv-section>.text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.enjoy-on-tv-section>.text>h1{
+    font-weight: 900;
+}
+
+.enjoy-on-tv-section>.text>p{
+    width: 435px;
+}
+
+.tv{
+    position: relative;
+    font-family: sans-serif;
+}
+
+.tv>video{
+    position: absolute;
+    left: 86px;
+    top: 102px;
+    z-index: -1;
+}
+
+.line{
+    height: 6px;
+    background-color: #3b3b3b;
+}
+
+.watch-anywhere-section{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 24px;
+    color: white;
+}
+
+.device-pile{
+    position: relative;
+    font-family: sans-serif;
+}
+
+.device-pile>video{
+    position: absolute;
+    left: 116px;
+    top: 60px;
+    z-index: -1;
+    height: 230px;
+}
+
+.watch-anywhere-section>.text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+
+.watch-anywhere-section>.text>h1{
+    font-weight: 900;
+}
+
+.watch-anywhere-section>.text>p{
+    width: 435px;
+}
+
+.faq{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    font-family: sans-serif;
+    gap: 8px;
+    padding-top: 60px;
+}
+
+.faq>h1{
+    font-weight: 900;   
+    font-size: 48px;
+}
+
+.question{
+    background-color: rgb(45,45,45);
+    border: none;
+    display: flex;
+    height: 84px;
+    width: 80%;
+    padding: 24px;
+    color: white;
+    font-size: 24px;
+    text-align: left;
+    transition: background-color ease;
+}
+
+.question:hover{
+    cursor: pointer;
+    background-color: rgb(59, 59, 59);
+}
+
+.question>p{
+    width: 98%;
+}
+
+footer{
+    color: rgba(255,255,255,0.7);
+    text-decoration: underline;
+    font-family: sans-serif;
+}
+
+footer>p:first-child{
+    width: 86vw;
+    margin: 76px auto 5px auto;
+}
+
+.footer-content{
+    display: grid;
+    height: 320px;
+    grid-template-columns: repeat(5, 17vw);
+    grid-template-rows: repeat(4, 41px) 121px;
+    justify-content: center;
+    justify-items: start;
+    align-items: start;
+    gap: 5px;
 }
