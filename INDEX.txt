@@ -460,4 +460,9 @@
       1)background-size: cover;
       2)changing color of svg (fill="red" inside the .svg file)
 
+      Tip: 1)The favicon when stored in Tut53 (i.e the same directory where index.html is stored i.e the entry point of our website i.e the root directory of our website) is picked automatically by ALL other browsers (without any kind of linking being done via code) (when website is hosted using live server extension of VS-code) BUT NOT edge 😞
+      (This might be corrected in future edge updates)
+
+           2)For this to work, VS-code should be opened in Tut53, this means live server extension will treat TUT53 as the root directory of our website.
+      
       
