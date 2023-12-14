@@ -29,7 +29,7 @@
       3)BackEnd
             -django
             -flask
-            -nodeJS
+            -Node.js
             -php
             -ruby on rails
 
@@ -453,7 +453,7 @@
 /**********Tut 52************/
       Figma Intro Basic
 
-/**********Tut 52************/
+/**********Tut 53************/
       Netflix Clone (Exercise)
 
       New Things used:
@@ -465,4 +465,21 @@
 
            2)For this to work, VS-code should be opened in Tut53, this means live server extension will treat TUT53 as the root directory of our website.
       
+/**********Tut 54************/
+      JavaScript Starts
+      1)JS is a client side scripting language to make webpages interactive
+      2)U can use Node.js to script backend using JavaScript
+      3)Ways to add JS to your html:
+            1)inline (using <style> tag)
+            2)external 
+      2)Some JS functions
+            1)alert()
+            2)console.log("...") -->useful for debugging
+            3)prompt("Enter Ur Name : ")
+      
+      About Node.js
+      1)This is the run-time environment for JavaScript
+      2)Node.js 's javascript engine is derived from chrome's V8 engine (a JavaScript engine )
+            1)A JavaScript engine is simply a computer program that interprets JavaScript code. The engine is responsible for executing the code.
+      3)Some functions (like alert() etc..) are available only in browsers and thus a JS code containing these would throw error when being run by Node.js
       
