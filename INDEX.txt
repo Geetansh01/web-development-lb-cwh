@@ -483,3 +483,44 @@
             1)A JavaScript engine is simply a computer program that interprets JavaScript code. The engine is responsible for executing the code.
       3)Some functions (like alert() etc..) are available only in browsers and thus a JS code containing these would throw error when being run by Node.js
       
+/**********Tut 55************/
+      Variables in JavaScript
+      1)Naming Rules for variables
+            -Letters, digits, underscores, $ sign allwed
+            -Must begin with $, _ or Letters
+            -Case Senssitive (num & Num are different)
+            -JS reserved words can not be used
+      2)3 types of variables in JS :
+            1)var
+                  -It is globall scoped
+                  
+                  Tip: mostly we will not use a "var" in our code but use "let" & "const"
+            2)let
+                  -It is local scoped
+                  -If you declare it outside of all blocks then it will be global
+            3)const
+                  -It is local scoped
+      3)Primitive DataTypes in JS:
+            -null : This data type can hold only one possible value that is null
+                    "typeof" will give the datatype of a null variable as "object" (Historical Reasons)
+            -number
+            -boolean
+            -string
+            -symbol
+            -undefined :  The meaning of undefined is ‘value is not assigned’
+            -BigInt : This data type can represent numbers greater than 2^53-1 which helps to perform operations on large numbers. 
+                      The number is specified by writing ‘n’ at the end of the value
+
+      4)Non-Primitive DataTypes in JS
+            1)Objects
+                  -An object is a collection of properties.
+                   And a property is a <key : value> pair
+                  -A property's value can be a function, in which case the property is known as a method
+                  -Example:
+
+                        const obj = {
+                              property1: <value1>, // property name may be an identifier
+                              2: <value2>, // or a number
+                              "property n": <value3>, // or a string
+                        };
+
