@@ -467,7 +467,8 @@
       
 /**********Tut 54************/
       JavaScript Starts
-      1)JS is a client side scripting language to make webpages interactive
+      1)JS is a client side scripting language to make webpages interactive. 
+      2)JS is a Dynamically typed language.
       2)U can use Node.js to script backend using JavaScript
       3)Ways to add JS to your html:
             1)inline (using <style> tag)
@@ -523,4 +524,47 @@
                               2: <value2>, // or a number
                               "property n": <value3>, // or a string
                         };
+            
+            Tip: ';' is optional in JS but it's a good idea to use it to mark end of statement
+
+/**********Tut 56************/
+      1)Selection Structure in JS (Conditionals like if-else etc..)
+      2)Arithmetic operators in JS 
+            1)=== : to compare value and type
+
+                  console.log(3 == "3"); //gives true
+                  console.log(3 === "3"); //gives false
+
+            2)etc..
+      3)REPL (Read Evaluate Print Loop of JS)
+
+/**********Tut 57************/
+      Loops in JS
+      1)for Loop
+      2)for in loop : to loop through the keys of an object
+      3)for of loop : to iterate an iterable data structure like arrays, strings
+      4)while loop
+      5)do while loop
+
+/**********Tut 58************/
+      JS functions
+      1)Simpe function ex:
+            function add(a, b, c = 1){
+                  let sum = a + b + c;
+                  console.log("Sum is : ", sum);
+                  return sum;
+            }
+
+      2)arrow function in JS
+            1)Used for shorter synatax over traditional functions
+            2)Syntax:
+
+                  const myFunction = (param1, param2, ...) => {
+                        // function body
+                  }
+
+            In the code above, the "myFunction" is the variable that holds the function. You can call the function as "myFunction()" later in your code.
+
+/**********Tut 59***********/
+      Exercise: Faulty Calcualator
 
