@@ -568,3 +568,31 @@
 /**********Tut 59***********/
       Exercise: Faulty Calcualator
 
+/**********Tut 60***********/
+      Strings in JS
+      1)Template literals 
+            1)Template Literals use back-ticks (``) rather than the quotes ("") to define a string
+            2)With template literals, you can use both single and double quotes inside a string
+            Ex:
+
+                  // let sentence = "This lion's "nature" is carnivorous by "birth !";  //Unable to write a string that contains double or single quotes {" ", ' '} in the usual manner 
+
+                  let sentence = `This lion's "nature" is carnivorous by "birth !`;  //Prblm solved with "Template literals" 
+                  console.log(sentence);
+
+            3)String Interpolation : Template literals provide an easy way to interpolate variables and expressions into strings
+            Ex: 
+
+                  let first_name = "Geetansh";
+                  let last_name = "Bhardwaj";
+                  console.log(`The name is ${first_name} ${last_name}`);
+      2)various string functions and properties :
+            - .toLowerCase()
+              .slice(x,y)  {x index included , y not}
+              .replace("<str-to-replace>", "<with-this-str>")
+              .trim()
+              etc...
+
+                  Tip: Strings in JS are IMMUTABLE, so all of these function can NOT change the original string but you can always make a new one 😉
+
+            - .length etc...
