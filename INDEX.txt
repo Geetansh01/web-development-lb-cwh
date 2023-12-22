@@ -567,6 +567,7 @@
 
 /**********Tut 59***********/
       Exercise: Faulty Calcualator
+      Tip: CWH used eval() in his solution but Never use eval() in actual production (Security Reasons) 😨😨
 
 /**********Tut 60***********/
       Strings in JS
@@ -596,3 +597,6 @@
                   Tip: Strings in JS are IMMUTABLE, so all of these function can NOT change the original string but you can always make a new one 😉
 
             - .length etc...
+
+/**********Tut 62***********/
+      Exercise : Business Name Generator 
