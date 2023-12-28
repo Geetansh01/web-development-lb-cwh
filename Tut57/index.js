@@ -4,7 +4,6 @@ console.log("JS Loops");
 //     console.log(1 + i);
 // }
 
-// for in loop
 let person = {
     name: "Geetansh",
     "Running Speed": 20,
@@ -12,13 +11,20 @@ let person = {
     height: 181
 };
 
+// for in loop
 for (const key in person) {
-    console.log(key, person[key]);      
+    if (Object.hasOwnProperty.call(person, key)) {
+        console.log(key, person[key]);
+    }    
 }
 
 // for of loop
 for(const c of "Geetansh"){
     console.log(c);
+}
+
+for (const key in person) {
+
 }
 
 //while loop
