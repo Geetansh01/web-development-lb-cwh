@@ -664,4 +664,31 @@
             
             4)Array.from(...) : The Array.from() static method creates a new, shallow-copied Array instance from an iterable or array-like object.
 
+/**********Tut 65***********/
+      Exercise : Factorial 
              
+/**********Tut 66***********/
+      BOM & DOM in JS
+      0)window object
+            1)-It is a global object creted by the browser.
+              -global means accessible everywhere.
+                  eg: You can replace "console.log(...)" with "window.console.log(...)", it's same.
+            2)this "window" object represents the browser window (basically everything) and used to control anything within the browser window.
+            3)In this window object (i.e as the functions and properties of this window object) lies 3 major things:
+                  1)DOM
+                  2)BOM
+                  3)JS Core 
+                  
+      1)DOM : Document Object Model
+            1)DOM basically apke webpage ki HTML ko (i.e ENTIRE HTML Documnet ko) ek "Object" bna deta hai.
+            2)Ye Object represents the HTML Document in a logical tree like structure jisse programming languages and scripting languages (like JS) us Document ke elements ko modify/ manipulate kr pae.
+                  eg: Using JS to change the color of any element (in a webpage) comes under DOM.
+            3)DOM pure webpage ko ek hierarchial tree like structure bna deta hai (see DOM.jpg)
+      
+      2)BOM : Browser Object Model
+            1)It allows JS to communicate to browser regarding matters other than content of webpage (content of webpage is entirely under DOM)
+                  eg: when we use "alert()" to ask the browser to display an alert to the user, this is something other than the content of the webpage & comes under BOM.
+
+      Tip: 1)-In edge, go to : inspect element -> elements tab -> select an element
+             -This selected element can now be represented by "$0" and you can interact with it using JS
+                  eg: typing " $0.style.backgroundColor = "purple"; " in the console changes the background color of the selected element to purple! 💜💜
