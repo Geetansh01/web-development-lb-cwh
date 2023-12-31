@@ -692,3 +692,36 @@
       Tip: 1)-In edge, go to : inspect element -> elements tab -> select an element
              -This selected element can now be represented by "$0" and you can interact with it using JS
                   eg: typing " $0.style.backgroundColor = "purple"; " in the console changes the background color of the selected element to purple! 💜💜
+
+/**********Tut 67***********/
+      JS DOM - Children, Parent & Sibling Nodes
+      1)Walking the DOM : accessing the element (See accompanying index.html)
+            1)document.body.childNodes : run this in the edge console to access all the child nodes of "body" 
+                  output: NodeList(5) [text, div.container, text, script, text]   ____(1)
+
+                  Tip: "text" in above output refers to any kind of "blank-space" or "newline character" appearing before "div.container". So this "blank-space" or "newline character" is also treated as a child node.
+
+            2)document.body.childNodes[1] : to access the 1st child node ("div.container" acc. to (1) above)
+            3)document.body.firstElementChild : To access the first child node that is an element
+                  1)So "text" node is ignored and we get "div.container" (acc. to (1) above)
+            4)document.body.childNodes[1].style.backgroundColor = "green" : changes the background Color of "div.container" to green (acc. to (1) above)
+
+                  Tip: 1)Instead of repeatedly navigating to the target element, you can use a variable for convenience. So doing the same thing as above :
+
+                        let a = document.body.childNodes[1];
+                        a.style.backgroundColor = "green";
+
+                        -Every node is an object so "document.body.childNodes[1]" i.e "div.container" is an object in DOM (typeof(a) gives 'object')
+                        -So "a" can now be used to change the properties of "div.container" object
+
+                       2)More Technically, in JS, primitive data-types are "passed by value" and everything else (i.e objects) are "passed by sharing".
+                         To read more refer : 
+                         1)https://stackoverflow.com/a/38533677/22639449 
+                         2)http://dmitrysoshnikov.com/ecmascript/chapter-8-evaluation-strategy/#call-by-sharing (this link given in above SO answer, in case it's not accessible, I archived it as "Archive.pdf" in Tut67 Folder)
+            5)<element-name>.parentElement : to get the parent element
+            6)<element-name>.nextElementSibling , <element-name>.previousElementSibling etc...
+            7)<element-name>.children : to get all those child nodes that are also HTML elements 
+                  1)<element-name>.children includes only element nodes. To get all child nodes, including non-element nodes like text and comment nodes, use <element-name>.childNodes.
+                  2)<element-name>.children[0] : to access 0th children (i.e 0th child node that is an HTML Element)
+
+                  Tip: We will mostly be concerned with only those Nodes in DOM that are also HTML elements (so text nodes, comment Nodes will be ignored) 😉😉
