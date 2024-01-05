@@ -725,3 +725,25 @@
                   2)<element-name>.children[0] : to access 0th children (i.e 0th child node that is an HTML Element)
 
                   Tip: We will mostly be concerned with only those Nodes in DOM that are also HTML elements (so text nodes, comment Nodes will be ignored) 😉😉
+
+/**********Tut 68***********/
+      Continued - Walking the DOM
+      JS - Selecting elements by Ids, Classes, etc. in DOM
+            1)document.getElementsByClassName(" <class-name> ")
+                  1)if say "box" is the class Name then:
+                        document.getElementsByClassName(" <class-name> ")
+
+            2)document.getElementById(" <id> ")
+            3)document.querySelector(" <CSS-selector-here> ")
+                  1)NOTE: It takes CSS Selector. So if there is a class "box" then ".box" will be used  🛑🛑
+                        document.querySelector(".box") 
+                  2)This will NOT ❌ target all elements that match with ".box" CSS Selector but just the 1st one matched. If u want to target all elements the see 4) 👇
+            4)document.querySelectorAll(" <CSS-selector-here> ")
+                  1)This returns a NodeList of all nodes (Here, these nodes would be HTML elements) that match ".box" Selector
+                  2)Although NodeList is not an Array, it is possible to iterate over it with forEach()
+            5)document.getElementsByTagName("div")
+
+      Some other functions
+      1)element.matches(" <CSS-selector-here> ")
+      3)element.closest(" <CSS-selector-here> ")
+      3)elementA.contains(elementB) : gives true if elementA contains elementB
