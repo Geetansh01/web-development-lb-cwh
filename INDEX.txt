@@ -747,3 +747,6 @@
       1)element.matches(" <CSS-selector-here> ")
       3)element.closest(" <CSS-selector-here> ")
       3)elementA.contains(elementB) : gives true if elementA contains elementB
+
+/**********Tut 68***********/
+      Exercise : Change Box color Randomly using DOM
