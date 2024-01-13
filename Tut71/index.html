@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserting&RemovingElementsfromDOM</title>
+</head>
+<style>
+    body{
+        background-color: orange;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="box" data-manga="OnePunchMan">I am Box</div>
+        <!-- I am a Comment -->
+    </div>
+
+
+    <script>
+        let div = document.createElement("div");
+        div.innerHTML = `I have been inserted by <b>JS</b>`;
+        // document.querySelector(".container").append(div);
+        document.querySelector(".container").insertAdjacentHTML("afterbegin","<div>Inserted in beginning</div>");
+        
+    </script>
+</body>
+</html>

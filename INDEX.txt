@@ -731,7 +731,7 @@
       JS - Selecting elements by Ids, Classes, etc. in DOM
             1)document.getElementsByClassName(" <class-name> ")
                   1)if say "box" is the class Name then:
-                        document.getElementsByClassName(" <class-name> ")
+                        document.getElementsByClassName("box")
 
             2)document.getElementById(" <id> ")
             3)document.querySelector(" <CSS-selector-here> ")
@@ -748,5 +748,64 @@
       3)element.closest(" <CSS-selector-here> ")
       3)elementA.contains(elementB) : gives true if elementA contains elementB
 
-/**********Tut 68***********/
+/**********Tut 70***********/
       Exercise : Change Box color Randomly using DOM
+
+/**********Tut 71***********/
+      Continued - Walking the DOM
+      [See what all of these do in enclosed notes]
+      1)element.innerHTML
+            1)You can access inner HTML using this
+            2)U can also change inner HTML using this, pass the new HTML as a string
+                  element.innerHTML = `<div class="NEWbox">I am NEW-Box</div>`
+      2)element.innerText
+      3)element.outerHTML
+      4)element.tagName
+      5)element.nodeName
+            This is for all nodes (text, comment node etc) but ".tagName" only for Element nodes (i.e HTML element Nodes) 
+      6)element.textContent
+      7)element.hidden
+      8)element.hasAttribute(" <any Attribute, say id, class, etc> ")
+      9)element.getAttribute(...)
+      9)element.setAttribute(...)
+      10)element.attributes : gives all attributes (class, id, etc...)
+      11)element.removeAttribute("<attribute to be removed>")
+            eg: element.removeAttribute("class")
+      12)document.designMode = "on" : Now u can edit the website 🙌
+      13)data-* attribute : U can add this attribute to store some custom data which can then be accessed using "dataset" property in JS
+
+            //In .html
+            <div class="box" data-manga="OnePunchMan">I am Box</div>
+
+            //In JS
+            document.querySelector(".box").dataset
+                  output : DOMStringMap {manga: 'OnePunchMan'}
+            
+
+      Inserting Elements in DOM
+      Using JS To change the DOM is useful if you wish to change the webpage without reloading for the user 🌈🌈
+      
+      All the below 👇 methods take a node object (the new node to be inserted) as input.
+      1).append(<a node object here>) : new element will be inserted at the end of jis bhi element me append kr rhe ho
+      2).prepend()
+      3).after()
+      4).before()
+      5).replaceWith()
+
+           
+      6).insertAdjacentHTML("<position>","<HTML Text>")
+            eg: .insertAdjacentHTML("afterbegin","<div>Inserted in beginning</div>")
+            1)This methods takes a HTML text as input (& NOT a Node object)
+                  This would work : insertAdjacentHTML("afterbegin","<div>Inserted in beginning</div>") ✅
+                  This won't work : insertAdjacentHTML("afterbegin", <a Node object> ); ❌
+                  (See SupportedParams.jpg)
+      7).insertAdjacentElement("<position>", <node object>)
+      8).insertAdjacentText("<position>", "<Text>");
+      9).remove()
+
+      Other Things
+      1).classList
+            1).classList.add("<new-class-to-be-added>")
+            2).classList.remove("<class-to-be-removed-from-classList>")
+            3).classList.toggle("class-name") : if class in classList then removes it, if not then adds it
+      2).className
