@@ -1,22 +1,19 @@
 console.log("Reload For Different Colors");
 
 
-function setRandomBackground(x) {
-    let colors = ["blanchedalmond", "antiquewhite", "pink", "pink"]; 
-    let a = Math.floor(Math.random()*10) % colors.length; 
-    x.style.backgroundColor = colors[a];
+function getRandomColor() {
+    let v1 = Math.ceil(0 + Math.random()*(255 - 0));
+    let v2 = Math.ceil(0 + Math.random()*(255 - 0));
+    let v3 = Math.ceil(0 + Math.random()*(255 - 0));
+    return `rgb(${v1}, ${v2}, ${v3})`;
 }
 
-function setRandomColor(x) {
-    let colors = ["pink", "yellow", "blue", "green", "aqua", "brown"]; 
-    let a = Math.floor(Math.random()*10) % colors.length; 
-    x.style.backgroundColor = colors[a];
-}
-
-setRandomBackground(document.body);
+document.body.style.backgroundColor = getRandomColor(document.body);
 
 let a = document.getElementsByClassName("box");
 
 for (let index = 0; index < a.length; index++) {
-    setRandomColor(a[index]); 
+    a[index].style.backgroundColor = getRandomColor();
+    a[index].style.color = getRandomColor();
 }
+
