@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asynchronus Programming in JS</title>
+</head>
+<body>
+
+    <script>
+        console.log("Synchronus 1");
+        console.log("Synchronus 2");
+        
+        setTimeout(()=>{console.log("Asynchronus : after 0ms | Inside setTimeout()")}, 0);
+        setTimeout(()=>{console.log("Asynchronus : after 2ms | Inside setTimeout()")}, 2);
+
+        console.log("Synchronus 3");
+    </script>
+</body>
+</html>

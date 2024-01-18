@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>callbacks</title>
+</head>
+<body>
+    
+
+    <script>
+        function callback(){
+            console.log("script Loaded!");
+        }
+
+        function loadScript(source, callback) {
+            let sc = document.createElement("script");
+            sc.src = source;
+            sc.onload = callback(); 
+            document.head.append(sc);         
+        }
+
+        loadScript("https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/prism.min.js", callback);
+    </script>
+</body>
+</html>

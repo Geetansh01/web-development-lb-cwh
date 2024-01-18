@@ -816,3 +816,37 @@
 
 /**********Tut 73***********/
       Exercise : Card Gen via JS
+
+/**********Tut 74***********/
+      JS Events
+      1)Add event listeners to any element that can fire the events using "addEventListener()"
+            element.addEventListener("click", () => {
+                  alert("I was Clicked");
+            });
+
+            1)The Second function in "addEventListener()" can take an event-object ("e" in below ex.) as argument. An event-object represents an event that takes place in the DOM
+                  element.addEventListener("keypress", (e) => {
+                        console.log(e); //Logging the event object
+                        console.log(e.key);
+                  });
+            
+            2)Events can also be handled via HTML attribute (like "onload" etc...) but above method is preferred more. 🌄
+
+      2)Event Bubbling : an event will bubble up to the parent elements.
+            1)e.stopPropagation() : to stop the event propagation (e is an event object)
+
+      Other Functions (Unrelated to Events)
+      1)setInterval(<a function>, <Time in ms>) : If you want to run some code repeatedly after some time interval
+      2)clearInterval() : to stop setInterval(...)
+
+      3)setTimeout(<a function>, <Time in ms>) : If you want to run some code ONCE after some time interval
+      4)clearTimeout() : to stop setTimeout(...)
+
+/**********Tut 75***********/
+      JS callbacks and promises
+      1)Asynchronous programming is implemented in JS (say for functions that may take a long time to return their output)
+            (Ref: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing)
+      2)callback functions : callback functions are passed as arguments to other functions and then executed inside this outer function to perform some action.
+            Tip: Poor use of callbacks can lead to "JS Pyramid of Doom" (see : https://matcha.fyi/pyramid-of-doom-javascript/)
+                 💩
+      3)promises : used to prevent "JS Pyramid of Doom" 🛡️

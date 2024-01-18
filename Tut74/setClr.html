@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More JS funct</title>
+    <style>
+        #hero{
+            width: 200px;
+            height: 200px;
+            border: 2px solid black;
+        }
+        #superhero{
+            width: 200px;
+            height: 200px;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="hero">I change color every 2s</div>
+    <div id="superhero">I will change color once after 3s</div>
+
+    <script>
+        function getRandomColor() {
+            let v1 = Math.ceil(0 + Math.random() * (255 - 0));
+            let v2 = Math.ceil(0 + Math.random() * (255 - 0));
+            let v3 = Math.ceil(0 + Math.random() * (255 - 0));
+            return `rgb(${v1}, ${v2}, ${v3})`;
+        }
+
+        //////////////////////////////////////////////
+        let a = setInterval(() => {
+            document.querySelector("#hero").style.backgroundColor = getRandomColor();
+        }, 2000);
+        
+        console.log(a); //"a" can be used with clearInterval()
+        
+        ////////////////////////////////////////////////
+        let b = setTimeout(() => {
+            document.querySelector("#superhero").style.backgroundColor = getRandomColor();
+        }, 3000);
+
+    </script>
+</body>
+
+</html>
