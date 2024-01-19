@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promises in JS</title>
+</head>
+<body>
+    
+
+    <script>
+
+        //Asynchronus code inside promise (To be run parallely)
+        let meraPromise1 = new Promise(function(resolve, reject){
+            setTimeout(function () {
+                console.log('I am inside Promise1'); 
+            }, 5000);    
+            resolve(1234);    
+        });
+
+        meraPromise1.then((value)=>{console.log(value);
+        });
+        
+        let meraPromise2 = new Promise(function(resolve, reject){
+            setTimeout(function () {
+                console.log('I am inside Promise2'); 
+            }, 3000);    
+            reject(new Error("Code me ERROR aa gyi"));
+        });
+
+        meraPromise2.catch((error) => {console.log('Geetansh Bro ERROR Receieved');
+        });
+
+        
+    </script>
+</body>
+</html>

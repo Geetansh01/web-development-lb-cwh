@@ -11,3 +11,6 @@
 
 /************ SEO ****************/
 1)https://web.dev/articles/vitals
+
+/**************Fake API***********************/
+1)https://jsonplaceholder.typicode.com/

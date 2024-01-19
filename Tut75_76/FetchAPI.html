@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API</title>
+</head>
+
+<body>
+    <script>
+        //GET Call
+        //Bcz we are making a network call, use async-await
+        // async function utility(){
+        //     let content = await fetch("https://jsonplaceholder.typicode.com/posts/1");  //a GET call
+        //     let output = await content.json();
+        //     console.log(output);
+        // }
+
+        // utility();
+
+        //POST Call
+        //Bcz we are making a network call, use async-await
+        async function helper() {
+
+            let options = {
+                method: 'POST',
+                body: JSON.stringify({
+                    title: 'Geetansh',
+                    body: 'Tagdi Body',
+                    userId: 1,
+                    favAnime: "One Punch Man"
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            };
+
+            let content = await fetch('https://jsonplaceholder.typicode.com/posts', options); //a POST call
+            let response = content.json();
+            return response;
+            
+        }
+
+        async function utlity(){
+            let ans = await helper();
+            console.log(ans);
+        }
+
+        utlity();
+
+    </script>
+</body>
+
+</html>

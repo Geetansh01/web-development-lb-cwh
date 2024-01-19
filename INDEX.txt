@@ -842,11 +842,92 @@
       3)setTimeout(<a function>, <Time in ms>) : If you want to run some code ONCE after some time interval
       4)clearTimeout() : to stop setTimeout(...)
 
-/**********Tut 75***********/
-      JS callbacks and promises
+/**********Tut 75 + Tut76***********/
+      [Majorly Done From LB WebDev local saved Video for this topic : "82. JS DOM Class - 1.mp4" ]
+
+      🟨🟨JS callbacks and promises🟨🟨
+
       1)Asynchronous programming is implemented in JS (say for functions that may take a long time to return their output)
             (Ref: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing)
       2)callback functions : callback functions are passed as arguments to other functions and then executed inside this outer function to perform some action.
-            Tip: Poor use of callbacks can lead to "JS Pyramid of Doom" (see : https://matcha.fyi/pyramid-of-doom-javascript/)
-                 💩
-      3)promises : used to prevent "JS Pyramid of Doom" 🛡️
+            Tip : 1)callback functions are used to implement Asynchronous programming (like executing a callback once a time taking Asynchronous task completes)
+                  2)Poor use of callbacks can lead to "JS Pyramid of Doom" 💩 (see : https://matcha.fyi/pyramid-of-doom-javascript/)
+      3)promise : used to prevent "JS Pyramid of Doom" 🛡️. Let's see in more detail
+
+
+            1)What is a Promise? 
+                 A)It is used to execute some code parallely in background in JS.
+                  The promise then tells if that code was executed successfully or not.
+                       (i) promise resolved : if that code was executed successfully
+                       (ii)promise rejected : if that code was NOT executed successfully (i.e some error occurred)
+                 B)This code (inside the promise) can be a synchronus code OR asynchronous code 
+                 c)Basically promise is a task that i wish to get completed parallely in background.
+                   🌳Practical use case:
+                        Say u are running a synchronus code & in b/w you made a network call. Ab is network call se dhere-dhere 🐌 data aega. So i wouldn't want to freeze the entire webpage (and frustrate 😡 the user) while this is happenning. So i will handle the network call asynchronously & parallely in background using a promise. The promise will tell me if the network call was successfull or not in the end (i.e data aa paya ya kuch gdbd ho gyi). (See "Event Loop" in JS from LB WebDev local saved Video "82. JS DOM Class - 1.mp4" )
+
+            2)Syntax of a making a promise (basically we will make a promise object using a call to constructor of its class):
+
+                        let meraPromise = new Promise(function(resolve, reject){
+                              //Any code to be run parallely
+                        });
+
+                        Ex:
+                        //Synchronus code inside promise (To be run parallely)
+                        let meraPromise1 = new Promise(function(resolve, reject){
+                              console.log('I am inside Promise1');
+                        });
+
+                        Here, "meraPromise1" is a promise object. 😊😊
+            
+            3)A promise object has following properties:
+                  1)state : pending, fullfilled OR rejected
+                  2)result : 
+                        (i)promise resolved : result is a value
+                              -use "then()" method promise object to work with value
+                        (ii)promise rejected : result is an error
+                              -use "catch()" / "then()" method of promise object to work with error
+                  3)Promise chaining : Say we have promises P1, P2, P3
+                        chain: P3's execution depends on successfull execution of P2 which itself depends on P1 i.e
+                                    P3 --depends on--> P2 --depends on--> P1 
+                        
+                        Note: Here, aisa possible hai ki P1 browser me chla jaye and resolve ho jaye (but still P1 has NOT ❌ executed, it's in the browser) and therefore P2 ko execution start krne ka green signal 🟩 mil jaye. Same for P2 and P3
+
+
+
+      🟨🟨Async - Await🟨🟨
+
+      1)async- await is used when multiple promises depend on each other (same as P1, P2, P3 above but now say we have upto P50).
+      2)Some points:
+            (i)Any function can be made "async"
+            (ii)async function returns a promise
+            (iii)any function can be made "await"
+
+      3)consider 3 promises P1, P2, P3. We want the following: 
+            P3 --depends on--> P2 --depends on--> P1
+
+            conditions:
+            A)Jb tk P1 execute nhi ho jata, P2 start hi nhi hoga. Same for P2 and P3 (🔴 This condition was not there in "Promise chaining" eg. above)
+            So, this is like a RELAY RACE 🏃‍♂️🏃‍♀️, jb tk pichla bnda flag nhi lata, agla bhag nhi skta!
+
+            B)In such a situation, we can use async-await rather than multiple .then() (See "AsyncAwait.html" file)
+
+
+      🟨🟨Fetch API🟨🟨
+
+      1)API (Application Programming Interface) : an interface that facilitates the communication b/w different software components.
+      2)fetch API is used to get / push something on the network.
+      3)calls using fetch API:
+            1)get call
+                  Syntax: fetch("<some-url>"); 
+                  Note that paid APIs might need more things in the get call (say Keys)
+            2)Post call
+                  Syntax: fetch("<some-url>", <an object containing additional things>);
+
+                  Tip: Copy calls from "https://jsonplaceholder.typicode.com/guide/" 😁😁 
+
+      🟨🟨Closures🟨🟨
+      1)Say u have a nested function [eg: inner() inside of outer()], this nested function forms a closure.
+      2)A closure is the combination of that nested function along with with REFERENCES to its surrounding state (its lexical environment).
+        So, if inner() is now passed out from outer(), it will still work even though outer() has ended bcz inner() has references to the variables it needs (from its closure)
+
+            

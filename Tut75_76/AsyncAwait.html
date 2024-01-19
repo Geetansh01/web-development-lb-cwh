@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AsyncAwait in JS</title>
+</head>
+<body>
+    <script>
+
+        //Async Function examples
+
+        //Example 1
+        // async function abcd(){
+        //     return "Any return Value Here";
+        // }
+        // console.log(abcd()); //Returns a promise
+
+        //Example 2
+        async function utility(){          
+            let delhiMausam = new Promise(function(resolve, reject){
+                setTimeout(() => {
+                    resolve("Delhi me bht garmo hai!")
+                }, 1000);
+            });
+            
+            let goaMausam = new Promise(function(resolve, reject){
+                setTimeout(() => {
+                    resolve("Goa me Sardi hai!")
+                }, 5000);
+            });
+
+            //Both promises run parallely as no "await" used
+            // let dM = delhiMausam;
+            // let gM = goaMausam;
+            
+            //Now gM promise will NOT execute until dM has finished executing (i.e gM will wait)
+            let dM = await delhiMausam;
+            let gM = goaMausam;
+
+
+            return [dM, gM];
+        }
+
+    </script>
+</body>
+</html>

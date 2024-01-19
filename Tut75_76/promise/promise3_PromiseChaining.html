@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promises in JS</title>
+</head>
+<body>
+    
+
+    <script>
+        
+        // Demonstration 1 : when one promise depends on completion of another
+
+        // Flow: waada2 jb chlega jb waada1 resolve ho jaega
+        let waada1 = new Promise(function(resolve, reject){
+            setTimeout(()=>{
+                console.log('setTimeout 1 started');
+            },2000);
+            resolve("Resolved!");
+        });
+
+        let output = waada1.then((value)=>{
+            let waada2 = new Promise(function(resolve, reject){
+                resolve("waada2 Resolved");
+            });
+            return waada2;  //waada1.then() returns a promise (i.e a promise object)
+        })
+        
+        output.then((value) => {console.log(value);})
+
+
+        
+    </script>
+</body>
+</html>
