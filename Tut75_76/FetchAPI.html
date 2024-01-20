@@ -10,12 +10,20 @@
 <body>
     <script>
         //GET Call
-        //Bcz we are making a network call, use async-await
+        // Bcz we are making a network call, use async-await
         // async function utility(){
-        //     let content = await fetch("https://jsonplaceholder.typicode.com/posts/1");  //a GET call
-        //     let output = await content.json();
-        //     console.log(output);
+        //     let content = await fetch("https://jsonplaceholder.typicode.com/posts/1");  //a GET call  ....line(1)
+        //     let output = await content.json(); //....line(2)
+        //     console.log(output); //....line(3)
         // }
+
+        // /*
+        //     What happened above? [From cwh][Just Basic hand waving understanding, might not be entirely technically correct]
+        //     1)In line(1), we made a get call using fetch API. Since a get call may take time to get the data, the fetch API returns a promise. We await for this promise to 
+        //       be settled (resolved/ rejected). Say, this promise is settled, we store the value in "content"
+        //     2)In line(2), we parse the "content" to ".json" format. Since it may take some time, we await it. After completion, this ".json" is stored in "output"
+        //     3)In line(3), we now have the "output" and we log it to console
+        // */
 
         // utility();
 
@@ -37,7 +45,7 @@
             };
 
             let content = await fetch('https://jsonplaceholder.typicode.com/posts', options); //a POST call
-            let response = content.json();
+            let response = await content.json();
             return response;
             
         }

@@ -886,11 +886,45 @@
                               -use "then()" method promise object to work with value
                         (ii)promise rejected : result is an error
                               -use "catch()" / "then()" method of promise object to work with error
+
+                              Tip: If your promise returns an error, u need to chain the then() & catch() methods, using them separately won't work bcz then() does not catch errors, so JS engine returns error ('ERR_UNHANDLED_REJECTION')
+
+                                    ❌❌WRONG❌❌
+                                    let p = new Promise(function(resolve, reject){
+                                          reject("p rejected");
+                                    })
+
+                                    p.then((val)=>{
+                                          console.log(val);
+                                    })
+
+                                    p.catch((err)=>{
+                                          console.log(err);
+                                    })
+
+                                    ✅✅Correct✅✅
+                                    let p = new Promise(function(resolve, reject){
+                                          reject("p rejected");
+                                    })
+
+                                    p.then((val)=>{
+                                          console.log(val);
+                                    }).catch((err)=>{
+                                          console.log(err);
+                                    })
+
+
                   3)Promise chaining : Say we have promises P1, P2, P3
                         chain: P3's execution depends on successfull execution of P2 which itself depends on P1 i.e
                                     P3 --depends on--> P2 --depends on--> P1 
                         
                         Note: Here, aisa possible hai ki P1 browser me chla jaye and resolve ho jaye (but still P1 has NOT ❌ executed, it's in the browser) and therefore P2 ko execution start krne ka green signal 🟩 mil jaye. Same for P2 and P3
+
+                  4)Promise API methods   
+                        1)Promise.all()
+                        2)Promise.allSettled()
+                        2)Promise.race()
+                         ...etc (Do from cwh Notes Chapter 9)
 
 
 
