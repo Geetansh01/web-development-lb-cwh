@@ -964,4 +964,32 @@
       2)A closure is the combination of that nested function along with with REFERENCES to its surrounding state (its lexical environment).
         So, if inner() is now passed out from outer(), it will still work even though outer() has ended bcz inner() has references to the variables it needs (from its closure)
 
+
+/**********Tut 78***********/
+      Exercise : Hacking Simulator
+
+/**********Tut 79***********/
+      Error handling in JS
+      1)throw <error-to-be-thrown>
+            1)You can throw an error object using any of the 6 builtin error constructors:
+                  SyntaxError
+                  EvalError
+                  RangeError
+                  ReferenceError
+                  TypeError
+                  URIError
+
+                  eg: throw SyntaxError("<Ur-error-msg-here>")
             
+            2)You can also throw a custom error by making a custom error object and throwing that
+                  eg: throw new Error("jhkb")
+
+                  Tip: "new" in JS is used to make an object
+
+      2)try-catch-finally block
+            1)try-block ka code run hota hai, agr try-block me error throw hua to execution transferred to catch-block 
+            2)finally-block:
+                  1)Chahe try-block error throw kre ya na kre, (i.e catch-block pe execution aye ya na aye), last me finally-block zrur execute hota hai
+                  2)🟢finally-block is mainly needed when we are inside functions
+                    🟢When inside a function, we would want that the function to either "return" from within the try-block or from within the catch-block 
+                    🟢So if we want to do something even when the "return" statement has been encountered in the function, we use finally-block
