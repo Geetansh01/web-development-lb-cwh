@@ -16,7 +16,7 @@ function dotsAnimation(){
         }
     },500);
 
-    let RandomTimeout = Math.ceil(1 + Math.random()*(7 - 1));
+    let RandomTimeout = Math.ceil(1 + Math.random()*(6 - 1));
 
     let prm1 = new Promise((resolve, reject)=>{
         setTimeout(()=>{

@@ -993,3 +993,49 @@
                   2)🟢finally-block is mainly needed when we are inside functions
                     🟢When inside a function, we would want that the function to either "return" from within the try-block or from within the catch-block 
                     🟢So if we want to do something even when the "return" statement has been encountered in the function, we use finally-block
+
+/**********Tut 80***********/
+      OOPs in JS
+      1)OOPs JS will not be used in beginner level projects
+      2)Prototype of an object : gives additional properties to that object 
+      3)"extends" keyword : used for inheritance
+      4)-"super()" used to call the base class constructor
+        -"super" keyword to access base class methods
+                  eg : super.eats(); //To call eats() of super (base) class
+      5)getters & setters (Not done in enough detail)
+            Note: 🔻Syntax of getters & setters WRONG in cwh Notes chapter 11
+      6)instanceof operator : to check if an object is of a particular class 
+            1)Syntax : <object> instanceof <class>
+            2)Note that an object is also an instance of its class's BASE class, so "true" returned in that case!
+
+/**********Tut 81***********/
+      Advanced JS
+
+      IIFE
+      1)An IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined
+      
+      Destructring
+      2)The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables
+            eg: 1)Wiht arrays
+                  let [x, y, ...rest] = [1,2,3,4,5,6,7]; {Note that 3 dots "..." are necessary}
+                
+                2)With objects
+                  let boy = {
+                        Name: "Rohan",
+                        Age: 18,
+                        weight: 60,
+                  }
+
+                  let {Name, weight} = boy;   .....Line(1)
+
+                  Note: It should be "Name" & "weight" only (& no other variable name) to destructure those properties out of the object
+
+      Spread operator
+      1)Spread operator khol deta hai (symbolised with 3 dots "...")
+
+      Hoisting
+      1)Only works for "var" & not "let" & "const". [So not useful unless u are using "var" which u anyways should not 🤪]
+      2)Hoisting : when the interpreter appears to move declarations of "var" (& NOT the definitions/Initializations) on the top of the block, so they can be used before they are declared (although value remains "undefined" until you reach the line where they are declared + initialized/defined as only declaration is hoisted to the top, like a flag 🚩)
+
+      3)Hoisting can also do with functions (Pehle use krlo then declare + define)
+       (But 🔴NOT if function is made with let/const (like const foo = function (x){...})
