@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll using JS</title>
+
+<style>
+    *{
+        margin: 0px;
+        padding: 0;
+    }
+    .box{
+        border: 2px solid black;
+        background-color: chocolate;
+        width: 200px;
+        height: 200px;
+        margin: 10px;
+    }
+    .red{
+        background-color: yellowgreen;
+    }
+    .blue{
+        background-color: blue;
+    }
+    .container{
+        position: relative;
+    }
+    .scrollBtn{
+        background-color: black;
+        color: white;
+        position: fixed;
+        top: 90vh;
+        left: 90vw;
+        /* z-index: 10; */
+        padding: 10px;
+    }
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <button class="scrollBtn">Scroll To Top</button>
+        <div class="box red"></div>
+        <div class="box red"></div>
+        <div class="box red"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box blue"></div>
+        <div class="box blue"></div>
+        <div class="box blue"></div>
+    </div>
+
+
+
+    <script src="scroll.js"></script>
+
+</body>
+</html>

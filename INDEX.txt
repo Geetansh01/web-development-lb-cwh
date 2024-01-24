@@ -1039,3 +1039,16 @@
 
       3)Hoisting can also do with functions (Pehle use krlo then declare + define)
        (But 🔴NOT if function is made with let/const (like const foo = function (x){...})
+
+
+/**********Tut 82***********/
+      JS Practice Questions
+      1)Local Storage:
+            1)You can store/ retrieve string "key" "value" pairs in the browsers local storage for a specific webpage
+                  -localStorage.setItem("<key>", "<value>); {To set a pair}
+                  -localStorage.getItem("<value>"); {To retrieve a pair if it exists}
+            
+            2)U can also store objects to local storage by converting them to string (JSON.stringify(<object>))
+            2)You can view the local storage for a webpage in the "Application" tab of Dev Tools in edge
+      2) 
+

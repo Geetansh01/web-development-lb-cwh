@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Storage</title>
+</head>
+<body>
+    <div class="container">
+        I will only ask for name once, then store it!
+        >>
+    </div>
+
+    <!-- NOTE : If it's not asking for name, clear the local storage 1st! -->
+    
+
+    <script>
+        if(localStorage.getItem("name")){
+            let y = localStorage.getItem("name")
+            document.body.querySelector(".container").innerText += `Hello ${y}`;
+        }
+        else{
+            let x = prompt("Enter Name :");
+            localStorage.setItem("name", x);
+            document.body.querySelector(".container").innerText += `Hello ${x}`;
+        }
+        
+    </script>
+</body>
+</html>
