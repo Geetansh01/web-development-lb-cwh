@@ -1,0 +1,8 @@
+What i learnt after watching soln vdo:
+
+1)Was unable to change svg color using CSS
+>As the SVGs are by default black, use "filter: invert(1);" 
+
+2)Was unable to implement responsive height for ".library-actions" & ".sidebar" as a whole
+>
+

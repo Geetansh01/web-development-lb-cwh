@@ -1008,7 +1008,7 @@
             1)Syntax : <object> instanceof <class>
             2)Note that an object is also an instance of its class's BASE class, so "true" returned in that case!
 
-/**********Tut 81***********/
+/**********Tut 82***********/
       Advanced JS
 
       IIFE
@@ -1041,7 +1041,7 @@
        (But 🔴NOT if function is made with let/const (like const foo = function (x){...})
 
 
-/**********Tut 82***********/
+/**********Tut 83***********/
       JS Practice Questions
       1)Local Storage:
             1)You can store/ retrieve string "key" "value" pairs in the browsers local storage for a specific webpage
@@ -1050,5 +1050,7 @@
             
             2)U can also store objects to local storage by converting them to string (JSON.stringify(<object>))
             2)You can view the local storage for a webpage in the "Application" tab of Dev Tools in edge
-      2) 
+      2)Smooth Scroll (DIY)
 
+/**********Tut 84***********/
+      Project : Spotify Clone
