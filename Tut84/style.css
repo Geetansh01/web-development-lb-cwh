@@ -11,7 +11,7 @@
     font-family: "CircularSp";
 }
 
-body{
+body {
     background-color: var(--debug-bg-color);
 }
 
@@ -64,14 +64,14 @@ body{
     font-size: 14px;
 }
 
-.library > span:first-child{
+.library>span:first-child {
     display: flex;
     align-items: center;
     gap: 13px;
     padding-left: 12px;
 }
 
-.library > span:first-child > img{
+.library>span:first-child>img {
     filter: invert(1);
 }
 
@@ -131,21 +131,28 @@ body{
 
 /************right************/
 
-.right>nav{
+.right>nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 70vw;
+    width: 75vw;
 }
 
-.right>nav>ul{
+.right>nav>ul {
     display: flex;
     justify-content: space-between;
     list-style: none;
     width: 150px;
 }
 
-.song-card{
+.spotify-playlists {
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.song-card {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -158,14 +165,48 @@ body{
     color: var(--font-color2);
     background-color: var(--sec-color);
     border-radius: 6px;
+    position: relative;
 }
 
-.song-card > img{
+.song-card>img {
     border-radius: 6px;
     height: 170px;
     width: 170px;
 }
 
-.song-title{
+.play-btn {
+    position: absolute;
+    bottom: 103px;
+    right: 28px;
+    transition: all 0.5s ease-out;
+    /* display: none; */
+}
+
+/* .song-card :hover{
+    display: block;
+} */
+
+.play-btn>.circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    width: 48px;
+    background-color: #1ed760;
+    border-radius: 50%;
+}
+
+.translate {
+    transform: translate(-50%, -50%);
+    border: 12px solid red;
+}
+
+
+.play-btn>.circle>img {
+    height: 24px;
+
+}
+
+.song-title {
     font-weight: bold;
 }

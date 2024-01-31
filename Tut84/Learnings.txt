@@ -6,3 +6,6 @@ What i learnt after watching soln vdo:
 2)Was unable to implement responsive height for ".library-actions" & ".sidebar" as a whole
 >
 
+3)Was unable to make the "play-btn" animation when hovered  over "song-card"
+>
+
