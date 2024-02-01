@@ -168,6 +168,18 @@ body {
     position: relative;
 }
 
+.song-card>.overlay{
+    height: inherit;
+    width: inherit;
+    padding: inherit;
+    border-radius: inherit;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-sizing: border-box;
+    /* background-color: #ff00004a; */
+}
+
 .song-card>img {
     border-radius: 6px;
     height: 170px;
@@ -176,15 +188,22 @@ body {
 
 .play-btn {
     position: absolute;
-    bottom: 103px;
+    z-index: 1; /*To get it above the overlay so its clickable*/
     right: 28px;
-    transition: all 0.5s ease-out;
-    /* display: none; */
+    opacity: 0;
+    animation: play-btn-animation 0.5s forwards cubic-bezier(0, 0, 0.1, 0.96) 1;
 }
 
-/* .song-card :hover{
-    display: block;
-} */
+@keyframes play-btn-animation {
+    from {
+        bottom: 94px;
+    }
+
+    to {
+        bottom: 108px;
+        opacity: 1;
+    }
+}
 
 .play-btn>.circle {
     display: flex;
