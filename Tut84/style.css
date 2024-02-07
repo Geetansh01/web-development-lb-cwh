@@ -93,6 +93,7 @@ body {
 .library {
     height: 48vh;
     box-sizing: border-box;
+    overflow-y: scroll;
 }
 
 .library>span:first-child {
@@ -108,6 +109,28 @@ body {
 
 .library-actions {
     height: 46vh;
+}
+
+.library>.song {
+    border: 2px solid grey;
+    margin: 2px;
+}
+
+.library>.song>a {
+    color: var(--font-color2);
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.library>.song>a img {
+    height: 26px;
+}
+
+.song>a>.song-info {
+    display: flex;
+    gap: 2px;
 }
 
 .libcard {
@@ -294,7 +317,8 @@ body {
 }
 
 .playbar {
-    background-color: #1ed760;
+    background-color: var(--sec-color);
+    border-radius: var(--border-rad);
     width: 100%;
     height: 4vh;
     position: absolute;

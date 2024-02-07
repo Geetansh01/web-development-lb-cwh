@@ -9,3 +9,6 @@ What i learnt after watching soln vdo:
 3)A cool trick to capture "mouseenter:mouseleave" type events:
 > setTimeout(() => {debugger;}, 5000)
 
+
+Resume : 1 : 50
+
