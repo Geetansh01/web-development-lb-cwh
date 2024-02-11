@@ -10,5 +10,5 @@ What i learnt after watching soln vdo:
 > setTimeout(() => {debugger;}, 5000)
 
 
-Resume : 1 : 50
+Resume : 2 : 27
 

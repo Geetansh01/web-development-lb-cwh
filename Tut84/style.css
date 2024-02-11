@@ -112,25 +112,38 @@ body {
 }
 
 .library>.song {
+    display: flex;
+    justify-content: space-between;
     border: 2px solid grey;
     margin: 2px;
 }
 
-.library>.song>a {
+/* .library>.song>a {
     color: var(--font-color2);
     text-decoration: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+} */
 
-.library>.song>a img {
+.library>.song img {
     height: 26px;
 }
 
-.song>a>.song-info {
+.song>.first {
     display: flex;
-    gap: 2px;
+    align-items: center;
+    /* justify-content: space-between; */
+    color: var(--font-color2);
+    gap: 17px
+}
+
+.song .song-info>p:first-child {
+    font-size: large;
+}
+
+.song .song-info>p:nth-child(2) {
+    font-size: small;
 }
 
 .libcard {
