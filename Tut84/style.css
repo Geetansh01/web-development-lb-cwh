@@ -333,12 +333,21 @@ body {
     background-color: var(--sec-color);
     border-radius: var(--border-rad);
     width: 100%;
-    height: 4vh;
+    /* height: 4vh; */
     position: absolute;
     bottom: 0;
+    padding: 7px;
+    box-sizing: border-box;
 }
 
-.playbar>ul {
+.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.playbar ul {
     list-style: none;
     display: flex;
     justify-content: center;
@@ -347,6 +356,43 @@ body {
     height: inherit;
 }
 
+.song-name,
+.song-duration {
+    /* border: 2px solid red; */
+    color: var(--font-color2);
+    width: 508px;
+    height: 15px;
+    overflow: hidden;
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+}
+
+.song-duration {
+    align-items: center;
+}
+
 .playbar>ul li {
     display: flex;
+}
+
+.seekbar {
+    background-color: white;
+    /* border: 11px solid red; */
+    width: 100%;
+    height: 2px;
+    margin: 10px 0px 8px 0px;
+    cursor: pointer;
+}
+
+.seekbar>.circle {
+    background-color: white;
+    border-radius: var(--border-rad);
+    height: 15px;
+    width: 15px;
+    position: relative;
+    bottom: 6px;
+    left: 0;
+    transition: left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
