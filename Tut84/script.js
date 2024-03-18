@@ -26,8 +26,8 @@ function addPlayBtnAnimation() {
 }
 
 /* Populating library with available Songs */
-async function getSongs() {
-	let response = await fetch("./songs")
+async function getSongs(AlbumFolder) {
+	let response = await fetch(`./songs/${AlbumFolder}`)
 	let data = await response.text()
 	// console.log(data);
 
@@ -45,11 +45,12 @@ async function getSongs() {
 	return songsArray
 }
 
-async function populateLibrary() {
-	let songsArray = await getSongs()
+async function populateLibrary(AlbumFolder) {
+	let songsArray = await getSongs(AlbumFolder)
 	// console.log(songsArray);
 
-	let libraryActions = document.querySelector(".library-actions")
+	let songsArea = document.querySelector(".songs-area");
+	songsArea.innerHTML = ""; //Clear already existing content
 
 	songsArray.forEach((s) => {
 		//Extracting song name
@@ -74,8 +75,10 @@ async function populateLibrary() {
     `
 		)
 
-		libraryActions.insertAdjacentElement("beforebegin", song)
+		songsArea.insertAdjacentElement("beforeend", song)
 	})
+
+	return songsArray;
 }
 
 function secondsToString(seconds) {
@@ -101,31 +104,41 @@ function secondsToString(seconds) {
 	return minutes + ":" + remainder
 }
 
-async function main() {
-	addPlayBtnAnimation()
-	await populateLibrary()
+function playSong(currSong, songURL, trackName) {
+	currSong.pause();
 
-	/* Play song on click */
+	currSong.src = songURL
+	currSong.setAttribute(
+		`data-trackName`,
+		trackName
+	) // Store the current song name for later use in pause and stop functions
+
+	currSong.load();
+	currSong.play();
+}
+
+async function main() {
+	addPlayBtnAnimation();
+	let AlbumFolder = "parmish_verma";
+	let songsArray = await populateLibrary(AlbumFolder);
+	console.log("songsArray: ", songsArray);
+
+	/* Play song on click */ /////////////////NOT WORKING FOR ALLLLL
+	let currSong = new Audio()
+	currSong.setAttribute(`data-trackName`, ``)
+
 	let songs = Array.from(
 		document.querySelector(".library").getElementsByClassName("song")
 	)
-	// console.log(songs)
-
-	let currSong = new Audio()
-	// let currSongName = ``;
-	currSong.setAttribute(`trackName`, ``)
+	console.log(songs)
 
 	songs.forEach((song) => {
-		let songURL = `./songs/${song.querySelector("#trackName").innerText}.mp3`
-		console.log(songURL)
+		let songURL = `./songs/${AlbumFolder}/${song.querySelector("#trackName").innerText}.mp3`; ////////////FOLDER to be added here
+		// console.log(songURL)
 
 		song.addEventListener("click", () => {
-			currSong.src = songURL
-			currSong.play()
-			currSong.setAttribute(
-				`trackName`,
-				`${song.querySelector("#trackName").innerText}`
-			) // Store the current song name for later use in pause and stop functions
+			let trackName = `${song.querySelector("#trackName").innerText}`;
+			playSong(currSong, songURL, trackName);
 			document
 				.querySelector(".playbar ul>li:nth-child(2)")
 				.children[0].setAttribute("src", "./assets/images/pausebtnplaybar.svg")
@@ -153,10 +166,63 @@ async function main() {
 		}
 	})
 
+	/* previous & next button in playbar */
+	let simpleSongsArray = [];
+	songsArray.forEach((songURL) => {
+		simpleSongsArray.push(songURL.split("/").at(-1));
+	});
+	console.log(simpleSongsArray);
+
+	let prevbtn = document.getElementById("prevBtn");
+	prevbtn.addEventListener("click", () => {
+		if (currSong.currentSrc == "") {
+			//Do nothing
+		} else if (currSong.paused) {
+
+		} else {
+			//song is playing
+
+			let url = currSong.currentSrc;
+			// console.log(currSong.currentSrc);
+			let index = songsArray.indexOf(url);
+			// console.log(index);
+
+			let prevSongIndex = (index === 0) ? index : index - 1;
+			let newURl = songsArray[prevSongIndex];
+			let newTrackName = `${newURl.split("/").pop().replace(".mp3", "").replaceAll("%20", " ")}`; // To update the trackName of the song
+
+			playSong(currSong, newURl, newTrackName);
+
+		}
+	})
+
+	let nxtbtn = document.getElementById("nxtBtn");
+	nxtbtn.addEventListener("click", () => {
+		if (currSong.currentSrc == "") {
+			//Do nothing
+		} else if (currSong.paused) {
+
+		} else {
+			//song is playing
+
+			let url = currSong.currentSrc;
+			// console.log(currSong.currentSrc);
+			let index = songsArray.indexOf(url);
+			// console.log(index);
+
+			let nextSongIndex = (index === (songsArray.length - 1)) ? index : index + 1;
+			let newURl = songsArray[nextSongIndex];
+			let newTrackName = `${newURl.split("/").pop().replace(".mp3", "").replaceAll("%20", " ")}`; // To update the trackName of the song
+
+			playSong(currSong, newURl, newTrackName);
+
+		}
+	})
+
 	/* Set song name & duration in playbar */
 	let songName = document.getElementsByClassName("song-name")[0]
 	currSong.addEventListener("playing", () => {
-		songName.innerHTML = `${currSong.getAttribute(`trackName`)}`
+		songName.innerHTML = `${currSong.getAttribute(`data-trackName`)}`
 	})
 
 	let songDuration = document.getElementsByClassName("song-duration")[0]
@@ -167,6 +233,13 @@ async function main() {
 		)} / ${secondsToString(currSong.duration)}`
 
 		seekBtn.style.left = `${(currSong.currentTime / currSong.duration) * 100}%`
+	})
+
+	/* Volume control */
+	let volumeSeekBar = document.getElementById("volume");
+	volumeSeekBar.addEventListener("change", (e) => {
+		// console.log(e, e.target, e.target.value);
+		currSong.volume = parseInt(e.target.value) / 100;
 	})
 
 	/*Seek Song */
@@ -189,5 +262,22 @@ async function main() {
 	closemenuicon.addEventListener("click", () => {
 		document.getElementsByClassName("sidebar")[0].style.left = `-290px`
 	})
+
+	/* Load Album on card click */
+	let allSongCards = Array.from(document.getElementsByClassName("song-card"));
+	allSongCards.forEach((songCard) => {
+		songCard.addEventListener("click", (event) => {
+			// console.log(event);
+			// console.log(event.target);
+			// console.log(event.currentTarget);
+			let AlbumFolder = event.currentTarget.dataset.albumfolder;
+			// console.log(AlbumFolder);
+			populateLibrary(AlbumFolder);
+		});
+	});
+
+
+
 }
-main()
+
+main();
