@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify</title>
-    <link rel="stylesheet" href="utility.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/utility.css">
+    <link rel="stylesheet" href="./css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -33,7 +33,6 @@
                 <div class="songs-area">
 
                 </div>
-
                 <!-- <div class="song black-card">
                     <div class="first">
                         <img src="./assets/images/music-icon.svg" alt="play">
@@ -105,20 +104,7 @@
             <div class="hero">
 
                 <div class="spotify-playlists">
-                    <div data-albumfolder="parmish_verma" class="song-card">
-                        <div class="overlay"></div>
-                        <!-- play button added via JS upon hover over song card -->
-                        <img src="./assets/images/thumbnail.jpg" alt="song">
-                        <div class="song-title">Sleep</div>
-                        <div class="song-text">Gentle Ambient piano to help you fall asleep. </div>
-                    </div>
-                    <div data-albumfolder="ncs" class="song-card">
-                        <div class="overlay"></div>
-                        <!-- play button added via JS upon hover over song card -->
-                        <img src="./assets/images/thumbnail.jpg" alt="song">
-                        <div class="song-title">Sleep</div>
-                        <div class="song-text">Gentle Ambient piano to help you fall asleep. </div>
-                    </div>
+                    <!-- Adding song cards via JS -->
                 </div>
             </div>
 
@@ -139,15 +125,17 @@
                         <input type="range" id="volume" name="volume" />
                     </div>
                 </div>
-
-                <div class="seekbar">
-                    <div class="circle"></div>
+                
+                <div class="seekbar-wrapper">
+                    <div class="seekbar">
+                        <div class="circle"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,52 @@
+Here are the 50 JavaScript interview questions for 2024
+
+1. What is JavaScript?
+2. What are the data types in JavaScript?
+3. What is the difference between null and undefined?
+4. Explain the concept of hoisting in JavaScript.
+5. What is a closure in JavaScript?
+6. What is the difference between “==” and “===” operators in JavaScript?
+7. Explain the concept of prototypal inheritance in JavaScript.
+8. What are the different ways to define a function in JavaScript?
+9. How does event delegation work in JavaScript?
+10. What is the purpose of the “this” keyword in JavaScript?
+11. What are the different ways to create objects in JavaScript?
+12. Explain the concept of callback functions in JavaScript.
+13. What is event bubbling and event capturing in JavaScript?
+14. What is the purpose of the “bind” method in JavaScript?
+15. Explain the concept of AJAX in JavaScript.
+16. What is the “typeof” operator used for?
+17. How does JavaScript handle errors and exceptions?
+18. Explain the concept of event-driven programming in JavaScript.
+19. What is the purpose of the “async” and “await” keywords in JavaScript?
+20. What is the difference between a deep copy and a shallow copy in JavaScript?
+21. How does JavaScript handle memory management?
+22. Explain the concept of event loop in JavaScript.
+23. What is the purpose of the “map” method in JavaScript?
+24. What is a promise in JavaScript?
+25. How do you handle errors in promises?
+26. Explain the concept of currying in JavaScript.
+27. What is the purpose of the “reduce” method in JavaScript?
+28. What is the difference between “null” and “undefined” in JavaScript?
+29. What are the different types of loops in JavaScript?
+30. What is the difference between “let,” “const,” and “var” in JavaScript?
+31. Explain the concept of event propagation in JavaScript.
+32. What are the different ways to manipulate the DOM in JavaScript?
+33. What is the purpose of the “localStorage” and “sessionStorage” objects?
+34. How do you handle asynchronous operations in JavaScript?
+35. What is the purpose of the “forEach” method in JavaScript?
+36. What are the differences between “let” and “var” in JavaScript?
+37. Explain the concept of memoization in JavaScript.
+38. What is the purpose of the “splice” method in JavaScript arrays?
+39. What is a generator function in JavaScript?
+40. How does JavaScript handle variable scoping?
+41. What is the purpose of the “split” method in JavaScript?
+42. What is the difference between a deep clone and a shallow clone of an object?
+43. Explain the concept of the event delegation pattern.
+44. What are the differences between JavaScript’s “null” and “undefined”?
+45. What is the purpose of the “arguments” object in JavaScript?
+46. What are the different ways to define methods in JavaScript objects?
+47. Explain the concept of memoization and its benefits.
+48. What is the difference between “slice” and “splice” in JavaScript arrays?
+49. What is the purpose of the “apply” and “call” methods in JavaScript?
+50. Explain the concept of the event loop in JavaScript and how it handles asynchronous operations.
