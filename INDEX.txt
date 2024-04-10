@@ -480,6 +480,17 @@
       
       About Node.js
       1)This is the run-time environment for JavaScript
+            1)A nice SO answer on "What is run time environment?" (ref: https://stackoverflow.com/questions/3710130/what-is-run-time-environment):
+                  Distinguish this from Development Environments and Build Environments.
+
+                  You will tend to find a hierarchy here.
+
+                  Run time environment - Everything you need to execute a program, but no tools to change it.
+
+                  Build environment- Given some code written by someone, everything you need to compile it or otherwise prepare an executable that you put into a Run time environment. Build environments are pretty useless unless you can see tests what you have built, so they often include Run too. In Build you can't actually modify the code.
+
+                  Development environment - Everything you need to write code, build it and test it. Code Editors and other such tools. Typically also includes Build and Run.
+                  
       2)Node.js 's javascript engine is derived from chrome's V8 engine (a JavaScript engine )
             1)A JavaScript engine is simply a computer program that interprets JavaScript code. The engine is responsible for executing the code.
       3)Some functions (like alert() etc..) are available only in browsers and thus a JS code containing these would throw error when being run by Node.js
@@ -1054,3 +1065,101 @@
 
 /**********Tut 84***********/
       Project : Spotify Clone
+
+/*********Tut 85***********/
+      Starting backend Development using JavaScript 🎉🎉
+      1)Now we will not be using JS to write scripts for the frontend (i.e no JS inside "script" tags in html) but rather using it as a programming language for programming the logic at the backend 
+      2)This backend logic is intended to be run on our remote server that would be listening for requests from the clients (i.e web browsers sending requests to the remote server)
+      3)Things that we will need
+            1)Node.js : JavaScript's runtime environment (to run JS outside a web browser)
+                  1)command to run the JS file via Node.js
+                        node <path-to-js-file>
+                        eg: (i) node "c:\Users\Geetansh\Desktop\WebDevCodes\Tut85\server.js"
+                            (ii) node .\Tut85\server.js 
+                            (Also works; "." means current directory, so navigate to the appropriate directory in the cmd prompt, say using "cd" command)
+            2)npm(node package manager) : What will it do ❓
+                  1)It is used to manage packages. So the flow goes something like this : 
+                        1)run "node init" (or "npm init -y" to skip all the questions. You can later enter required details yourself in "package.json")
+                              1)This command initializes your package. Say you are writing backend logic for your Spotify Clone. So the entire logic will go into a package. Let's call this package "spotify-clone" 
+                              2)This command will make a "package.json" file in your folder
+                              3)Then if you use any other packages via "npm install <package-name>", say you use "slugify", while writing your code, this means your package "spotify-clone" depends on "slugify". So "slugify" will be added as a dependency in your "package.json" file.
+                              4)In effect, a folder "node_modules" will be made which will contain the code of "slugify"
+                              4)Now when you share your package "spotify-clone" with someone, say you push your "spotify-clone" on github, you won't push the folder "node_modules". You would just have the dependencies listed in "package.json". (npm automatically adds the dependencies in "package.json" when you install a package via "npm install <package-name>" cmnd)
+                              5)When someone else pulls your code, he can run "npm install" and all the dependencies listed in "package.json" will be installed in "node_modules" and your code will work as expected for him.
+                              
+            3)Express.js
+                  1)A JS framework for making server side application. 
+                  2)We will use it to ease our backend JS writing process. 
+      
+      4)To be able to use functions from a package, we somehow need to import it in our JS file. (see "server.js" file)
+            1)I used "const slugify = require("slugify");" {I have the "slugify" package in my "node_modules" folder}
+
+            📒Note: This is the old way, i am using "commonJS modules" here. See Tut86 for latest standard.
+
+/********* 85.5 ************/
+      [Done From LB WebDev local saved Video for this topic : "135. BD - Class 1 [HD].mp4" ]
+      
+      Basics of BackEnd & the Client - Server model 
+
+      🌍 HTTP protocol 🌍
+      1)One of the ways a client can interact with the server is through the HTTP protocol. 
+        It Defines several methods for the client to interact with the server for some resource, called HTTP request methods. Some of these are:
+        1)GET : to get a resource from the server
+        2)PUT : to update some existing resource (say data) on server
+        3)POST : to submit some NEW data on the server (so pehle se server pe nhi tha, ab kuch nya store hoga vahan pe)
+        4)DELETE : to delete some resource (say data) from the server
+
+        📒Note : HTTP methods like GET, PUT and DELETE are idempotent, while POST is generally non-idempotent. 
+
+/*********Tut 86***********/
+      🟩CommonJs Vs EcmaScript Modules 
+
+      1)"npm i --global nodemon" : installs the "nodemon" package globally (& not for just the current project/ folder)
+            1)So "nodemon" will not be in the dependencies list of "package.json". 
+            2)If you want that someone using your package should have "nodemon" then included it in the dependencies list.
+            3)Why it's needed? Because every time you make a change in your server.js file, you will have to kill the server and restart the server manually. Nodemon, on the other hand, automates this process, so whenever you make a change to your server.js file, it will automatically restart the server.
+
+      2)Modules in JavaScript
+            1)A module is a function or group of similar functions. They are grouped together within a file and contain the code to execute a specific task when called into a larger application. You create modules to better organize and structure your codebase.
+            2)So, A module is a single JavaScript file that has some reasonable functionality. (So modules are libraries) 
+                  ex: Circle.js, 
+                      Rectangle.js, 
+                      Square.js
+
+      3)What are packages then?
+            1)A package is one or more modules (libraries) grouped (or packaged) together.
+            2)So, A package is a directory with one or more modules inside of it and a "package.json" file which has metadata about the package.
+                  ex: You can get the package "Shapes" and have access to the Circle, Rectangle, and Square modules.
+
+      4)2 major module systems : 
+            1)CommonJS modules {using statements like --> const http = require("http"); }
+            2)ECMAScript modules / ES6 modules {using statements like --> import http from "http" }
+
+            🔴Tip : 1)ES6 modules is the latest standard so we will be usng this now!
+
+                  2)If you only have a standalone JavaScript file, you can use either 1) or 2). However, if it's part of a package and includes a "package.json" file, then if you want to use ES6 modules, use the statement { "type": "module", } inside that "package.json". Otherwise, the default is CommonJS modules. 
+
+                  3)Additionally, if you specify { "type": "module", } in "package.json" , your code will produce an error if you attempt to use CommonJS modules (by using statements like --> const http = require("http"); )
+      
+      
+      🟩Default V/S Named Exports (See folder "ExportsInESModules")
+    
+      1)2 Ways to export "things" out of a module. These "things" can be anything - variables, functions, objects!
+            1)Named export
+            2)Default export
+
+      
+
+      🟩Using Modules with HTML files (See folder "usingModulesWithHTMLFiles" inside folder "ExportsInESModules")
+
+      1)In index.html, i used
+       <script type="module" src="../server.js"></script> 
+       to get "server.js" module in the HTML (import statements will only work if the JS file is treated as a module, so {type="module"} is necessary)
+
+      📒Note : 1) "server.js" imports stuff from "myModule2.js" located inside "usingModulesWithHTMLFiles" folder.
+                  So, even though i only got "server.js" in "index.html", the browser automatically gets the exported stuff from "myModule2.js"
+               2)Also, the path inside "server.js" to "myModule2.js" is relative to "server.js" and still the console in Browser is able to locate "myModule2.js". This means that for import statements, if relative path is provided, the browser takes it relative to the module that is importing. 
+               This is unlike when relative path is given in fetch() calls in JS, where the relative path is resolved taking the url of the HTML page as the base url (So there, it's relative to the HTML file that loaded the JS, rather than relative to whatever the actual location of that JS file might be) 
+
+      
+      
