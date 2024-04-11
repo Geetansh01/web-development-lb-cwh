@@ -1137,7 +1137,7 @@
 
             🔴Tip : 1)ES6 modules is the latest standard so we will be usng this now!
 
-                  2)If you only have a standalone JavaScript file, you can use either 1) or 2). However, if it's part of a package and includes a "package.json" file, then if you want to use ES6 modules, use the statement { "type": "module", } inside that "package.json". Otherwise, the default is CommonJS modules. 
+                  2)If you only have a standalone JavaScript file, you can use 1). However, if it's part of a package and includes a "package.json" file and if you want to use ES6 modules, use the statement { "type": "module", } inside that "package.json". Otherwise, the default is CommonJS modules. 
 
                   3)Additionally, if you specify { "type": "module", } in "package.json" , your code will produce an error if you attempt to use CommonJS modules (by using statements like --> const http = require("http"); )
       
@@ -1161,5 +1161,42 @@
                2)Also, the path inside "server.js" to "myModule2.js" is relative to "server.js" and still the console in Browser is able to locate "myModule2.js". This means that for import statements, if relative path is provided, the browser takes it relative to the module that is importing. 
                This is unlike when relative path is given in fetch() calls in JS, where the relative path is resolved taking the url of the HTML page as the base url (So there, it's relative to the HTML file that loaded the JS, rather than relative to whatever the actual location of that JS file might be) 
 
-      
-      
+/*********Tut 87***********/
+      Working with Files: fs and path modules
+
+      🟫fs module
+      1)To see all the details of the module includnig all it's functions, import the module & log it to console
+
+            const fs = require("fs");
+            console.log(fs);
+
+      🟨Reading writing & Appending to files
+      1)fs.writeFileSync() : writes to file Synchronusly 
+            1)So, it stops current thread, content is written to file & then the current thread resumes execution
+            2)Not Recommended, as JS supports Asynchronous Programming
+      2)fs.writeFile(<file>, <content-to-be-written>, <a callback function>)
+            1)It works Asynchronusly
+            2)callback function is called once data is written to the file
+            3)Recommended to be used! 😊
+      3)fs.readFile(<file-to-be-read>, <a-callback-function>) : to read a file
+      4)fs.appendFile : Appending to file
+
+      Simple "fs" modules's functions above ☝ can lead to callback hell (Say you use "fs.writeFile" & inside the callback you use "fs.readFile" & inside it's callback you use "fs.writeFile" & so on..... 😫😫)
+
+      So, "fs" provided a submodule where functions return promises. This is "fs/promises". It's functions are:
+      1)fs.writeFile(<file>, <content-to-be-written>)
+            1)It returns a promise!
+      2)fs.readFile(), fs.appendFile() etc...
+
+      🔴Tip : If you are inside a JS Module, you can use "await" keyword without being inside an "async" function. 😎 
+
+      🟫path Module
+      1)To deal with paths!
+      2)Functions:
+            -path.extname(<a string denoting the path>) : extension of file the path refers to 
+            -path.dirname()
+            -path.basename()
+            -path.join()
+                              etc...
+
+
