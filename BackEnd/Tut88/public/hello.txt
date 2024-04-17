@@ -1,0 +1,2 @@
+Hi!
+This static file is being served to You

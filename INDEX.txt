@@ -1164,13 +1164,13 @@
 /*********Tut 87***********/
       Working with Files: fs and path modules
 
-      🟫fs module
+      🟩fs module
       1)To see all the details of the module includnig all it's functions, import the module & log it to console
 
             const fs = require("fs");
             console.log(fs);
 
-      🟨Reading writing & Appending to files
+      🟩Reading writing & Appending to files
       1)fs.writeFileSync() : writes to file Synchronusly 
             1)So, it stops current thread, content is written to file & then the current thread resumes execution
             2)Not Recommended, as JS supports Asynchronous Programming
@@ -1199,4 +1199,64 @@
             -path.join()
                               etc...
 
+/*********Tut 88***********/
+      Introduction to Express.js
+      1)Express.js is a JS framework to write backend / server side code
+      2)Why use Express.js when Node.js ships with a built-in "http" module that can also start a server (See Tut86). Because Express.js has built-in many features that otherwise we would have to code from scratch.
+            🔴Tip : run "npm i express@4" to specifically install 4th version of Express.js
+      
+      Basic Functions of Express.js
+      1)app.get(<route>, <Handler call back function>) 
+            1)This will listen for GET requests on "<route>" specified
+            2)"<Handler Callback Function>" will execute if request comes in (and may send a response)
+            3)Ex : 
+                  app.get('/', (request, response) => {
+                        response.send('Hello World!')
+                  })
 
+                  Here, forward slash ('/') represents the root URL of your application. When you visit your application's domain (e.g., http://localhost:3000/), you are accessing this root URL
+      
+      Similar synatax for other HTTP request methods:
+       -app.post(): Listens for POST Requests
+       -app.put(): Listen for PUT Requests
+       -app.delete(): Listen for DELETE Requests 
+                                                etc....
+      
+      2)Route parameters in URL: 
+            1)eg: 
+                  app.get('/blog/:slug', (request, response) => {
+                        response.send(request.params.slug)
+                  })
+            
+                        1) Here, "slug" is the Route parameters.  It'll take whatever value comes after "/blog/". All the route parameters are populated in the "request.params" object. For above code, "request.params" will look like:
+
+                                    params: { slug: '<value>' }
+
+                        This value can then be used to serve the response to the GET request
+      
+      3)Query Parameters in URL : used to send choti moti query / data to the server in the URL
+            1)Query parameters me "?" ke baad wala saman in the URL
+                  eg : http://localhost:3000/IronMan?mode=dark&region=India
+            Here "mode = dark" and "region = India" are the Query parameters
+            Say, "mode = dark" may signal the server to serve website in dark mode
+      
+      Serving static files in Express
+      1)To serve static files such as images, CSS files, and JavaScript files. Static files are those files whose data remains the same and whose content is constant and does not change, like a CSS file, images, or videos etc...
+            eg: app.use(express.static("public"));
+
+            Now, static files from the "public" directory would be served by the server
+
+            ⚠️Warning : Don't put your code files in "public" folder or they too will be accessible from the client side.
+
+/*********Tut 89***********/
+      Response, Request and Routers in Express
+
+      🟩Handling POST requests
+      1)If you want to send choti-moti Query to the server then you can use the query parameters in the URL. But say you want to send 
+            (A)Some sensitive info for example e-mail and password during login. (Sensitive data MUST not be sent via Query Parameters) 
+                  Or
+            (B)Some large data such as entire content of a Stack Overflow question that you wrote
+      In that case, you will use a POST request (GET request also has size limitations).
+
+      RESUME 4:46
+      
