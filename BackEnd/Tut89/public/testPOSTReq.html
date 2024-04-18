@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        async function sendPostReq() {
+            //sending POST request on '/' of server bcz this is where i have handled the POST request in "server.js"
+            let a = await fetch("/", { method: "POST" });
+            let b = await a.text();
+            console.log(b); //See this in the console in browser (Bcz it is the server's response so it is visible on the client side)
+        }
+
+        //Similarly sending PUT & delete requests
+        async function sendPutReq() {
+            let a = await fetch("/", { method: "PUT" });
+            let b = await a.text();
+            console.log(b); 
+        }
+
+        async function sendDeleteReq() {
+            let a = await fetch("/", { method: "DELETE" });
+            let b = await a.text();
+            console.log(b); 
+        }
+
+        sendPostReq();
+        sendPutReq();
+        sendDeleteReq();
+
+    </script>
+</body>
+
+</html>
