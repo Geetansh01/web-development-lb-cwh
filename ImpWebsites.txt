@@ -18,5 +18,9 @@
 /*************Node.js Documentation : for backend **************/
 1)https://nodejs.org/en/learn/getting-started/introduction-to-nodejs
 
-/*************Node.js Documentation : for backend **************/
+/*************Express.js Documentation : for backend **************/
 1)https://expressjs.com/
+
+/*************EJS Documentation : for backend **************/
+1)ejs docs : https://ejs.co/
+2)Using ejs with express docs : https://github.com/mde/ejs/wiki/Using-EJS-with-Express

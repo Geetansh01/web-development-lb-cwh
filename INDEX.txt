@@ -1289,3 +1289,93 @@
       3)So make a "routes" folder and maintain all the routes in separate files.
 
             See "Express Router" folder
+
+/*********Tut 90***********/
+      Middlewares in Express.js
+      
+      🟩What is middleware?
+      1)What is a web-server : We see a web server as a function that takes in a "request object" and outputs a "response object". So there is this "request-response cycle" : 
+
+            1)request ayi
+            ⬇
+            2)Beech me web application (i.e server)  
+            ⬇
+            3)response gya
+
+      2)Middleware is anything that is placed in between the request-response cycle.
+
+            1)request ayi
+            ⬇
+            3)Beech me middleware : so before the request can reach the actual server logic, it is intercepted by the middleware(s)
+            ⬇
+            2)web application (i.e server)  
+            ⬇
+            3)response gya
+
+            See "middleware1.jpg"
+
+            So, Middleware is a request handler that allows you to intercept and manipulate requests before they reach route handlers.
+            (See "server.js" for example)
+      
+      3)So, Middlewares are functions that have takes 3 objects:
+            1)request object (req), 
+            2)response object (res),  
+            3)the next middleware function in the application’s request-response cycle. 
+
+            A Middleware can perform the following tasks:
+            - Execute any code.
+            - Make changes to the request and the response objects.
+            - End the request-response cycle.
+            - Call the next middleware function in the stack.
+      
+      ⚠️Warning : If the current middleware function does not end the request-response cycle, it must call next() to pass control to the next middleware function. Otherwise, the request will be left hanging (the browser will forever show the loading icon - see EXAMPLE 4 in "server.js" )
+
+      Syntax to write your own middleware function: 
+                        app.use(<your own middleware function)
+      
+      4)To write middleware specific to a route (when you are using the "express.Router" class), write that middleware insdie the file that is handling that route (see "server2.js" and "routes" folder)
+
+      5)Order matters in middleware. Say you have :
+            app.use((req, res, next) => {
+                  req.name = "Geetansh Bhardwaj"; 
+                  next()
+            })
+
+            app.use((req, res, next) => {
+                  req.name = "Soahm Sharma"; 
+                  next()
+            })
+
+
+            So finally "req.name" will hold "Soahm Sharma". (Just like how flow works in simple JS code, bcz this is JS after all 😊)
+      
+      6)5 Types of middlewares : 
+            1. Application-level middleware : when we write our own (like in "server.js" )
+            2. Router-level middleware : middleware specific to a route (see point 4) )
+            3. Error-handling middleware
+            4. Built-in middleware : builtin in NodeJS
+            5. Third-party middleware
+
+/*********Tut 91***********/
+      Exercise : Clear the clutter
+
+/*********Tut 92***********/
+      🟩ejs Template Engine in Express
+      ejs docs : https://ejs.co/
+      Using ejs with express docs : https://github.com/mde/ejs/wiki/Using-EJS-with-Express
+
+      1)EJS : Embedded JavaScript templating. It is a template / view engine
+      2)What is a view engine used for : 
+            1)template me variables ki value lake render krana webpage. 
+            2)So view engine makes HTML from a "view" (i.e template). For ejs, views are saved with .ejs extension 
+      3)Say you have a template for a webpage, like a blog post. You don't want to make a separate page for each blog post, but you want to use the same template to insert different data into it. This is where a template engine like EJS comes in handy. As a template engine, it allows you to take a single HTML file and insert dynamic data into it.
+      4)How to use : 
+            1)Set  up view engine using :  " app.set('view engine', 'ejs'); "
+            2)Put all the templates inside "views" folder. The templates will be saved with  ".ejs" extension (rather than .html)
+            3)Send templates to client using  :
+                  res.render("<template-name>", <a JS object containing data to be filled in the template>);
+      5)Partials in EJS : These are like reusable components. For example, you might want the same navbar across all your web pages, so you can separate the entire code for the navbar into a separate view (also called a "partial" i guess), say "navbar.ejs" and then include that in all other views using a simple line of code : 
+
+                        <%- include('navbar'); %>           {This syntax as for ejs v3.0.1}
+
+      See folder "ejsComponents"
