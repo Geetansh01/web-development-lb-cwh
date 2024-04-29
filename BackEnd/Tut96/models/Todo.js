@@ -1,0 +1,23 @@
+import mongoose from "mongoose";
+
+const TodoSchema = new mongoose.Schema({
+    name: String,
+    desc: String,
+    longDesc: {type: String, required : true, default: "<long-desc-here>"},
+    isDone: Boolean
+});
+
+export const Todo = mongoose.model('Todo', TodoSchema);
+
+//
+
+/* 
+    1)When you call mongoose.model() on a schema, Mongoose compiles a model for you. Ex:
+
+        const schema = new mongoose.Schema({ name: String, size: String });
+        const Tank = mongoose.model('Tank', schema);
+
+    The first argument is the singular name of the collection your model is for. Mongoose automatically looks for the plural, lowercased version of your model name. Thus, for the example above, the model Tank is for the tanks collection in the database.
+
+    2)In short : mongoose.model('<collection-name-in-singular that you want to be store in database>', <schema-object>)
+*/

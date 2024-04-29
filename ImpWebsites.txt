@@ -24,3 +24,20 @@
 /*************EJS Documentation : for backend **************/
 1)ejs docs : https://ejs.co/
 2)Using ejs with express docs : https://github.com/mde/ejs/wiki/Using-EJS-with-Express
+
+/*************EJS Mongoose**************/
+1)https://mongoosejs.com/docs/index.html
+
+/************ Tailwind CSS ****************/
+1)https://tailwindcss.com/
+2)https://play.tailwindcss.com/
+3)https://tailblocks.cc/
+
+
+/************ React ****************/
+1)React : https://react.dev/
+
+//React build Tools
+2)Vite : https://vitejs.dev/guide/
+3)Create React App : https://create-react-app.dev/
+

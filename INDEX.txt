@@ -1379,3 +1379,208 @@
                         <%- include('navbar'); %>           {This syntax as for ejs v3.0.1}
 
       See folder "ejsComponents"
+
+/*********Tut 93***********/
+[It's actually Tut94 but MongoDB me database ka naam tut93 rkh diya & use to change ni kr paya so...😂]
+      Getting started with MongoDB & MongoDB Compass
+      
+      1)MongoDB is a NoSQL database. Data is ultimately stored in documents (in a format similar to JSON). Hierarchy of where data is stored in MongoDB:
+
+            database -----> collections ------>  documents (these finally contain the data)
+
+      Every Document has a default id.
+
+      2)What is "playground-1.mongodb.js" in "Tut93" ? It is a script written in JS to insert data in MongoDB 😊
+
+/*********Tut 95***********/
+      CRUD operations in MongoDB
+
+      1)For various operators in MongoDB ref : https://www.mongodb.com/docs/manual/reference/operator/
+
+/*********Tut 96***********/
+      Mongoose & Using it with Express
+
+      Basic package (mongodb) : https://www.npmjs.com/package/mongodb
+      Advanced package (mongoose) : https://mongoosejs.com/docs/index.html
+
+      1)mongoose is a package that allows us to use MongoDB database in our Node.js application. You can also achieve this using a basic package called "mongodb" but mongoose is more advanced & useful.
+      2)mongoose can :
+            1)Enforce schema : by default MongoDB is a NoSQL database, but using Mongoose you can enforce a schema such that this document will contain these fields of these data types (say string or int etc...) only. These we define in the "models" folder (See "models" folder).
+                  1)You can impose many checks while defining your schema. Example(from documentation):
+                        const schema = new Schema({
+                              name: String,
+                              binary: Buffer,
+                              living: Boolean,
+                              updated: { type: Date, default: Date.now },
+                              age: { type: Number, min: 18, max: 65 },
+                              mixed: Schema.Types.Mixed,
+                              _someId: Schema.Types.ObjectId,
+                              decimal: Schema.Types.Decimal128,
+                              array: [],
+                              ofString: [String],
+                              ofNumber: [Number],
+                              ofDates: [Date],
+                              ofBuffer: [Buffer],
+                              ofBoolean: [Boolean],
+                              ofMixed: [Schema.Types.Mixed],
+                              ofObjectId: [Schema.Types.ObjectId],
+                              ofArrays: [[]],
+                              ofArrayOfNumbers: [[Number]],
+                              nested: {
+                              stuff: { type: String, lowercase: true, trim: true }
+                              },
+                              map: Map,
+                              mapOfString: {
+                              type: Map,
+                              of: String
+                              }
+                        });
+      
+
+/*********Tut 97***********/
+      Dummy Data Generator
+
+/*********Tut 98***********/
+      Tailwind CSS in one Video
+      Ref:  1)https://tailwindcss.com/
+            2)https://play.tailwindcss.com/
+            3)https://tailblocks.cc/
+      1)TailwindCSS is a CSS framework
+      2)@apply directives in Tailwindcss are useful to make utility classes together and apply them at once.
+      3)Process to use : see "TailwindCSSsetup.md" (Also, everyting is there in the documentation)
+
+/*********Tut 105***********/
+      Introduction to React
+      1)React : https://react.dev/
+      2)Create React App : https://create-react-app.dev/
+
+      0)"Create React App" is a build tool for making single page React apps. So basically apke development folder me sari files/ folders ready krke dega and you just start developing your React app. Ye kaam app manually bhi kr skte ho but that would be tiresome.
+
+      1)With react you can:
+            1)Use States : make variables in JS representing your elements in DOM. Change those variables and the elements in the DOM will change. 
+            Without react, you would use "document.querySelector(...), BLA BLA" 🤣🤣
+            2)Use Components : make a single component for "navbar" ONCE and use that across all your pages.
+            1)Note : React component names must begin with capital letters.
+                  So "import Navbar from './components/navbar';"  ✅works
+                  but "import navbar from './components/navbar';" ❌Doesn't work
+            3)Use  Props : 
+      2)To get started with a react app : "npx create-react-app with-react" (this will make a react app in "with-react" folder)
+      3)You will write your code in "src/App.js" using JSX (Javascript XML). This will be placed in "public/index.html"'s "<div id="root">" element.
+            1)JSX looks like HTML but gets converted to Javascript (so it's just syntactical  sugar). 
+            2)Bcz "class" is a reserved keyword in Javascript, we use "className"  in JSX.
+
+/*********Tut 106***********/
+      Introduction to React
+      0)Vite : https://vitejs.dev/guide/
+
+      1)Vite : also a build tool. Better & more modern alternative to  "Create React App"
+
+      2)React : it is a library  (primarily for frontend) & not a FrameWork (Next.js is a framework)
+            1)Library v/s Framework : 
+                  1)Library : performs specific, well-defined operations.
+                  2)FrameWork : it provides a general skeleton (bones). You fill that skeleton with "meat" to make an application. Different "meat" filling results in different applications achieveing different things. 
+      2)Everything in react is a Component. These Components are JavaScript Functions that return markup (i.e JSX). 
+            Ex:
+                  function App() {
+                        return (
+                              <>
+                                    {/* write JSX Here */}
+                              </>
+                        )
+                  }
+
+      🔴Tip : 1)Components that are JS classes are also there but for now we will only use Components that are JS Functions
+               2)To underestand JSX : think of it like HTML in which you can write JS
+               3)For a react app, the "/src/App.jsx" file is the entry point. So it will be served to the client on root url.
+               4)"/src/index.css" file contains global css (i.e will be applied on all the pages even if not imported using JS "import" statement)
+
+            1)The component can return atmost 1 tag (above example returns a wrapper tag <>). Entire JSX that you write should be contained within that 1 tag (this 1 tag can be any tag like <div>, <>, etc...)
+
+/*********Tut 107***********/
+      Hooks & State in React
+
+      1)One of the features of React is that the app doesn't reload the entire page when navigating. This is made possible by React's virtual DOM, which acts as an intermediary between the React components and the actual DOM.
+            Ex: Take YouTube, for instance. Suppose you're on a playlist section and then click on the YouTube icon to return to the homepage. Despite this transition, observe that the page doesn't undergo a reload. You can verify this by checking your browser tab, where you'll notice the absence of a page reload indicator.
+      2)React Hooks : Hooks allow function components to have access to state and other React features. So, Hooks allow us to "hook" into React features such as state etc.. inside the Function Components of react.
+            Ex:
+                  function App() {
+                        const [count, setCount] = useState(0)
+
+                        return (
+                        <>
+                              <div>count is {count} </div>
+                              <button onClick={() => {setCount(count + 1)}}>Update Count</button>
+                        </>
+                        )
+                  }
+
+            1)Here, App() is the Function component and useState() is the react Hook
+            2)usestate() allows me to access the "state" functionality of react inside App(). Basically "count" is a state and setcount() is a function that updates that state and whenever the state is updated, the result is reflected in the DOM (on the webpage)
+      3)You will write your code in "/src/App.jsx" and whatever the App() function returns will be placed in the "index.html" 's <div id="root"></div> element and this "index.html" will be served to the client.
+
+/*********Tut 108***********/
+      The useEffect Hook in React
+
+      🔴Tip : 
+      1)Use "." as project name and vite sari files current folder me faila dega instead of making a separate subfolder.
+            npm create vite@latest       
+            √ Project name: ... .         {supplied "."}
+            
+      2)My code in App.jsx is giving error "'React' refers to a UMD global, but the current file is a module. Consider adding an import instead." but ignore it, the file still works. The error can be resolved by using "import React from 'react' " but in the latest versions this import statement is not needed, So the error is outdated tbh 🤣🤣
+
+
+      1)useEffect() Hook Batata hai Ki current component Ke browser may mount (i.e when the component loads into browser) hone par kya karna hai.
+            Ex : 
+                  function App() {
+                        const [count, setCount] = useState(0);
+
+                        useEffect(() => {
+                              alert("I am from useEffect()")
+                        }, [])
+                        
+
+                        return (
+                              <>
+                                    <div>count is {count} </div>
+                                    <button onClick={() => {setCount(count + 1)}}>Update Count</button>
+                              </>
+                        )
+                  }
+
+            1)Here, the array in useEffect() ("[]" above) will contain the things (say, states) jinke change hone pr useEffect() chlega. Above the array is empty so useEffect() bs 1 bar chlega when the component App() renders (i.e loads in browser) for the 1st time. (After 1st time if App() is rendered again then this useEffect() nhi chlega)
+                  🔴Tip : 
+                  1)If in your "main.jsx", you have strict mode ON (i.e "<React.StrictMode> ... </React.StrictMode>) then your code will run 2 times during development. So useEffect() will run 2 times. So comment out that tag to see what is actually happenning.
+                  2)strict mode development me (not during production : so it does not affect the production build in any way whatsoever) apke code ko 2 baar chalaega, keep it ON usually !
+            
+            2)Different cases of useEffect() (See App.jsx for implementation) : 
+                  //Case 1 : Runs only on 1st render of the component (i.e App() here)
+                  useEffect(() => {
+                        alert("1st time App() render hua hai! 🥇")
+                  }, [])
+
+                  //Case 2 : Runs on every Render
+                  useEffect(() => {
+                        alert("App() render hua hai !")
+                  })
+
+                  //Case 3 : Runs on change of something (like a state). This will fire when state "count" is changed
+                  useEffect(() => {
+                        alert("count change hua hai")
+                  }, [count])
+            
+            3)useEffect()'s cleanup Function : it runs when the Component unmounts (i.e removed from DOM) (See "/components/Navbar.jsx")
+                      //Example of cleanup function
+                        useEffect(() => {
+        
+                              return ( 
+                                    // Below is the cleanup function (in the form of an arrow function)
+                                    () => {
+                                    alert("Navbar unmounted (removed) from DOM")
+                                    }
+                              )
+
+                        }, [])
+
+                  1)The clean up function is present inside the "return" statement 
+                  2)To see the cleanup function in action : Once the page loads with the Navbar , manually comment out the Navbar in "App.jsx" and again go the page. You'll observe the cleanup function functioning as expected. In future, we will un-mount components conditionally in the code rather than doing it manually.
+                  2)A possible use case of a cleanup function : Say we want to break connection from the server or update something in the database when a particular component is unmounted.

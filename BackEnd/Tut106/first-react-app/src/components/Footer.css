@@ -1,0 +1,8 @@
+footer{
+    background-color: black; /*I have overridden it using inline CSS and set the color to brown*/
+    text-align: center;
+    width: 100vw;
+    height: 40px;
+    position: fixed;
+    bottom: 0px;
+}

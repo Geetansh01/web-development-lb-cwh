@@ -1,0 +1,15 @@
+.card{
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 250px;
+    height: 350px;
+    background-color: beige;
+}
+
+.title{
+    height: 40%;
+    width: 100%;
+    background-color: green;
+    border-radius: 8px;
+}
+

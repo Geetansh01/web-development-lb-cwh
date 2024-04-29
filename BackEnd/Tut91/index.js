@@ -26,20 +26,21 @@ async function clearClutter() {
         const files = await fsPromises.readdir("./");
         
         for (const file of files) {
-            if(file == "index.js" || file == "ClutterInside") continue;
+            if(file == "index.js" || !file.includes(".")) continue;
             // console.log(file);
             
 
             let myArray = file.split(".");
-            let name = myArray[0];
+            // let name = myArray[0];
             let extension = myArray[myArray.length - 1];
 
             try {
                 await fsPromises.access(`./${extension}/`);
-                await fsPromises.rename(`./${name}.${extension}`, `./${extension}/${name}.${extension}`);
+                await fsPromises.rename(`./${file}`, `./${extension}/${file}`);
             } catch {
                 await fsPromises.mkdir(`./${extension}/`);
-                await fsPromises.rename(`./${name}.${extension}`, `./${extension}/${name}.${extension}`);
+                await fsPromises.rename(`./${file}`, `./${extension}/${file}`);
+
             }
             
         }
