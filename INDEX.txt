@@ -1463,7 +1463,7 @@
             1)Note : React component names must begin with capital letters.
                   So "import Navbar from './components/navbar';"  ✅works
                   but "import navbar from './components/navbar';" ❌Doesn't work
-            3)Use  Props : 
+            3)Use  Props 
       2)To get started with a react app : "npx create-react-app with-react" (this will make a react app in "with-react" folder)
       3)You will write your code in "src/App.js" using JSX (Javascript XML). This will be placed in "public/index.html"'s "<div id="root">" element.
             1)JSX looks like HTML but gets converted to Javascript (so it's just syntactical  sugar). 
@@ -1584,3 +1584,20 @@
                   1)The clean up function is present inside the "return" statement 
                   2)To see the cleanup function in action : Once the page loads with the Navbar , manually comment out the Navbar in "App.jsx" and again go the page. You'll observe the cleanup function functioning as expected. In future, we will un-mount components conditionally in the code rather than doing it manually.
                   2)A possible use case of a cleanup function : Say we want to break connection from the server or update something in the database when a particular component is unmounted.
+
+/*********Tut 109***********/
+      The useRef() Hook in React
+
+      1)(from documentation) useRef is a React Hook that lets you reference a value that’s not needed for rendering.
+      2)2 Use Cases of useRef() hook (see "App.jsx" for implementation):
+            1)Use 1 of "useRef()" : persisting the value of "a" b/w renderings
+                  1)Note that useRef() se referenced value should not be used to display anything in the DOM bcz jb ye value update hogi to component re-render nhi kiya jaega (use "state" for that)
+            2)Use 2 of "useRef()" : reference DOM elements & modify them w/o doing any actual DOM manipulation the old way (like we did in pure JS : document.getElementById("...") etc...)
+
+/*********Tut 110***********/
+      Conditional Rendering & Rendering Lists in React 
+
+      🟩Conditional Rendering
+      1)Say you want to render a particular element in the DOM based on some condition (See "App_CondRend.jsx", change it's name to "App.jsx" to run)
+
+      RESUME 7-08
