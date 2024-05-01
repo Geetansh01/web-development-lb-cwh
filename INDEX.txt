@@ -1600,4 +1600,10 @@
       🟩Conditional Rendering
       1)Say you want to render a particular element in the DOM based on some condition (See "App_CondRend.jsx", change it's name to "App.jsx" to run)
 
-      RESUME 7-08
+      🟩Rendering Lists in React 
+      1)We will use JS map() function. See "App.jsx"
+            - Note that jb aise map() se list render krate hai to you will need to provide a "key" for each list item.
+            - Keys allow React to keep track of elements. This way, if an item is updated or removed, only that item will be re-rendered instead of the entire list. Keys need to be unique to each sibling. But they can be duplicated globally.
+
+
+      ///////TailwindCSS 
