@@ -1605,5 +1605,18 @@
             - Note that jb aise map() se list render krate hai to you will need to provide a "key" for each list item.
             - Keys allow React to keep track of elements. This way, if an item is updated or removed, only that item will be re-rendered instead of the entire list. Keys need to be unique to each sibling. But they can be duplicated globally.
 
+/*********Tut 111***********/
+      Exercise : Display the Cards
 
-      ///////TailwindCSS 
+      Problems Faced : 1)Was unable to identify what was coming in the response from the API yet got things working.
+
+/*********Tut 112***********/
+      Handling Events in React
+
+      1)Baki HTML elements me event handling is simple, Bss <input> me thoda alg hai:
+            1)Here, <input> ki "value" (i.e iska "value" attribute) ek react "state" variable hoga and usee update krenge when the user tries to change the "value"
+
+      2)Making Forms in react : to handle many <input>s of a Form with a single event handling function :
+            1)To control the values of more than one <input> field, we add a "name" attribute to each <input> & then we use a special easy to use syntax:
+            
+                  setform({...form, [e.target.name] : e.target.value})
