@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+    font-family: twitterChirp;
+    src: url(./assets/twitterchirp/twitterchirp.ttf);
+}
+@layer components {
+    .allchildimgSmall img{
+        height: 19px;
+    }
+    .allchildimgSmall svg{
+        height: 19px;
+    }
+    .allchildimgSmall2 img{
+        height: 26px;
+    }
+    textarea{
+        field-sizing: content;
+    }
+    .cc{
+        /* border: 2px solid white; */
+    }
+}
+
+.A{
+    fill: orange !important;
+    height: 200px !important;
+}

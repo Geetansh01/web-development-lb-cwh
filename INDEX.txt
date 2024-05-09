@@ -1449,6 +1449,15 @@
       2)@apply directives in Tailwindcss are useful to make utility classes together and apply them at once.
       3)Process to use : see "TailwindCSSsetup.md" (Also, everyting is there in the documentation)
 
+/*********Tut 98.1***********/
+      TailwindCSS more practice : done from LB saved Vid : " 59. Tailwind -  Class I [HD].mp4 "
+
+/*********Tut 100***********/
+      Exercise 17 - Design This Layout
+
+/*********Tut 101***********/
+      Project : X.com (Twitter) Clone using Tailwind CSS 
+
 /*********Tut 105***********/
       Introduction to React
       1)React : https://react.dev/
@@ -1620,3 +1629,6 @@
             1)To control the values of more than one <input> field, we add a "name" attribute to each <input> & then we use a special easy to use syntax:
             
                   setform({...form, [e.target.name] : e.target.value})
+
+/*********Tut 114***********/
+      Project : TodoList App using React, Tailwind & React Icons
