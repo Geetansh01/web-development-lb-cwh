@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.myBtn{
+    @apply w-[100px] h-[30px] text-white bg-violet-700 rounded-2xl hover:bg-violet-600 transition-all
+}

@@ -1457,6 +1457,8 @@
 
 /*********Tut 101***********/
       Project : X.com (Twitter) Clone using Tailwind CSS 
+      
+      Resume 37 : 05
 
 /*********Tut 105***********/
       Introduction to React
@@ -1632,3 +1634,19 @@
 
 /*********Tut 114***********/
       Project : TodoList App using React, Tailwind & React Icons
+
+      🟩Things Learnt during project
+      1)What is a react "state" actually ? [From docs : https://react.dev/learn/thinking-in-react#step-3-find-the-minimal-but-complete-representation-of-ui-state]
+            1)Think of state as the minimal set of changing data that your component needs to remember.
+            To Identify what should be a "state":
+                  -Does it remain unchanged over time? If so, it isn’t state.
+                  -Is it passed in from a parent via props? If so, it isn’t state.
+                  -Can you compute it based on existing state or props in your component? If so, it definitely isn’t state!
+            What’s left is probably state.
+
+            2)FLOW : React "state" persists between re-renders of the component, and you explicitly change the state using the "setstate()" function. Chnage in the "state" causes the component to re-render.
+            3)Pitfall 💀⚡ : Do not copy a prop into a "state". This violates "single source of truth" policy and leads to bugs
+                  1)If a compnent receives a "prop" from it's parent and you can directly use that "prop" inside the child component, do that instead of storing the "prop" in a local "state" and then using that local "state" because "state" will persist during re-renders of that component and you will have mysterious bugs 🐛🐜
+                  2)This is a classic case of copying props into local state -- which you usually do not want to do as it introduces a surface area for bugs, including the one you are seeing. If something is available as a prop -- what is the purpose of copying it into local state?
+
+      Resume 41 : 24
