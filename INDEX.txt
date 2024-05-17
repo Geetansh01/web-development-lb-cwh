@@ -1648,5 +1648,64 @@
             3)Pitfall 💀⚡ : Do not copy a prop into a "state". This violates "single source of truth" policy and leads to bugs
                   1)If a compnent receives a "prop" from it's parent and you can directly use that "prop" inside the child component, do that instead of storing the "prop" in a local "state" and then using that local "state" because "state" will persist during re-renders of that component and you will have mysterious bugs 🐛🐜
                   2)This is a classic case of copying props into local state -- which you usually do not want to do as it introduces a surface area for bugs, including the one you are seeing. If something is available as a prop -- what is the purpose of copying it into local state?
+      
+      2)Concept of IIFE (Immediately Invoked Function Expression)
+            Say i am writing JSX and I have a button jisme "disabled" attribute hai. If i write "disabled = true" then the button will be disabled. Basically "disabled" expects a boolean. Say i don't want to directly supply a boolean but use a function that returns a boolean (In actual use case the function will return "true" or "false" based on some condition!). Ways to do this:
+                  🟧Method 1 : define a JS function like usual.
+                              
+                        function disableBtn() {
+                              return true;
+                        }
 
-      Resume 41 : 24
+                        <button
+                              disabled={disableBtn()} 
+                        >
+                        
+                  But this is stupid, bss ek hi jgh use krna hai to why make a function, function is code jo aap repeatedly use kro.
+                        
+                  💀Pitfall : If you use just the name of the function without "()" then you are not assigning the result of the function but the fucntion itself (basically a reference to the function) to "disabled". But "disabled" wants the result of the function, so execute the function (i.e call it i.e use "()") and give "disabled" the boolean result returned by the function. 
+                  The following is ❌❌WRONG❌❌ : 
+                        function disableBtn() {
+                              return true;
+                        }
+
+                        <button
+                              disabled={disableBtn} 
+                        >
+
+                  🟧Method 2 : Use IIFE. It's the best here ⭐
+                        disabled={  (function disableBtn() {
+                              if (value == "") {
+                              return true;
+                              } else {
+                              return false;
+                              }
+                        })()}
+
+                  Synatx of IIFE:
+                  1)With Simple Functions : 
+                        (function () {
+                              // …
+                        })();
+                  
+                  2)With Arrow Functions :
+                        (() => {
+                              // …
+                        })();
+
+/*********Tut 114***********/
+      React Router: Routing in React
+
+      🟩 Without React Router (See folder "WithoutRR")
+      🔴Quick Note about how links are working : 
+            Vite's server is working in such a way that the outer folder is the root of the server, which in this case is the folder "WithoutRR". The "index.html" file inside this root folder is served at the root of the server. Now, all the code that I write in "App.jsx" or all the components that I'm loading inside "App.jsx" are eventually added after being converted into pure HTML in the "index.html" file's " <div id="root"></div> ", and then served to the browser.
+
+            So, all the links that you are writing in, say, your "Navbar" component, should be written with the "index.html" file in your mind. For example, I have an "<a>" tag with the relative path "./login.html" and I also have a "login.html" file in the root folder. So, clicking on that hyperlink, the server takes me to "login.html".
+      1)The problem is that whenever I click on a hyperlink, the entire page reloads. React Router eliminates this problem by ensuring that when a link is clicked, only the relevant parts of the DOM are updated, rather than reloading the entire page. This allows for a smoother, faster user experience without full page refreshes.
+
+      🟩 With React Router (See folder "WithRR")
+      Ref: https://reactrouter.com/en/main/start/tutorial
+      1)Baki zyada kuchn ni likh ra mai 😅
+
+
+

@@ -70,14 +70,6 @@ function App() {
     handleDelete(todoid, true);
   };
 
-  function disableBtn() {
-    if (value == "") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   return (
     <>
       <Navbar />
@@ -93,7 +85,14 @@ function App() {
             onChange={handleChange}
           />
           <button
-            disabled={disableBtn()}
+            //Using IIFE : Immediately Invoked Function Expression
+            disabled={  (function disableBtn() {
+              if (value == "") {
+                return true;
+              } else {
+                return false;
+              }
+            })()}
             onClick={handleAdd}
             className="add w-[100px] h-[30px] myBtn disabled:bg-gray-500"
           >
