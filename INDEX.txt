@@ -1735,7 +1735,21 @@
       
       "value" would be accessible to all the child Components (and any further children of the child components) using "useContext" hook. Here i have passed a JS object in "value". So i can access this object and then use it's properties in any child component [See "Component1.jsx"]
 
+/*********Tut 117***********/
+      The useMemo hook in React
 
+      1)It is used for memoization. 
+            Ex ( See "App.jsx" ) : 
+            whenever state "count" would change as the user clicks on the button, the entire Component "App()" would re-render as a result of which the Expensive Calculation would be done on every re-render. 
+            
+            We can avoid this by memoizing the result of the calculation using "useMemo" as :
 
+                  let expensiveCalcResult = useMemo(() => (<Expensive Calculation Here>), [])
 
+            Now, the Calculation would be done once and not every time "App()" re-renders!
+            Here, [] would contain those "dependencies" jinke change hone pe the Expensive Calculation would be redone. For ex:
 
+                  const [stateX, setstateX] = useState(0);
+                  let expensiveCalcResult = useMemo(() => (<Expensive Calculation Here>), [stateX])
+
+            Now, whenever "stateX" would change, the Expensive Calculation would be redone. 
