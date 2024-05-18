@@ -1693,7 +1693,7 @@
                               // …
                         })();
 
-/*********Tut 114***********/
+/*********Tut 115***********/
       React Router: Routing in React
 
       🟩 Without React Router (See folder "WithoutRR")
@@ -1706,6 +1706,36 @@
       🟩 With React Router (See folder "WithRR")
       Ref: https://reactrouter.com/en/main/start/tutorial
       1)Baki zyada kuchn ni likh ra mai 😅
+
+/*********Tut 116***********/
+      The useContext hook in React
+
+      1)Why we need this hook:
+            App.jsx (owner of `count` state)
+            |-- Navbar.jsx
+            |   |-- Button.jsx
+            |       |-- Component1.jsx
+
+            Say you have many nested components as follows. `App.jsx`, `Navbar.jsx`, `Button.jsx`, `Component1.jsx`. 
+            Now you want to access the `count` state in `Component1.jsx`. So you would have to pass it as props through all the components. 
+            First of all into `Navbar.jsx`, then `Button.jsx`, then finally `Component1.jsx`. 
+
+            So just so you can use the state in the lowest component, `Component1.jsx`, you had to pass it into all other higher components. 
+            But this was unnecessary. This is known as props drilling, and this is the problem that is solved by the use of the `useContext` hook in React.
+
+      2)To use "useContext" hook, make a context "CountContext" in "Context.js". Import this in "App.jsx". Now wrap the child components of "App.jsx" in the "Context Provider". This will look like:
+            <>
+                  <CountContext.Provider value={{ "count": count, "setCount": setCount }}>
+                        <Navbar />
+                        <button onClick={() => setCount((count) => count + 1)}>
+                              count is {count}  
+                        </button>
+                  </CountContext.Provider>
+            </>
+      
+      "value" would be accessible to all the child Components (and any further children of the child components) using "useContext" hook. Here i have passed a JS object in "value". So i can access this object and then use it's properties in any child component [See "Component1.jsx"]
+
+
 
 
 
