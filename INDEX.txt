@@ -1753,3 +1753,15 @@
                   let expensiveCalcResult = useMemo(() => (<Expensive Calculation Here>), [stateX])
 
             Now, whenever "stateX" would change, the Expensive Calculation would be redone. 
+
+/*********Tut 118***********/
+      The useCallback hook in React
+
+      1)React "memo" : Using "memo" will cause React to skip rendering a component if its props have not changed. This can improve performance. 
+      Say you have a child component "Navbar()" in "App()", whenever "App()" re-renders, it's not needed to re-render "Navbar()" everytime. So, in "Navabr.jsx", you can:
+            export default memo(Navbar);
+
+            Ex : See "Navbar.jsx" 
+
+      2)useCallback Hook: it is a React Hook that lets you cache a function definition between re-renders. The useCallback and useMemo Hooks are similar. The main difference is that useMemo returns a memoized value and useCallback returns a memoized function.
+            Ex : See "App.jsx" 
