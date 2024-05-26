@@ -1765,3 +1765,13 @@
 
       2)useCallback Hook: it is a React Hook that lets you cache a function definition between re-renders. The useCallback and useMemo Hooks are similar. The main difference is that useMemo returns a memoized value and useCallback returns a memoized function.
             Ex : See "App.jsx" 
+
+/*********Tut 119***********/
+      Handling Forms + Connecting React to Express Backend
+      
+      🟩 Handling Forms
+      Ref: https://react-hook-form.com/
+      1)Usually, if you are making forms in React, you need to create change handlers for all the input fields (See "Tut 112") and other stuff etc. This process can result in a lot of boilerplate code. However, the "react-hook-form" library does much of this for you and makes creating forms in React easy."
+      2)See Comments in "App.jsx", everything is in the comments!
+
+      
