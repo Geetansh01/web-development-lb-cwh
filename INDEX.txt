@@ -1774,4 +1774,46 @@
       1)Usually, if you are making forms in React, you need to create change handlers for all the input fields (See "Tut 112") and other stuff etc. This process can result in a lot of boilerplate code. However, the "react-hook-form" library does much of this for you and makes creating forms in React easy."
       2)See Comments in "App.jsx", everything is in the comments!
 
-      
+/*********Tut 120***********/
+      Redux in One video
+      Ref(Redux toolkit): https://redux-toolkit.js.org/
+
+      1)Redux is an open-source JavaScript library for managing and centralizing application state. It is most commonly used with libraries such as React or Angular for building user interfaces. Redux Toolkit is used for writing redux code but in a more concise way. Redux Toolkit (RTK) solves problems that most of the developer’s face who used redux in a react application. RTK abstracts the basic redux code and provides us boilerplates that enable us to write redux code in less lines of code
+
+      2)Why Redux? Basically, if you remember, state in React is owned by a component, and passing the state to other components via methods such as prop drilling can be a headache. This is where Redux comes in with the concept of a store. The Redux store holds all the states, and all components communicate with the store. This way, any state can be easily accessed by many different components.
+      So in a nutshell: 
+                  Centralization of states happens via the Redux store.
+
+      3)Steps:
+            🔴Tip : Copy most of the boilerplate code from documentation (" https://redux-toolkit.js.org/tutorials/quick-start ") 😁😁
+            1)Make a "store.js" File (See "src\Redux\store.js). It will contain our states
+            2)In "main.jsx", wrap the "App" component in "React-Redux <Provider>" as:
+                  
+                  import { store } from "./Redux/store.js";
+                  import { Provider } from "react-redux";
+
+                  ReactDOM.createRoot(document.getElementById("root")).render(
+                        <React.StrictMode>
+                              <Provider store={store}>
+                                    <App />
+                              </Provider>
+                        </React.StrictMode>
+                  );
+            
+            Now all the components in our React App (i.e inside "App") will have access to Redux Store!
+            3)Now we will make a "Redux State Slice". This will basically contain a "state", it's initial value, functions to update it etc.
+            4)Next we will add this "Slice" to our store. Now this Slice is accessible to all the components via the store.
+            5)Now you can use the state from store in any component, say "App" . We will use the React-Redux hooks to let React components interact with the Redux store. These are:
+                  i)"useSelector" : To read data from the store  
+                  ii)"useDispatch" : dispatch actions to the store i.e update the value of the state 
+            
+      4)Some redux terms:
+            i)Store - is what holds all the data your application uses.
+            ii)Reducer - is what manipulates that data when it receives an action.
+            iii)Action - is what tells reducer to manipulate the store data, it carries the name and (optionally) some data.
+
+            Ex (See "App.jsx" ) : In below code, "increment" is the action:
+            <button onClick={() => {
+                              dispatch(increment())
+                        }
+                  } >+</button>
