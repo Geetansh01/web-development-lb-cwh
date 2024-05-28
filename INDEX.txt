@@ -1817,3 +1817,53 @@
                               dispatch(increment())
                         }
                   } >+</button>
+
+/*********Tut 121***********/
+      Introduction to Next.js & File based routing
+      Ref(Next.js): https://nextjs.org
+      
+      1)What is Next.js : It is a React FrameWork to make big-applications using react
+      2)Steps to start:
+            1)run: npx create-next-app@latest
+            2)Follow along:
+                  √ What is your project named? ... firstnextprj
+                  √ Would you like to use TypeScript? ... No / Yes
+                  √ Would you like to use ESLint? ... No / Yes
+                  √ Would you like to use Tailwind CSS? ... No / Yes
+                  √ Would you like to use `src/` directory? ... No / Yes     
+                  √ Would you like to use App Router? (recommended) ... No / 
+                  Yes
+                  √ Would you like to customize the default import alias (@/*)? ... No / Yes
+                  Creating a new Next.js app in C:\Users\Geetansh\Desktop\WebDevCodes\BackEnd\Tut121\firstnextprj.
+      3)Next.js can be used in two ways: app-based routing and page-based routing.
+            1)App Router (We will do this 🙌):
+            - This is the latest method introduced in Next.js.
+            - Better suited for larger and more complex applications.
+
+            2)Pages Router:
+            - This is the traditional method used in Next.js.
+            - Pages are created by adding files to the `pages` directory.
+            - Each file in the `pages` directory automatically becomes a route.
+            - Simple and straightforward, especially for small to medium-sized projects.
+            - Provides automatic code splitting, server-side rendering, and static generation.
+      4)Layout:
+            1)".../app/page.js" contains the home page of the next app (i.e it will be visible on " <base-url-of-website>/ ").
+            ".../app/globals.css" contains global css of your app.
+            2)You can make custom routes, say " <base-url-of-website>/about " by making a folder ".../app/about" and making a file ".../app/about/page.js" in it.
+            Now this "page.js" will be visible on " <base-url-of-website>/about ". This is App router in Next.js 
+            3)To create a component, say "Navbar", make a new file "firstnextprj/components/Navbar.js". Then you can import it in other files (like see ".../app/page.js). 
+            Also, you can import it in ".../app/layout.js". This "layout.js" defines the layout of all the pages in the app. Also, you can change the metadata and title of the app from here!
+
+            🔴Tip : 
+                  1)You will see "@" in import statements like "import Navbar from "@/components/Navbar". Here, "@" is an alias provided by Next.js. It points to the root of the project (here, it's the folder "firstnextprj"). 
+
+                  2)So, when you import a component like this : 
+                  "import Navbar from "@/components/Navbar", 
+                  it is equivalent to importing it like this : 
+                  "import Navbar from "firstnextprj/components/Navbar". 
+                  This makes it easier to import components from anywhere in the project.
+
+
+
+
+
