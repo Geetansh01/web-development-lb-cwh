@@ -1863,7 +1863,37 @@
                   "import Navbar from "firstnextprj/components/Navbar". 
                   This makes it easier to import components from anywhere in the project.
 
+/*********Tut 122***********/
+      Server & Client Components in Next.js
+
+      1)Next.js is a full stack framework, you can write both client side and server side code in it. By dafault in Next.js, any component that is placed within the App Router is considered a Server Component.
+            1)Server Component : Basically server side code. It runs on the server. HTML jo bnti hai vo bnke client pe bheji jati hai
+                  1)Console logs here will be visible on server side
+                  2)It's Default
+                  3)see "app/page1.js" [change name to "page.js" to use it]
+                  4)🟥Note : React hooks like "useState" etc will NOT ❌ work in a Server component. 
+                        1)Why? Bcz React is a frontend JS library and iska code browser pe jake work krta hai. To React ki cheeze like "state", "hooks" vgera sirf client component me chlegi jo browser pe bheja jata hai!
+                        2)From ChatGPT:
+                              Server Components
+                                    1)Execution Environment: Server components run on the server. They are rendered on the server-side and sent to the client as static HTML.
+                                    2)Lifecycle: Since server components are rendered on the server, they don't have a lifecycle in the way client components do. This means there is no concept of "mounting" or "unmounting" as the component doesn't exist in the client's browser to be managed over time.
+                              Client Components
+                                    1)Execution Environment: Client components run in the browser. They can interact with the user and manage state over time.
+                                    2)Lifecycle: Client components go through a lifecycle (mounting, updating, unmounting) that React manages. This lifecycle allows the use of hooks like useState for state management and useEffect for side effects.
+                        3)If you feel the need to use React Hooks while writing a server component, separate out a new client component, use the React Hooks in that, and import that inside the server compnent 
+                              Ex: I imported client component "Navbar.js" inside "app/page.js" 
+                        
 
 
+            2)Client Component : This code is sent to the client (i.e the browser).
+                  1)Console logs here will be visible on client side (i.e in the browser)
+                  2)write "use client" on top of file to make a Client Component
+                  3)see "app/page2.js" [change name to "page.js" to use it]
+          Warning :🟨⚠ Warning : Be careful while writing code in a client component bcz the entire code will be sent to the browser
 
+      2)When to use which component?
+            1)Server Component : when you want to write backend logic (DB connection, user authentication etc...)
+            Ex:   1) See "app/page.js". Here, i am reading some data from "data.json".
+                  2) This code is obviously server side. It won't even work and throw error if you write "use client" on top of it bcz this code is sent to the browser which will not have access to either "data.json" or "fs/promises" module for that matter.
+            
 
