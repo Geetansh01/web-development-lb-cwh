@@ -1896,4 +1896,80 @@
             Ex:   1) See "app/page.js". Here, i am reading some data from "data.json".
                   2) This code is obviously server side. It won't even work and throw error if you write "use client" on top of it bcz this code is sent to the browser which will not have access to either "data.json" or "fs/promises" module for that matter.
             
+/*********Tut 123***********/
+      Script, Link & Image components in Next.js
+      
+      🟩Link Component (Solves the same problem as "Tut 115: React Router")
+      1)Use "Link" instead of "a" tag to use client-side routing in Next.js (This means page does not reload on URL click)
+      2)See "myprj\components\Navbar.js"
+
+      🔴Tip : To have custom title and metadata for a route, write this in the component of that route (ex: see "myprj\app\about\page.js") :
+            export const metadata = {
+                  title: "...",
+                  description: "...",
+            };
+
+      If you don't specify one to i guess "layout.js" me jo hai vo lg jata hai
+
+      🟩Script Component 
+      1)This is used to send JS to the client side. In simpe terms , us page pe koi JS execute krne ke liye
+      2)Use : import Script from "next/script"
+      3)For Ex (From "\myprj\app\about\page.js" ):
+
+            const page = () => {
+              return (
+                <>
+                  <div>I am Geetansh</div>
+
+                  <Script>
+                    {`
+                    alert("Welcome to About Page");
+                    console.log("I am on the browser console");
+                    `}
+                  </Script>
+                </>
+              );
+            };
+
+            1)Note that it's not the HTML <script> tag, it's <Script> with capital S. 
+            2)Ye JS browser pe run hogi. Remember that we are writing JSX inside " return( ...JSX Here... ) ". Ye JSX HTML bnke client ko jati hai. Agr client ko koi JS bhejni hai along with the HTML then we use "Script Component" in Next.js
+            3)Usually it is used to load a third-party script like this:
+                  <Script src="https://example.com/script.js" />
+
+            -This is when you want 3rd party JS say Google Ads or Google Analytics on your page. 
+            -If you want a 3rd party JS like Google Analytics across the entire Next.js App (i.e on all webpages of your website) then place it in "myprj\app\layout.js"
+      
+      🟩Image Component 
+      1)The <Image/> component is a better and enhanced version of the <img> tag. 
+      2)It includes features for automatic image optimization as:
+            1)Size Optimization: 
+                  1)Automatically serve correctly sized images for each device, using modern image formats like WebP and AVIF.
+                        -This implies for the images stored locally on your server. Jb client image request krega to Apka Next.js me likha hua server stored image as it is client ko nhi dega. Agr client ka device bda hai to bdi image dega agr chota hai to choti image dega.
+                        -Thus optimized!
+
+                        🔴Tip : 
+                              1)If your image is stored locally, it must be located in the "/public" folder (i.e root directory me 1 "public" naam ke folder me. In my case it's : "Tut123/myprj/public/"), otherwise, you’ll get an error.
+                              2)If you want to use the Image Component, following 3 properties are must to specify
+                                    -src
+                                    -width
+                                    -height
+                              Also, "width" , "height" only accept pixels as values, which must also be an integer without a unit.
+                              Ex: width={100}
+
+                  2)On-demand image resizing, even for images stored on remote servers
+                        -Agr apke code me image kisi 3rd party remote jgh se bhi aa rhi hai to bhi jb client vo image mangega to apka Next.js me likha server uss image ko optimize krke client ko dega. 
+            
+            To see the Size Optimization in action, see "app/page.js" i.e the home page in browser. Check the Network tab from dev Tools to see the sizes of the loded images which otherwise look identical. (ScreenShot attached in "Tut123\ss.jpg")
+
+                  🔴Tip : 
+                        1)To perform a hard refresh on Edge, you can use the shortcut "Ctrl+Shift+R". This reloads the page ignoring cache. Use it while testing via the Network tab
+                        2)You can also throttle your Network to "Slow 3G" in dev Tools, do it and see that normal <img> tag performs much poorly.
+                        3)Also, zoom in on the images, you will see that <img> tag wali mst detailed hai, but <Image> wali blurred hai.
+                        Kuch pane ke liye kuch khona bhi padta hai 😂😂
+                  
+            2)Visual Stability: Prevent layout shift automatically when images are loading.
+            3)Faster Page Loads: Images are only loaded when they enter the viewport using native browser lazy loading, with optional blur-up placeholders.
+
+      
+
 
