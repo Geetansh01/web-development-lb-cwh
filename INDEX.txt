@@ -1970,6 +1970,16 @@
             2)Visual Stability: Prevent layout shift automatically when images are loading.
             3)Faster Page Loads: Images are only loaded when they enter the viewport using native browser lazy loading, with optional blur-up placeholders.
 
-      
+/*********Tut 124***********/
+      Creating APIs in Next.js
+      Ref: https://nextjs.org/docs/app/api-reference/file-conventions/route#http-methods
+
+      1)Next.js is not only a front-end framework but also a back-end framework. So, you can also write back-end code in it. For example, you can define API-routes (what will be served on which route of your website)
+      2)Steps     
+            1)We will make a POST request handler for "<base-url>/api/postEndpoint" route of our application. So we wish to define what to do if we receive a POST request on this route
+            2)Make a folder "...\app\api\postEndpoint\" and make a "route.js" file inside it.
+              A "route.js" is a special file. It allows you to create custom request handlers for a given route.
+            3)Now write the request handling logic inside it!
+
 
 
