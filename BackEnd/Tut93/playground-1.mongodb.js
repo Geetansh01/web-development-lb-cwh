@@ -5,7 +5,7 @@
 // https://www.mongodb.com/docs/mongodb-vscode/playgrounds/
 
 // Select the database to use.
-use('sigmawebDtut93');
+use('sigmawebDtut9');
 
 // Insert a few documents into the sales collection.
 db.getCollection('people').insertMany([
