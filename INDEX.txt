@@ -864,8 +864,6 @@
             Tip : 1)callback functions are used to implement Asynchronous programming (like executing a callback once a time taking Asynchronous task completes)
                   2)Poor use of callbacks can lead to "JS Pyramid of Doom" 💩 (see : https://matcha.fyi/pyramid-of-doom-javascript/)
       3)promise : used to prevent "JS Pyramid of Doom" 🛡️. Let's see in more detail
-
-
             1)What is a Promise? 
                  A)It is used to execute some code parallely in background in JS.
                   The promise then tells if that code was executed successfully or not.
@@ -874,7 +872,7 @@
                  B)This code (inside the promise) can be a synchronus code OR asynchronous code 
                  c)Basically promise is a task that i wish to get completed parallely in background.
                    🌳Practical use case:
-                        Say u are running a synchronus code & in b/w you made a network call. Ab is network call se dhere-dhere 🐌 data aega. So i wouldn't want to freeze the entire webpage (and frustrate 😡 the user) while this is happenning. So i will handle the network call asynchronously & parallely in background using a promise. The promise will tell me if the network call was successfull or not in the end (i.e data aa paya ya kuch gdbd ho gyi). (See "Event Loop" in JS from LB WebDev local saved Video "82. JS DOM Class - 1.mp4" )
+                        Say u are running a synchronus code & in b/w you made a network call. Ab is network call se dhere-dhere 🐌 data aega. So i wouldn't want to freeze the entire webpage (and frustrate 😡 the user) while this is happenning. So i will handle the network call asynchronously & parallely in background using a promise. The promise will tell me if the network call was successfull or not in the end (i.e data aa paya ya kuch gdbd ho gyi). (See "Event Loop" in JS from LB WebDev local saved Video "80. JS DOM Class - 1" )
 
             2)Syntax of a making a promise (basically we will make a promise object using a call to constructor of its class):
 
@@ -894,7 +892,7 @@
                   1)state : pending, fullfilled OR rejected
                   2)result : 
                         (i)promise resolved : result is a value
-                              -use "then()" method promise object to work with value
+                              -use "then()" method of promise object to work with value
                         (ii)promise rejected : result is an error
                               -use "catch()" / "then()" method of promise object to work with error
 
@@ -1826,6 +1824,18 @@
       1)Now namings according to above playlist video Numbers, until "Tut 121" from where Sigma WebD Course continue with Next.js
 
       2)Done till : vid 44
+
+      /*********Tut 120.46***********/
+      Adding Data Validation Using express-validator
+      Ref(documentation) : https://express-validator.github.io/docs
+      
+      1)express-validator : It is an npm package to validate requests. 
+      ex: you can validate a POST request. Say, you wish to validate "request.body" as: 
+            1)"name" field should be minimum 1 in length
+            2)"email" should be a valid e-mail format 
+            etc...
+
+            See "Tut120.0\NoteCloud-Backend\routes\auth.js" for usage.
 
 /*********Tut 41***********/
       Introduction to MERN stack
