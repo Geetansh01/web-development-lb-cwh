@@ -1836,6 +1836,12 @@
             etc...
 
             See "Tut120.0\NoteCloud-Backend\routes\auth.js" for usage.
+      2)Do you need Express Validator even when you're using Mongoose?
+
+      Answer: If the validation logic is simple and the Mongoose schema is sufficient, then you don't need Express Validator. But for complex validation schemas, you'd want a clean Mongoose model file and use Express Validator instead.
+
+      Ex:
+      Express Validator provides a .isEmail method that can verify if the given string is an email or not. However, Mongoose just validates if the given field is a string or not.
 
 /*********Tut 41***********/
       Introduction to MERN stack
