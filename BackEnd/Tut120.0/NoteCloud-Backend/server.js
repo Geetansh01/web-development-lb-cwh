@@ -5,6 +5,9 @@ const { connectToMongoDB } = require("./DBConnection");
 
 connectToMongoDB();
 
+app.use(express.json()) // body-parsing middleware 
+//To populate "request.body", which is undefined by default. See docs : "https://expressjs.com/en/api.html#req.body"
+
 //API Endpoints
 app.use("/api/notes", require("./routes/notes"));
 app.use("/api/auth", require("./routes/auth"));

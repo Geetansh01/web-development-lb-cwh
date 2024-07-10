@@ -1825,6 +1825,8 @@
 
       1)Now namings according to above playlist video Numbers, until "Tut 121" from where Sigma WebD Course continue with Next.js
 
+      2)Done till : vid 44
+
 /*********Tut 41***********/
       Introduction to MERN stack
 
