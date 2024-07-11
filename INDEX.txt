@@ -1823,7 +1823,7 @@
 
       1)Now namings according to above playlist video Numbers, until "Tut 121" from where Sigma WebD Course continue with Next.js
 
-      2)Done till : vid 47
+      2)Done till : vid 51
 
       /*********Tut 120.46***********/
       Adding Data Validation Using express-validator
@@ -1857,6 +1857,9 @@
             2)session tokens, etc. 
       
             We will be using JWT tokens.
+
+      /*********Tut 120.50***********/
+      Creating Login Endpoint & sending JWT auth token
 
 /*********Tut 41***********/
       Introduction to MERN stack
