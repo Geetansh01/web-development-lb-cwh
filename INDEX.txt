@@ -1823,7 +1823,7 @@
 
       1)Now namings according to above playlist video Numbers, until "Tut 121" from where Sigma WebD Course continue with Next.js
 
-      2)Done till : vid 44
+      2)Done till : vid 47
 
       /*********Tut 120.46***********/
       Adding Data Validation Using express-validator
@@ -1842,6 +1842,21 @@
 
       Ex:
       Express Validator provides a .isEmail method that can verify if the given string is an email or not. However, Mongoose just validates if the given field is a string or not.
+
+      /*********Tut 120.48***********/
+      Understanding Password Hashing, Salt & Pepper
+      
+      1)bcrypt.js : npm package that automates password hashing, salting, and pepper for us.
+
+      /*********Tut 120.49***********/
+      Hashing Passwords using bcryptjs in NodeJs
+
+      Using Tokens to authenticate users
+      1) Once a user successfully logs in using their username and password, I will supply them with an authentication token. All subsequent requests to access secured resources will be authenticated using that token, so the user won't have to supply their username and password repeatedly. These tokens can be of multiple types, such as:
+            1)JWT tokens,
+            2)session tokens, etc. 
+      
+            We will be using JWT tokens.
 
 /*********Tut 41***********/
       Introduction to MERN stack
