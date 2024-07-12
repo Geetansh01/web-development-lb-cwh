@@ -1823,7 +1823,7 @@
 
       1)Now namings according to above playlist video Numbers, until "Tut 121" from where Sigma WebD Course continue with Next.js
 
-      2)Done till : vid 51
+      2)Done till : vid 52
 
       /*********Tut 120.46***********/
       Adding Data Validation Using express-validator
