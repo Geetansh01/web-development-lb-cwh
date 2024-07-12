@@ -1,5 +1,8 @@
-Make MERN stack project from vid 41 to 72
+#Make MERN stack project from vid 41 to 72
 ref:https://youtube.com/playlist?list=PLu0W_9lII9agx66oZnT6IyhcMIbUMNMdt&si=NI-PvWI3bN3QjAcQ
 
-Backend from LB saved videos
+#Backend from LB saved videos (Do this. It's for medium depth knowledge in backend)
 vid 135 to vid 147
+
+#Backend from Chai aur Code (For later. When you want production level knowledge overview of backend)
+https://youtube.com/playlist?list=PLu71SKxNbfoBGh_8p_NS-ZAh6v7HhYqHW&feature=shared

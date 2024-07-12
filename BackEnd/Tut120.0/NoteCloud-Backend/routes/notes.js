@@ -75,9 +75,44 @@ router.put(
       if(description) updates.description = description;
       if(tag) updates.tag = tag;
 
-      const updatedNote = await Note.findByIdAndUpdate(req.params.noteId, updates, {new: true});
+      const updatedNote = await Note.findByIdAndUpdate(req.params.noteId, {$set: updates}, {new: true});
 
       res.json(updatedNote);
+    } catch (error) {
+      //Some entirely different internal error occurred
+      console.log(error);
+      return res
+        .status(500)
+        .send("Some Error Occurred! It's Internal Server Error");
+    }
+  }
+);
+
+// ROUTE 4 : Delete an existing note of logged in user using: DELETE "/api/notes/deletenote". Login Required
+router.delete(
+  "/deletenote/:noteId",
+  getUser,
+  async (req, res) => {
+    try {
+      //Check if note exists
+      const note = await Note.findById(req.params.noteId);     
+      
+      if(!note){
+        return res.status(404).send("Not Found"); 
+      }
+
+      //Check if note belongs to user
+      if(note.user.toString() !== req.user.userID){
+        return res.status(401).send("Unauthorized"); 
+      }
+
+      //Delete the note
+      const deletedNote = await Note.findByIdAndDelete(req.params.noteId);
+
+      res.send({
+        info: "Note Deleted",
+        deletedNote
+      });
     } catch (error) {
       //Some entirely different internal error occurred
       console.log(error);
