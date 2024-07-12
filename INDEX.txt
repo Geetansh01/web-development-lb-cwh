@@ -1823,8 +1823,6 @@
 
       1)Now namings according to above playlist video Numbers, until "Tut 121" from where Sigma WebD Course continue with Next.js
 
-      2)Done till : vid 52
-
       /*********Tut 120.46***********/
       Adding Data Validation Using express-validator
       Ref(documentation) : https://express-validator.github.io/docs
@@ -1860,6 +1858,17 @@
 
       /*********Tut 120.50***********/
       Creating Login Endpoint & sending JWT auth token
+
+      /*********Tut 120.55***********/
+      React Project Setup
+
+      1)Work on Backend completed till Tut 120.54 . From now onwards we are working on our FrontEnd. 🎉🎉
+      2)concurrently (Ref: https://www.npmjs.com/package/concurrently): An npm package for starting multiple services together in the same terminal. 
+            1)I will use it to start my React front end and Express back end in the same terminal. I could have started them in separate terminals, but then I would have to switch between terminals frequently.
+            2)To use concurrently, I added this custom script in \NoteCloud-Frontend\package.json:
+                  "both": "concurrently \"npm run dev\" \"nodemon ..\\NoteCloud-Backend\\server.js\""
+
+                  Now, i can use "npm run both" to start both the FrontEnd & the BackEnd
 
 /*********Tut 41***********/
       Introduction to MERN stack
