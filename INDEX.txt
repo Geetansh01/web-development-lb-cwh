@@ -1705,6 +1705,26 @@
       Ref: https://reactrouter.com/en/main/start/tutorial
       1)Baki zyada kuchn ni likh ra mai 😅
 
+/*********Tut 115.0***********/
+      React Router (Done From LB WebDev local saved Video : "122. React Intermediate - Class 2 [HD] - @babbar_dsa.mp4"; React Router starts from 48:46)
+      
+      1)How "NavLink" works : Jo bhi current Route hai uspe NavLink "active" naam ki CSS class lga dega. Now you can style this "active" class (See "\Tut115.0\src\App.css"), say like this:
+            .active{
+                  border: 2px solid red;
+            }
+
+            Now selected route will have a red border ⭕!
+
+      2)Nested Routing: Say you have routes as follows:
+            1)Home: "/"
+            2)About: "/about"
+            3)Login: "/login"
+
+            - Because About comes after Home (You can see by the way they are written -> "/about" , 1st Home comes then About) so Home can be considered the parent route and About it's child route.
+            - Therefore, Home is the parent route of both About, Login. 
+
+            Resume from: "1:23:14" in the Lecture (Will come back to complete if need be in future 😉)
+
 /*********Tut 116***********/
       The useContext hook in React
 
@@ -1823,6 +1843,9 @@
 
       1)Now namings according to above playlist video Numbers, until "Tut 121" from where Sigma WebD Course continue with Next.js
 
+      /*********Tut 120.41***********/
+      Introduction to MERN stack
+
       /*********Tut 120.46***********/
       Adding Data Validation Using express-validator
       Ref(documentation) : https://express-validator.github.io/docs
@@ -1869,9 +1892,6 @@
                   "both": "concurrently \"npm run dev\" \"nodemon ..\\NoteCloud-Backend\\server.js\""
 
                   Now, i can use "npm run both" to start both the FrontEnd & the BackEnd
-
-/*********Tut 41***********/
-      Introduction to MERN stack
 
 /*********Tut 121***********/
       Introduction to Next.js & File based routing

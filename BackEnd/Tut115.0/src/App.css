@@ -1,0 +1,16 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.Navbar{
+  border: 2px solid black;
+  list-style: none;
+}
+
+/* "NavLink" jo bhi current Route hai uspe "active" class lga dega! */
+.active{
+  border: 2px solid red;
+}

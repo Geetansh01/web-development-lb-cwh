@@ -9,7 +9,7 @@ const Navbar = () => {
       </div>
       <div>
         {/* "./login.html is relative path" */}
-        <a href="./login">Login</a> 
+        <a href="./login.html">Login</a> 
       </div>
       <div>
         {/* "/ContactUs.html is absolute path to root of server" */}
