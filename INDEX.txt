@@ -1499,7 +1499,7 @@
                   }
 
       🔴Tip : 1)Components that are JS classes are also there but for now we will only use Components that are JS Functions
-               2)To underestand JSX : think of it like HTML in which you can write JS
+               2)To understand JSX : think of it like HTML in which you can write JS
                3)For a react app, the "/src/App.jsx" file is the entry point. So it will be served to the client on root url.
                4)"/src/index.css" file contains global css (i.e will be applied on all the pages even if not imported using JS "import" statement)
 
@@ -1892,6 +1892,27 @@
                   "both": "concurrently \"npm run dev\" \"nodemon ..\\NoteCloud-Backend\\server.js\""
 
                   Now, i can use "npm run both" to start both the FrontEnd & the BackEnd
+
+      /*********Tut 120.58***********/
+      useContext hook: Using React Context API
+      (I already did it in "Tut 116" 😀)
+
+      /*********Tut 120.59***********/
+      useLocation Hook in React Router
+
+      1)This hook returns the current location object. This object contains useful information about the current location (To understand: current URL) that you are on. Let's say I'm on route <root-route>/about. The location object might look like this:
+            {
+                  pathname: '/about',
+                  search: '',
+                  hash: '',
+                  state: null,
+                  key: 'default'
+            }
+
+      Here you can see that you have access to the current path inside the location object.
+      (i)Use Case: If you want to do something based on the current location, you can use this location object.
+      (ii) I used it to provide the same functionality as "NavLink" of React Router (see "Tut 115.0")
+
 
 /*********Tut 121***********/
       Introduction to Next.js & File based routing

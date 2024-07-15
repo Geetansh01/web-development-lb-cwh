@@ -132,6 +132,7 @@ router.post(
       }
     } catch (error) {
       //Some entirely different internal error occurred
+      console.log(error);
       return res
         .status(500)
         .send("Some Error Occurred! It's Internal Server Error");
