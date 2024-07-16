@@ -7,7 +7,7 @@ const Navbar = () => {
   // console.log(locationObj.pathname);
   
   return (
-    <nav data-bs-theme="dark" className="navbar navbar-expand-lg bg-body-tertiary ">
+    <nav data-bs-theme="dark" className="navbar navbar-expand-lg bg-black ">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/home">
           NoteCloud
