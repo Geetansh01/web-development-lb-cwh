@@ -2,20 +2,18 @@ import React, { useContext, useState } from "react";
 import NotesContext from "../contexts/NotesContext";
 import "../styles/updateNoteBox.css";
 
-const UpdateNote = ({ setshowUpdateNoteBox, noteID }) => {
+const UpdateNote = ({ setshowUpdateNoteBox, note }) => {
 	let { updateNote } = useContext(NotesContext);
 
-	const [formInput, setformInput] = useState({ title: "", description: "" });
+	const [formInput, setformInput] = useState({ title: note.title, description: note.description });
 
 	const handleInput = (event) => {
-		console.log(event.target.name);
 		setformInput({ ...formInput, [event.target.name]: event.target.value });
 	};
 
-	const handleUpdate = (event) => {
-		//TODO: Add note function		
+	const handleUpdate = (event) => {		
 		event.preventDefault();
-		updateNote(noteID, "TITLE UPDATED", "DESC UPDATED");
+		updateNote(note._id, formInput.title, formInput.description);
 		setshowUpdateNoteBox(false);
 	};
 	return (

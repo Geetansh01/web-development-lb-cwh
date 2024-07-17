@@ -1,15 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 import NotesContext from "../contexts/NotesContext";
-import UpdateNote from "./UpdateNote";
+import UpdateNote from "./UpdateNote"; //Don't remove it, i might use it! (See "Option 1" below)
 
 const Note = (props) => {
 	let { deleteNote } = useContext(NotesContext);
 	const [showUpdateNoteBox, setshowUpdateNoteBox] = useState(false);
 
 	const editHandler = () => {
-		// TODO : add some way for user to add newtitle
 		setshowUpdateNoteBox(!showUpdateNoteBox);
 	};
 
@@ -19,9 +18,9 @@ const Note = (props) => {
 
 	return (
 		<div className="card col-4 box-sizing bg-light">
-			{/* Update Note Dialog Box */}
+			{/* Option 1 : My Custom Update Note Dialog Box */}
 			{showUpdateNoteBox ? (
-				<UpdateNote setshowUpdateNoteBox={setshowUpdateNoteBox} noteID={props.note._id} />
+				<UpdateNote setshowUpdateNoteBox={setshowUpdateNoteBox} note={props.note} />
 			) : (
 				""
 			)}
@@ -38,7 +37,8 @@ const Note = (props) => {
 						/>
 						<FontAwesomeIcon
 							role="button"
-							onClick={editHandler}
+							onClick={editHandler} //To be used with Option 1
+							// onClick={()=>{props.updateNoteViaBootstrapModal(props.note)}} //To be used with Option 2 (For Option 2, see "./components/Home.jsx")
 							className="card-title col"
 							icon={faPen}
 						/>

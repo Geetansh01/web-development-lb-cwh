@@ -1913,6 +1913,13 @@
       (i)Use Case: If you want to do something based on the current location, you can use this location object.
       (ii) I used it to provide the same functionality as "NavLink" of React Router (see "Tut 115.0")
 
+      /*********Tut 120.65***********/
+      Adding "fetch notes" functionality to iNotebook 
+
+      Things Learnt
+      1)How to enable CORS requests in your backend: using a npm package "cors" (Ref: https://expressjs.com/en/resources/middleware/cors.html) 
+      2)Enabling CORS (Cross-Origin Resource Sharing) on your back end means you are allowing your back end to respond to cross-origin requests.
+
 
 /*********Tut 121***********/
       Introduction to Next.js & File based routing
