@@ -1,52 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import NotesContext from "../contexts/NotesContext";
+import AuthContext from "../contexts/AuthContext";
 
 const NoteStateComponent = ({ children }) => {
-	//Dummy test notes
-	// const [allNotes, setallNotes] = useState([
-	// 	{
-	// 		_id: "668fc0b2d8bc194a543801db",
-	// 		user: "668f950c1b51da8985b14b28",
-	// 		title: "Test note 1 changed again",
-	// 		description: "Meds Lani hai",
-	// 		tag: "Market",
-	// 		date: "2024-07-11T11:23:30.202Z",
-	// 		__v: 0,
-	// 	},
-	// 	{
-	// 		_id: "668fc25ed8bc194a543801de",
-	// 		user: "668f950c1b51da8985b14b28",
-	// 		title: "Test note 2 changed",
-	// 		description: "Gym jana hai!",
-	// 		tag: "Fitness",
-	// 		date: "2024-07-11T11:30:38.756Z",
-	// 		__v: 0,
-	// 	},
-	// 	{
-	// 		_id: "668fc25md8bc194a543801de",
-	// 		user: "668f950c1b51da8985b14b28",
-	// 		title: "Test note 3",
-	// 		description: "DSA 3 Questions!",
-	// 		tag: "Fitness",
-	// 		date: "2024-07-11T11:30:38.756Z",
-	// 		__v: 0,
-	// 	},
-	// 	{
-	// 		_id: "668fc25md8bc194a523801de",
-	// 		user: "668f950c1b51da8985b14b28",
-	// 		title: "Test note 4",
-	// 		description: "Web Dev Questions!",
-	// 		tag: "Fitness",
-	// 		date: "2024-07-11T11:30:38.756Z",
-	// 		__v: 0,
-	// 	},
-	// ]);
-
-	const rootUrl = "http://localhost:5000";
-	const tempAuthToken =
-		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6IjY2OGY5NTBjMWI1MWRhODk4NWIxNGIyOCJ9LCJpYXQiOjE3MjA2ODU4NjJ9.xZ0EAh_nP6nFQohdwfAnxaxRWvNuv_bW21shbBi1AlU";
+	const rootUrl = import.meta.env.VITE_ROOT_URL;
 
 	const [allNotes, setallNotes] = useState([]);
+
+	const { authToken } = useContext(AuthContext);
 
 	useEffect(() => {
 		let getNotes = async () => {
@@ -56,13 +17,13 @@ const NoteStateComponent = ({ children }) => {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
-						"auth-token": tempAuthToken,
+						"auth-token": authToken,
 					},
 				});
 
 				if (!response.ok) {
 					console.log(response);
-					throw new Error("Network response was not ok");
+					throw new Error(`Response status: ${response.status}`);
 				}
 
 				const data = await response.json();
@@ -76,7 +37,7 @@ const NoteStateComponent = ({ children }) => {
 		};
 
 		getNotes();
-	}, []);
+	}, [authToken]);
 
 	// CRUD Operations for notes
 
@@ -89,7 +50,7 @@ const NoteStateComponent = ({ children }) => {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
-					"auth-token": tempAuthToken,
+					"auth-token": authToken,
 				},
 				body: JSON.stringify({
 					title: title,
@@ -121,7 +82,7 @@ const NoteStateComponent = ({ children }) => {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
-					"auth-token": tempAuthToken,
+					"auth-token": authToken,
 				},
 				body: JSON.stringify({
 					title: title,
@@ -139,12 +100,11 @@ const NoteStateComponent = ({ children }) => {
 			let newAllNotes = allNotes.map((note) =>
 				note._id === noteID ? updatedNote : note
 			);
-	
+
 			setallNotes(newAllNotes);
 		} catch (error) {
 			console.error(error.message);
 		}
-
 	};
 
 	//DELETE: delete an existing note
@@ -156,7 +116,7 @@ const NoteStateComponent = ({ children }) => {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
-					"auth-token": tempAuthToken,
+					"auth-token": authToken,
 				},
 			});
 

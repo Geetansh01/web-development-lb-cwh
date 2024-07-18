@@ -8,6 +8,7 @@ const Note = (props) => {
 	let { deleteNote } = useContext(NotesContext);
 	const [showUpdateNoteBox, setshowUpdateNoteBox] = useState(false);
 
+	//Don't remove "editHandler()", i might use it! (See "Option 1" below)
 	const editHandler = () => {
 		setshowUpdateNoteBox(!showUpdateNoteBox);
 	};
@@ -37,8 +38,8 @@ const Note = (props) => {
 						/>
 						<FontAwesomeIcon
 							role="button"
-							onClick={editHandler} //To be used with Option 1
-							// onClick={()=>{props.updateNoteViaBootstrapModal(props.note)}} //To be used with Option 2 (For Option 2, see "./components/Home.jsx")
+							// onClick={editHandler} //To be used with Option 1
+							onClick={()=>{props.updateNoteViaBootstrapModal(props.note)}} //To be used with Option 2 (For Option 2, see "./components/Home.jsx")
 							className="card-title col"
 							icon={faPen}
 						/>
