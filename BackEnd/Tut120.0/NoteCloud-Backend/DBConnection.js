@@ -1,7 +1,7 @@
 const { default: mongoose } = require("mongoose");
+require('dotenv').config()
 
-// mongodbURI = "mongodb://localhost:27017/noteCloud"; //Production DB
-mongodbURI = "mongodb://localhost:27017"; //Testing DB
+mongodbURI = process.env.MONGO_DB_URI; 
 
 async function connectToMongoDB() {
     try{
