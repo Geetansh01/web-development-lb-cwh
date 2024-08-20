@@ -7,6 +7,35 @@ const LoginStateComponent = ({ children }) => {
 
 	const rootUrl = import.meta.env.VITE_ROOT_URL;
 
+	// Sign Up User
+	const signupUser = async (name, email, password) => {
+		//API Call
+		const url = `${rootUrl}/api/auth/createuser`;
+		try {
+			console.log("Api call");
+			const response = await fetch(url, {
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					name: name,
+					email: email,
+					password: password,
+				}),
+			});
+
+			if (!response.ok) {
+				throw new Error(`Response status: ${response.status}`);
+			}
+
+			const json = await response.json();
+			// setauthToken(json.authToken);
+		} catch (error) {
+			console.error(error.message);
+		}
+	};
+
 	// Login User
 	const loginUser = async (email, password) => {
 		//API Call
@@ -38,7 +67,7 @@ const LoginStateComponent = ({ children }) => {
 	};
 
 	return (
-		<AuthContext.Provider value={{ loginUser, authToken: authToken }}>
+		<AuthContext.Provider value={{ loginUser, authToken: authToken, signupUser }}>
 			{children}
 		</AuthContext.Provider>
 	);

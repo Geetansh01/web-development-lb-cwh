@@ -8,6 +8,7 @@ import "./App.css";
 import NoteStateComponent from "./components/NoteStateComponent";
 import Login from "./components/Login";
 import LoginStateComponent from "./components/LoginStateComponent";
+import Signup from "./components/Signup";
 
 const router = createBrowserRouter([
 	{
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
 			{
 				path: "login",
 				element: <Login />,
+			},
+			{
+				path: "signup",
+				element: <Signup />,
 			},
 		],
 	},
