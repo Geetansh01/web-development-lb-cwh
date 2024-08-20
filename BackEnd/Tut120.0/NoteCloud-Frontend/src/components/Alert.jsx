@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import "../styles/alert.css"; //Refer to this CSS to know what eaxh color of the alert means
 
-const Alert = ({message}) => {
+const Alert = ({ alertConfig }) => {
   return (
-    <div className="alert alert-primary" role="alert">
-      {message}
+    <div className={`alert ${alertConfig.color}`} role="alert">
+      <p>{alertConfig.msg}</p>
     </div>
   );
 };
-
 
 export default Alert;

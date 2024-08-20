@@ -1,0 +1,33 @@
+.alert {
+    padding: 11px;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    height: 50px;
+    transition: all 0.5s ease;
+    opacity: 1;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .default {
+    background-color: transparent;
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  .green {
+    background-color: green; /* Success */
+  }
+  
+  .red {
+    background-color: red; /* Failure */
+  }
+  
+  .yellow {
+    background-color: orange; /* Warning */
+  }
+  
+  .blue {
+    background-color: turquoise; /* Info */
+  }
+  

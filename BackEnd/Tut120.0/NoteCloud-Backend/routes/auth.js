@@ -35,7 +35,7 @@ router.post(
         const found = await User.findOne({ email: req.body.email });
         if (found) {
           //If user with this email already exists
-          res.json({ Desc: "User with this email Already Exists!" });
+          res.status(409).json({ Desc: "User with this email Already Exists!" });
           return;
         }
 

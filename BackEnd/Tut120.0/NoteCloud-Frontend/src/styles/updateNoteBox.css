@@ -10,3 +10,11 @@
     z-index: 1;
     padding:10%
 }
+.closeBtnContainer{
+    display: flex;
+    justify-content: end;
+}
+.closeBtn{
+    position: relative;
+    left: 37px;
+}

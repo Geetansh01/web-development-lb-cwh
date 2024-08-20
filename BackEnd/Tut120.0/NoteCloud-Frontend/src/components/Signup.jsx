@@ -1,18 +1,28 @@
 import React, { useState, useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
+import { useOutletContext } from "react-router-dom";
+
 
 const Signup = () => {
     const [formInput, setformInput] = useState({ name: "", email: "", password: "" });
 
     const { signupUser } = useContext(AuthContext);
+    const [showAlert] = useOutletContext();
 
     function handleInput(event) {
         setformInput({ ...formInput, [event.target.name]: event.target.value });
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
-        signupUser(formInput.name, formInput.email, formInput.password);
+        let response = await signupUser(formInput.name, formInput.email, formInput.password);
+        if (response.success) {
+			// console.log("Gd");
+            showAlert("green", "SignUp Successful! Now Login")
+		}
+		else{
+			showAlert("red", "Failed to signUp!")
+		}
     }
 
     return (

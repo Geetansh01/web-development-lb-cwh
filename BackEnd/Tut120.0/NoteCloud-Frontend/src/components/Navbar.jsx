@@ -1,10 +1,19 @@
 import React from "react";
 import { Link, useLocation, NavLink } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../contexts/AuthContext";
 
 const Navbar = () => {
 	let locationObj = useLocation();
 	let currPath = locationObj.pathname;
 	// console.log(locationObj.pathname);
+
+	const { authToken, setauthToken } = useContext(AuthContext);
+
+	const handleLogout = () => {
+		localStorage.removeItem("authToken");
+		setauthToken("no auth token");
+	}
 
 	return (
 		<nav data-bs-theme="dark" className="navbar navbar-expand-lg bg-black ">
@@ -42,22 +51,37 @@ const Navbar = () => {
 								Home
 							</Link>
 						</li>
-						<li>
-							<Link
-								className={`nav-link ${currPath === "/login" ? "active" : ""}`}
-								to="/login"
-							>
-								Login
-							</Link>
-						</li>
-						<li>
-							<Link
-								className={`nav-link ${currPath === "/signup" ? "active" : ""}`}
-								to="/signup"
-							>
-								Signup
-							</Link>
-						</li>
+
+						{/* Show logout button if user already logged in! */}
+						{authToken == "no auth token" ?
+							<>
+								<li>
+									<Link
+										className={`nav-link ${currPath === "/login" ? "active" : ""}`}
+										to="/login"
+									>
+										Login
+									</Link>
+								</li>
+								<li>
+									<Link
+										className={`nav-link ${currPath === "/signup" ? "active" : ""}`}
+										to="/signup"
+									>
+										Signup
+									</Link>
+								</li>
+							</>
+							:
+							<li>
+								<button
+									className="btn btn-dark"
+									onClick={handleLogout}
+								>
+									Logout
+								</button>
+							</li>
+						}
 					</ul>
 				</div>
 			</div>

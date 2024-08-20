@@ -32,6 +32,7 @@ const NoteStateComponent = ({ children }) => {
 			} catch (error) {
 				console.log("Error fetching notes: ");
 				console.log(error);
+				setallNotes([]); //set "allNotes" state (Here, clearing all notes)
 				return [];
 			}
 		};
@@ -66,8 +67,10 @@ const NoteStateComponent = ({ children }) => {
 			const newNote = await response.json(); //"newNote" is the note that was just added
 			//TODO: type <never> error
 			setallNotes([...allNotes, newNote]);
+			return { success: true, reason: "New note added!" };
 		} catch (error) {
 			console.error(error.message);
+			return { success: false, reason: "Failed to add note" };
 		}
 	};
 

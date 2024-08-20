@@ -1,11 +1,13 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
+import { useOutletContext } from "react-router-dom";
 
 const Login = () => {
 	const [formInput, setformInput] = useState({ email: "", password: "" });
 
 	const { loginUser } = useContext(AuthContext);
+	const [showAlert] = useOutletContext();
 
 	const navigate = useNavigate();
 
@@ -17,8 +19,12 @@ const Login = () => {
 		event.preventDefault();
 		let response = await loginUser(formInput.email, formInput.password);
 		if (response.success) {
-			console.log("Gd");
+			// console.log("Gd");
 			navigate("/home");
+			showAlert("green", "Login Successful")
+		}
+		else{
+			showAlert("red", "Failed to login!")
 		}
 	}
 
