@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useLocation, NavLink } from "react-router-dom";
+import AuthContext from "../contexts/AuthContext";
 
 const Navbar = () => {
 	let locationObj = useLocation();
 	let currPath = locationObj.pathname;
 	// console.log(locationObj.pathname);
+
+	const { authToken } = useContext(AuthContext);
+
+	const LogginSignupBtns = () => {
+		return (<>
+			<button type="button" className="btn btn-success mx-2">
+				<Link className="nav-link" to="/login">
+					Login
+				</Link>
+			</button>
+			<button type="button" className="btn btn-success mx-2">
+				<Link className="nav-link" to="/login">
+					Sign Up
+				</Link>
+			</button>
+		</>)
+	}
 
 	return (
 		<nav data-bs-theme="dark" className="navbar navbar-expand-lg bg-black ">
@@ -52,6 +70,7 @@ const Navbar = () => {
 						</li>
 					</ul>
 				</div>
+				{(authToken == "no auth token") ? <LogginSignupBtns></LogginSignupBtns> : null}
 			</div>
 		</nav>
 	);

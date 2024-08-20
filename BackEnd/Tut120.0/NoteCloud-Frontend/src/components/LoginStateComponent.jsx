@@ -30,8 +30,10 @@ const LoginStateComponent = ({ children }) => {
 
 			const json = await response.json();
 			setauthToken(json.authToken);
+			return { success: true, reason: "auth token obtained" };
 		} catch (error) {
 			console.error(error.message);
+			return { success: false, reason: "auth token not obtained" };
 		}
 	};
 
