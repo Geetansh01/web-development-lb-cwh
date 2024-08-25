@@ -11,12 +11,13 @@ const Root = () => {
 		setAlertConfig({ color: alertColor, msg: message });
 		setTimeout(() => {
 			setAlertConfig({ color: "default", msg: "" });
-		}, 2000);
+		}, 2500);
 	};
 
 	return (
 		<>
 			<Navbar />
+			<h6 className="text-center">Because this is a proof of concept website, all user Accounts & notes will be removed from the Database at 12:00 AM IST daily. Thank You!</h6>
 			<Alert alertConfig={alertConfig} />
 			{/* all the children elements in the nedted routes */}
 			<div>
