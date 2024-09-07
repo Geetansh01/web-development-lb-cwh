@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 import { useOutletContext } from "react-router-dom";
-
+import Alert from "./Alert";
 
 const Signup = () => {
     const [formInput, setformInput] = useState({ name: "", email: "", password: "" });
+    const [networkCallInProgress, setNetworkCallInProgress] = useState(false);
 
     const { signupUser } = useContext(AuthContext);
     const [showAlert] = useOutletContext();
@@ -15,6 +16,7 @@ const Signup = () => {
 
     async function handleSubmit(event) {
         event.preventDefault();
+        setNetworkCallInProgress(true);
         let response = await signupUser(formInput.name, formInput.email, formInput.password);
         if (response.success) {
 			// console.log("Gd");
@@ -23,10 +25,28 @@ const Signup = () => {
 		else{
 			showAlert("red", "Failed to signUp!")
 		}
+        setNetworkCallInProgress(false);
     }
+
+    const ShowNetworkCallAlert = () => {
+		return (
+			<>
+				{networkCallInProgress &&
+					<Alert
+						alertConfig={{
+							color: "yellow",
+							msg: "⌛⌛ Signing you up.... Backend hosted on a free plan, so initial requests may take time due to idle spin-up. Learn more ",
+							displaySomeLink: true,
+							linkURL: "https://docs.render.com/free#spinning-down-on-idle"
+						}}
+					/>}
+			</>
+		);
+	};
 
     return (
         <div className="container-lg h-100 bg-info-subtle rounded p-5">
+            <ShowNetworkCallAlert />
             <h1>Sign Up</h1>
             <form>
                 <div className="mb-3">

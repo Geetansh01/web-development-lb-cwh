@@ -7,11 +7,11 @@ const Root = () => {
 
 	const [alertConfig, setAlertConfig] = useState({ color: "default", msg: "" });
 
-	const showAlert = (alertColor, message) => {
+	const showAlert = (alertColor, message, time = 2500) => {
 		setAlertConfig({ color: alertColor, msg: message });
 		setTimeout(() => {
 			setAlertConfig({ color: "default", msg: "" });
-		}, 2500);
+		}, time);
 	};
 
 	return (
