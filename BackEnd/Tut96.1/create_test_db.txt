@@ -1,0 +1,19 @@
+Use these commands to create the 'test' db (in, say MySQL Workbench), then follow 'BackEnd\Tut96.1\index.js'
+
+    show databases;
+
+    create database test;
+    use test;
+    create table notes(
+    id integer primary key auto_increment,
+    title varchar(255) not null,
+    contents text not null,
+    created timestamp not null default now()
+    );
+
+    select * from notes;
+
+    insert into notes (title, contents) values 
+    ('1st Note', 'This is 1st Note'),
+    ('2nd Note', 'This is 2nd Note');
+
