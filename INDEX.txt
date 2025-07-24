@@ -2170,3 +2170,20 @@ Ref (documentation for JavaScript SDK): https://min.io/docs/minio/linux/develope
       1) Storing and retrieving the BLOB from a bucket (see code in "putObject.js" and "getObject.js")
 
 /**********************MinIO Ends*****************************/
+
+/**********************C# .NET in 1 video*****************************/
+Source: https://youtu.be/SuLiu5AK9Ps?si=ob-Uw0A3fvRwtyEO
+See "BackEnd\C#_dotNet" folder for code
+
+      1) C# can be used to make desktop apps, mobile apps and web apps (so basically everything). 
+      2).NET is a developer platform created by Microsoft. It has:
+            (i) CLR (Common Language Runtime) – the "runtime" where C# code runs (like JVM for Java).
+                  - C# is platform-independent (just like Java) because it compiles to CIL (Common Intermediate Language), and this CIL can be executed on any platform that has a compatible .NET runtime (CLR or CoreCLR).
+                  - Flow:
+                        C# Code (.cs)
+                        ↓ (C# Compiler - csc)
+                        CIL (Common Intermediate Language, formerly MSIL)
+                        ↓ (CLR or CoreCLR at runtime)
+                        Machine Code 
+           
+            (ii) Base Class Library (BCL) – built-in libraries for everything from file handling to network calls.
