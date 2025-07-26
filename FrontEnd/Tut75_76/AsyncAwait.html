@@ -17,31 +17,108 @@
         // console.log(abcd()); //Returns a promise
 
         //Example 2
-        async function utility(){          
+        async function utility(){        
             let delhiMausam = new Promise(function(resolve, reject){
                 setTimeout(() => {
+                    console.log("1");
                     resolve("Delhi me bht garmo hai!")
                 }, 1000);
             });
             
             let goaMausam = new Promise(function(resolve, reject){
                 setTimeout(() => {
+                    console.log("2");
                     resolve("Goa me Sardi hai!")
                 }, 5000);
             });
 
-            //Both promises run parallely as no "await" used
-            // let dM = delhiMausam;
-            // let gM = goaMausam;
+            let dM = await delhiMausam; //Now the execution of aysnc function utility stops here until delhiMausam is either resolved or rejected (i.e have any state other than pending)
+            /* 
+            "dM" is just a varaible waiting for Promise object "delhiMausam" to change state from Pending to fulfilled and then whatever will be the "value" of "delhiMausam" upon being fulfilled, it will be copied into "dM" (or dM will be a reference to it if the "value" is not a primitive data-type)
+            */
             
-            //Now gM promise will NOT execute until dM has finished executing (i.e gM will wait)
-            let dM = await delhiMausam;
-            let gM = goaMausam;
+            console.log(`3 | delhiMausam has been resolve!`)
+            let gM = goaMausam; //gM is just a reference to the Promise object "goaMausam"
 
 
             return [dM, gM];
         }
 
+        utility();
+        console.log("4");
+
+        //Expected output? <Make your guess and check End of File!>
+
+
+        /*
+            Explanation of output (from  Gemini 2.5 PRO | Proofread by me!):
+            
+            Excellent! Your comments within the code this time are much more accurate. You've correctly identified that `await` pauses the function and that `dM` is waiting for the promise to resolve.
+
+            Let's walk through this new version step-by-step to solidify the concept.
+
+            ### Step-by-Step Execution Analysis
+
+            1.  `utility()` Call:
+                - The `utility()` function is invoked. Since it's an `async` function, it immediately returns a promise (in a pending state) and its internal code begins to execute.
+
+            2.  Promise Creation:
+                - `let delhiMausam = new Promise(...)` runs. The `Promise` constructor's code executes, and `setTimeout` is handed off to the Web API environment (i.e The Browser) to start a 1-second timer.
+                - `let goaMausam = new Promise(...)` runs. Its `setTimeout` is also handed off to the Web API to start a 5-second timer. Both timers are now counting down concurrently.
+
+            3.  The `await` Pause:
+                - The engine reaches `let dM = await delhiMausam;`.
+                - The `await` keyword sees that `delhiMausam` is a pending promise. It suspends the execution of the `utility` function at this exact point.
+                - Crucially, the main thread is not blocked. Control is immediately given back to the script that called `utility()`.
+
+            4.  Global Scope Continues:
+                - The main thread, now free, moves to the next line in the global script: `console.log("4");`.
+                - "4" is printed to the console.
+                - The global script has now finished executing. The Call Stack is empty. The program now simply waits for events.
+
+            5.  First Timer Finishes (~1 second later):
+                - The 1-second timer in the Web API completes.
+                - Its associated callback function, `() => { console.log("1"); resolve(...) }`, is placed into the Callback Queue (also known as the Task Queue / Macrotask Queue).
+
+            6.  Event Loop's First Job:
+                - The Event Loop sees the Call Stack is empty and there's a task in the Callback Queue. It pushes this task onto the Call Stack to be executed.
+
+            7.  Callback Execution & Promise Resolution:
+                - The callback function runs.
+                - `console.log("1");` is executed. "1" is printed to the console.
+                - `resolve("Delhi...")` is called. This changes the state of the `delhiMausam` promise from pending to fulfilled.
+                - Because an `async` function was `await`-ing this promise, a job to resume the `utility` function is placed in the Microtask Queue.
+
+            8.  Microtask Queue Priority:
+                - The Event Loop always checks and empties the Microtask Queue completely before looking at the Callback Queue again.
+                - It finds the "resume `utility`" job, pushes it to the Call Stack, and execution of `utility` resumes.
+
+            9.  `utility()` Resumes:
+                - Execution picks up right after the `await`. The fulfilled value of `delhiMausam` is assigned to the `dM` variable.
+                - The next line, `console.log("3 | delhiMausam has been resolve!")`, is executed. "3 | delhiMausam has been resolve!" is printed to the console.
+                - `let gM = goaMausam;` assigns the still-pending `goaMausam` promise object to the `gM` variable.
+                - `return [dM, gM];` is executed. This resolves the main promise that `utility()` originally returned.
+
+            10. Waiting for the Final Timer (~4 seconds later):
+                - The Call Stack is empty again. The program waits. Eventually, the 5-second timer (which started at the beginning) completes.
+                - Its callback, `() => { console.log("2"); resolve(...) }`, is placed in the Callback Queue.
+
+            11. Event Loop's Final Job:
+                - The Event Loop takes the final task from the queue and pushes it to the Call Stack.
+                - The callback runs `console.log("2");`. "2" is printed to the console.
+                - `resolve("Goa...")` is called, fulfilling the `goaMausam` promise. Since nothing was `await`-ing this, no further code is triggered.
+
+            -----
+
+            ### Final Output
+
+            Based on this flow, the final output in the console will appear in this exact order:
+            4
+            1
+            3 | delhiMausam has been resolve!
+            2
+
+        */
     </script>
 </body>
 </html>
