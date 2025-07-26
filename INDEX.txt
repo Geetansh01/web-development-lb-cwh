@@ -872,7 +872,17 @@
                  B)This code (inside the promise) can be a synchronus code OR asynchronous code 
                  c)Basically promise is a task that i wish to get completed parallely in background.
                    🌳Practical use case:
-                        Say u are running a synchronus code & in b/w you made a network call. Ab is network call se dhere-dhere 🐌 data aega. So i wouldn't want to freeze the entire webpage (and frustrate 😡 the user) while this is happenning. So i will handle the network call asynchronously & parallely in background using a promise. The promise will tell me if the network call was successfull or not in the end (i.e data aa paya ya kuch gdbd ho gyi). (See "Event Loop" in JS from LB WebDev local saved Video "80. JS DOM Class - 1" )
+                        Say u are running a synchronus code & in b/w you made a network call. Ab is network call se dhere-dhere 🐌 data aega. So i wouldn't want to freeze the entire webpage (and frustrate 😡 the user) while this is happenning. So i will handle the network call asynchronously & parallely in background using a promise. The promise will tell me if the network call was successfull or not in the end (i.e data aa paya ya kuch gdbd ho gyi). 
+
+                        Note: 1) See "Event Loop" in JS from LB WebDev local saved Video "80. JS DOM Class - 1".
+                              2) Note that LB only explains the traditional Event Loop i.e with only 1 queue (now called the Macrotask Queue). With ES6 and the introduction of promises, we have another queue: Microtask Queue.
+                              3) So, the Event Loop now has 4 components:
+                                    (i) Single Call Stack (Bcz JS is Single threaded so there is only 1 call Stack)
+                                    (ii) The Browser (i.e WEB APIs)
+                                    (iii) Macrotask Queue: for event-handlers and WEB API callbacks (like setTimeout's callback: after the times expires, this callback goes into the Macrotask Queue)
+                                    (iv) Microtask Queue: for callbacks of .then(), .catch() and .finally() (+ other things)
+
+                                    💙 Great Video that covers this "new" Event Loop: https://youtu.be/eiC58R16hb8?si=zovgIjFCS8Wwi6NO 
 
             2)Syntax of a making a promise (basically we will make a promise object using a call to constructor of its class):
 
