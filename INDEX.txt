@@ -2197,3 +2197,189 @@ See "BackEnd\C#_dotNet" folder for code
                         Machine Code 
            
             (ii) Base Class Library (BCL) – built-in libraries for everything from file handling to network calls.
+
+/********************** Redis Starts *****************************/
+      Ref(Video): https://youtu.be/Vx2zPMPvmug?si=_mTvRnHXtcbESg2g
+      Redis Official Docs: https://redis.io/
+
+      0) What is Redis: Open source, in memory data-store (can be used for multiple things like cache etc.)
+      1) Why Redis:
+            Consider this scenario: You have a website with frontend + server (backend) + database. A user visits the site. The frontend sends an API request to fetch details from the backend.  
+                  The backend queries the database and gathers the data. Suppose the data is "computed" from various tables:  
+                  - Profile info from one table  
+                  - Some ID from another table  
+                  - Friends list or connections from yet another table  
+                  (Think of Instagram: profile picture, unread messages, friend requests, etc.)  
+                  Basically, this is an expensive query.
+
+            Now, the user receives this "computed data" on the frontend.  
+            If the user refreshes the page, all that work happens again!
+
+            Problems:
+            i) Re-querying and recomputing data across multiple tables  
+            ii) High response time (poor user experience on refresh)  
+            iii) High cost (too many expensive reads from the database)
+
+            Enter Redis 🔴:
+                  You create a Redis server, which runs in RAM (so Redis is running in RAM).  
+                  Initially, Redis has no data. On the first request by a user, the backend fetches data from the database and also stores this "computed" data in Redis (here, Redis is acting as a cache).  
+                  On subsequent requests, there is no need to query the database again. The data can be directly read from Redis.
+
+            What is Computed Data?  
+                  Consider something that is a dependent attribute, like age (which can be derived from date of birth), or something else that is not directly stored but can be computed using queries.  
+                  We can directly save this computed data in Redis because recomputation every time is expensive.
+
+      2) Getting started with Redis:
+            (i) It's a server in itself thar runs on port: 6379
+            (ii) Redis Stack: Redis by default only has CLI (& that is all you need for production), but for local learning and testing, we will use Redis stack (Redis server + GUI) 
+
+            Resume from: 00:14:27
+
+/********************** Docker Starts *****************************/
+      Ref: https://youtu.be/31k6AtW-b3Y?si=MwTqtrbIuQVnK9VM
+
+      1) Problem: Consider this scenario 
+            - Dev1 is using Windows with Node.js v16, MongoDB 5, and Redis 6.0 to build a Node.js app.  
+            - After 2 years, Dev2 joins the team. Dev2 is using macOS and installs Node.js v17, MongoDB 7, and Redis 7.0. Dev2 clones the app from GitHub, but it does not work!  
+
+            Solution 1: Dev2 downgrades everything to match Dev1’s setup. The project may run now.  
+            But if Dev1 was using something Windows-specific, Dev2 is at a dead end now. 💀
+
+            Another obstacle: when you would host this app on cloud (AWS, DigitalOcean), you would have to deal with these same issues there, and if there are multiple instances it will be hell 🔥
+
+            🟨 Main problem that Docker addresses: Replicating environments is tough.
+      
+      2) Docker Terms:  
+            (i) Container: A standalone environment that has its own configuration and specified versions of various apps, like Node.js v16, Redis 6.0, etc.  
+            This container can be copied by anyone and run on their machines.  
+
+            Example: I can run a container on Windows, and you can run the same container on macOS — it works the same.
+            
+            (ii) - Docker daemon: main docker process that spins up docker images and does the actual work (This is the actual docker app).
+                 - Docker desktop: just a GUI to see all our docker images etc!
+
+            (iii) Containers and Images: 
+                  Analogy:  
+                  A MacBook is a machine running an operating system (macOS).  
+                  Similarly, containers are just machines and cannot do anything on their own — you have to run images on them.  
+
+                  Also, just like two different machines might be running the same OS (for example, Windows 10), the data between them is separate and not shared at all.  
+                  In the same way, all containers running even the same image in Docker are isolated from each other. 
+      
+      3) Docker Commands: 
+            (i) docker run -it <image name like "ubuntu">  : to start a NEW container, here to run an ubuntu image in interactive mode. After running this command, the container will start and your terminal will be open inside that container.
+            Output from terminal: 
+            
+                  geetansh@Geetanshs-MacBook-Pro gen-ai % whoami
+                  geetansh
+                  geetansh@Geetanshs-MacBook-Pro gen-ai % docker run -it ubuntu
+                  Unable to find image 'ubuntu:latest' locally
+                  latest: Pulling from library/ubuntu
+                  cc43ec4c1381: Pull complete 
+                  Digest: sha256:9cbed754112939e914291337b5e554b07ad7c392491dba6daf25eef1332a22e8
+                  Status: Downloaded newer image for ubuntu:latest
+                  root@762890737f41:/# ls
+                  bin  boot  dev  etc  home  lib  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+                  root@762890737f41:/#  
+
+                  Note: (i) Here, "762890737f41" is the ID of this container. Use Ctrl+D to exit the running  ubuntu container.
+                        (ii) For the first run, you don't have ubuntu image do docker will download it from "hub.docker.com" [It's where public containers are present and where people pull them from. This is also the place where we will publish our custom images and other devs working wiht us will pull them from here. We can also run these custom images on whatever cloud server we are using in production! - So. basically GitHub for images.]
+            (ii) - docker container ls : show all running containers
+                 - docker container ls -a : show all containers (even stopped ones)
+                 - docker container ls -a : show all containers (even stopped ones) 
+                 - docker images / docker image ls : show all images on your machine  
+            (iii) docker start/ stop <container name> : start/ stop OLD (already existing) containers 
+            (iv) - docker exec <container name> <command to run> : to run a command in the container, get the results and then the terminal gets back to the main machine (outside docker)
+                 - docker exec -it <container name> bash : now a bash terminal is open and is connected inside the container, so you stay inside the container after runnign this command 
+            (v) docker run -it -p <port>:<port> -e key=value -e key=value <image-name> : "-e" enables us to set environment variables as {key, value} pairs inside the docker container
+
+      4) Port Mapping in Docker:  
+            Suppose your Docker container is running Node.js at port 9000.  
+            If you try to access it from your host machine at localhost:9000, you will not be able to reach it because it is inside the container.  
+            To make it accessible, you have to expose the port outside the Docker container. To do that, Use this command:  
+                  
+                  docker run -it -p 9000:9000 <image name>  
+
+            This exposes the container’s port 9000 on your machine’s port 9000. Format: <machine port>:<container port>
+      5) Containerize your nodeJS app (See "./BackEnd/Docker"): so the flow goes like : make your project as usual, now add a "Dockerfile" (yup excalty this name no extension, see this file in "./BackEnd/Docker/Dockerfile"). after doing alt his run this to make your custom image: 
+
+            docker build -t my-first-docker-image-of-nodejs . 
+
+      Here, (i) the "." -> the build context. The build context = the folder you send to the Docker daemon when building. So, "." means “use the current directory as the context”
+            (ii) "my-first-docker-image-of-nodejs" -> image name
+
+            Now, you can run this image as follows (Again, See "./BackEnd/Docker" for the express server code):
+
+                  geetansh@Geetanshs-MacBook-Pro gen-ai % docker run -it -p 9000:3000 my-first-docker-image-of-nodejs
+                  Example app listening on port 3000
+
+            If, you want to pass an environment variable PORT (we have this line in our code: "const port = process.env.PORT || 3000" ):
+
+                  Run 'docker run --help' for more information
+                  geetansh@Geetanshs-MacBook-Pro gen-ai % docker run -it -e PORT=4000 -p 9000:3000 my-first-docker-image-of-nodejs
+                  Example app listening on port 4000
+
+            📒 Layer Caching in Docker: 
+                  nDocker uses caching, so the order of commands in the Dockerfile is very important.
+
+                  Case 0:  
+                        If you don’t make any changes in the code and just rebuild the image, it will be lightning fast because Docker has everything cached and it knows there were no changes.
+
+                  Case 1 (Good):  
+                        Since the lines referring to our code are placed after installing Node.js, when we change our code and rebuild the Docker image, Docker already has everything up to "RUN apt-get install -y nodejs" cached.  
+                        This means that part executes very fast, and only the code-related lines are processed again.  
+
+                        Example:
+
+                        FROM ubuntu  
+                        RUN apt-get update  
+                        RUN apt-get install -y curl  
+                        RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -  
+                        RUN apt-get upgrade -y  
+                        RUN apt-get install -y nodejs  
+
+                        COPY package.json package.json  
+                        COPY package-lock.json package-lock.json  
+                        COPY main.js main.js  
+
+                        RUN npm install  
+                        ENTRYPOINT [ "node", "main.js" ]  
+
+                  Case 2 (Poor):  
+                        If the code lines appear first, then whenever we change the code, those lines will be processed again, but also everything after them (like installing Node.js).  
+                        As a result, rebuilding the image becomes slower (As NodeJS will be installed every time when we change our code in the image building process).  
+
+                        Example:
+
+                        FROM ubuntu  
+                        COPY package.json package.json  
+                        COPY package-lock.json package-lock.json  
+                        COPY main.js main.js  
+
+                        RUN apt-get update  
+                        RUN apt-get install -y curl  
+                        RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -  
+                        RUN apt-get upgrade -y  
+                        RUN apt-get install -y nodejs  
+
+                        RUN npm install  
+                        ENTRYPOINT [ "node", "main.js" ]
+
+      6) Docker Compose:  
+            Sometimes a single container is not sufficient. For example, your project may need multiple containers such as Postgres, Node.js, and Redis.  
+            Without Docker Compose, anyone wanting to use the project would have to ask which containers are required, then manually pull and run them one by one.  
+            This is solved by Docker Compose. Here, you can specify multiple containers that need to be spun up, along with all their configurations (environment variables, ports, etc.).  
+
+      Commands:  
+            docker compose up  
+                  Spins up all the containers defined in the docker-compose.yml file.  
+
+            docker compose down  
+                  Stops and removes all the containers, networks, and resources created by docker-compose up.  
+
+            docker compose up -d  
+                  Spins up all the containers in detached mode (runs them in the background).
+
+
+
+
