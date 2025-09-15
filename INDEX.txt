@@ -2230,10 +2230,178 @@ See "BackEnd\C#_dotNet" folder for code
                   We can directly save this computed data in Redis because recomputation every time is expensive.
 
       2) Getting started with Redis:
-            (i) It's a server in itself thar runs on port: 6379
+            (i) It's a server in itself that runs on port: 6379
             (ii) Redis Stack: Redis by default only has CLI (& that is all you need for production), but for local learning and testing, we will use Redis stack (Redis server + GUI) 
 
-            Resume from: 00:14:27
+      3) Redis cli commands: Start redis stack in side a docker container using: "docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest". Now run bash inside this container using: "docker exec -it <container name ex: redis-stack> bash". Now, inside the container, run these commands to use redis CLI
+            (i) redis-cli ping: to check if redis is up and running. Redis will reply with PONG if it's up and running.
+            (ii) redis-cli: to go into REPL(Read Evaluate Print Loop) mode with redis
+
+      4) DataTypes in redis: To be able to store (or cache) data in redis, it provides some datatypes out of the box like:
+         (Ref: https://redis.io/docs/latest/develop/data-types/strings/): Docs are very good, I am not writing much, you can refer the docs for exhaustive coverage
+            1) String
+                  (i) - SET <key> <value>; GET <key>
+
+                        127.0.0.1:6379> set name Geetansh
+                        OK
+                        127.0.0.1:6379> get name
+                        "Geetansh"
+                        127.0.0.1:6379> 
+                  
+                        📙 Note: Above is NOT a good way to name keys in redis. The recommended way to name a key is: <entity>:<id> . For ex if you are caching "users" and messages, you would:
+
+                              127.0.0.1:6379> set user:1 Geetansh
+                              OK
+                              127.0.0.1:6379> set user:2 Hardik
+                              OK
+                              127.0.0.1:6379> set msg:1 HelloBro
+                              OK
+                              127.0.0.1:6379> set msg:2 WhatsUp
+                              OK
+                              127.0.0.1:6379> get user:1
+                              "Geetansh" 
+                              "HelloBro"
+                        
+                        - SET <key> <value> nx: this will set the value only if one does not exist already
+                        - MGET <key1> <key2> ...: To get multiple values at once
+
+                              127.0.0.1:6379> mget user:1 user:2 msg:1
+                              1) "Geetansh"
+                              2) "Hardik" 
+                              3) "HelloBro"
+                        
+                        (ii) Even though the datatype is "String", they can also be used as integers. 2 commands: a) incr; b) incrby  
+
+                              127.0.0.1:6379> set site_visitors 0
+                              OK
+                              127.0.0.1:6379> incr site_visitors
+                              (integer) 1
+                              127.0.0.1:6379> incr site_visitors
+                              (integer) 2
+
+                              127.0.0.1:6379> incrby site_visitors 10
+                              (integer) 12
+                              127.0.0.1:6379> 
+            
+            2) Lists: Redis lists are frequently used to: (i) Implement stacks and queues.
+                                                          (ii) Build queue management for background worker systems.
+                                                            
+                  (i) lpush <key-name i.e name of the list> <element>
+                        127.0.0.1:6379> lpush messages One
+                        (integer) 1
+                        127.0.0.1:6379> lpush messages Two
+                        (integer) 2
+                        127.0.0.1:6379> lpush messages Three
+                        (integer) 1
+                        127.0.0.1:6379> rpop messages
+                        "One"
+
+                  (ii) lrange <key-name i.e name of the list> <start-index stop-index>
+                        127.0.0.1:6379> lrange messages 0 -1
+                        1) "4"
+                        2) "2"
+                        3) "1"
+
+            3) Sets: A Redis set is an unordered collection of unique strings (members). You can use Redis sets to efficiently, say, Track unique items (e.g., track all unique IP addresses accessing a given blog post). [+ more use cases, see docs]
+                  (i) sadd <key-name i.e name of the set> <element> 
+
+                        127.0.0.1:6379> sadd ip_addresses 1.1.1.1
+                        (integer) 1
+                        127.0.0.1:6379> sadd ip_addresses 1.1.1.0
+                        (integer) 1
+                        127.0.0.1:6379> sadd ip_addresses 1.1.1.2
+                        (integer) 1
+            
+            4) Sorted Sets: A Redis sorted set is a collection of unique strings (members) ordered by an associated score. When more than one string has the same score, the strings are ordered lexicographically. Some use cases for sorted sets include:
+                  Leaderboards. For example, you can use sorted sets to easily maintain ordered lists of the highest scores in a massive online game.
+                  Rate limiters. In particular, you can use a sorted set to build a sliding-window rate limiter to prevent excessive API requests.
+
+                  (i) zadd <key-name i.e name of the sorted set> <score> <element>
+
+                        127.0.0.1:6379> zadd kills 9 Hemish
+                        (integer) 1
+                        127.0.0.1:6379> zadd kills 6 Geetansh
+                        (integer) 1
+                        127.0.0.1:6379> zadd kills 4 Tanish
+                        (integer) 1
+                        127.0.0.1:6379> zrange kills 0 -1
+                        1) "Tanish"
+                        2) "Geetansh"
+                        3) "Hemish"
+                        127.0.0.1:6379> zrevrange kills 0 -1
+                        1) "Hemish"
+                        2) "Geetansh"
+                        3) "Tanish"
+                  
+            5) Streams: Redis streams are an inbuilt lightweight version of Kafka (both are used for event Streaming). So, cases where data is rapidly generated and needs to be stored (think user clicks, scrolls, or data from speed sensors, temperature sensors etc.), you can use redis streams.
+
+                  (i) XADD: to add to streams.
+                        eg: When our racers pass a checkpoint, we add a stream entry for each racer that includes the racer's name, speed, position, and location ID.
+
+                        127.0.0.1:6379> XADD race:france * rider Castilla speed 30.2 position 1 location_id 1
+                        "1757929634076-0"
+                        127.0.0.1:6379> XADD race:france * rider Norem speed 28.8 position 3 location_id 1
+                        "1757929664617-0"
+                        127.0.0.1:6379> XADD race:france * rider Prickett speed 29.7 position 2 location_id 1
+                        "1757929692620-0"
+
+                        📙 Note: Redis returns an ID like "1757929692620-0", here, "1757929692620" is an id and "0" means this is the only data that came at this exact moment. Had multiple things arrived at this exact moment, they would get IDs like ""1757929692620-1", "1757929692620-2", "1757929692620-3" etc.
+
+                        127.0.0.1:6379> XRANGE race:france 1692632086370-0 + COUNT 2
+                        1) 1) "1757929634076-0"
+                        2) 1) "rider"
+                              2) "Castilla"
+                              3) "speed"
+                              4) "30.2"
+                              5) "position"
+                              6) "1"
+                              7) "location_id"
+                              8) "1"
+                        2) 1) "1757929664617-0"
+                        2) 1) "rider"
+                              2) "Norem"
+                              3) "speed"
+                              4) "28.8"
+                              5) "position"
+                              6) "3"
+                              7) "location_id"
+                              8) "1"
+                        127.0.0.1:6379>  
+
+            6) Geospatial datatype: Redis geospatial indexes let you store coordinates and search for them. This data structure is useful for finding nearby points within a given radius or bounding box.
+      
+      5) Pub/Sub channels in Redis:
+            Terminal 1 (Publisher)
+
+                  root@859f33f73ddf:/# redis-cli
+                  127.0.0.1:6379> PUBLISH Geetansh_Podcast 1st_Podcast
+                  (integer) 1
+                  127.0.0.1:6379> PUBLISH Geetansh_Podcast 2nd_Podcast
+                  (integer) 1
+                  127.0.0.1:6379> 
+
+            Terminal 2 (Subscriber)
+
+                  127.0.0.1:6379> SUBSCRIBE Geetansh_Podcast
+                  1) "subscribe"
+                  2) "Geetansh_Podcast"
+                  3) (integer) 1
+                  1) "message"
+                  2) "Geetansh_Podcast"
+                  3) "1st_Podcast"
+                  1) "message"
+                  2) "Geetansh_Podcast"
+                  3) "2nd_Podcast"
+
+      6) Using redis with NodeJS server (See "BackEnd/Redis_with_NodeJS" Folder): 
+      Here, we made a client.js file in which the "client" object is the one interacting witht the redis server
+
+            1) Working with Redis String datatype (See "BackEnd/Redis_with_NodeJS/1_string.js")
+                  (i) You can also set TTL (Time to live) for a key, after which it automatically expires. Why do we need this? Well we are using redis as just a cache but the true data is in the DB, so for some time, the user will get cached data from redis but after TTL is over, user would get fresh data from DB!
+
+            2) Actual applcation to make your NodeJS server faster (See "BackEnd/Redis_with_NodeJS/server.js")
+
+/********************** Redis Ends *****************************/
 
 /********************** Docker Starts *****************************/
       Ref: https://youtu.be/31k6AtW-b3Y?si=MwTqtrbIuQVnK9VM
@@ -2286,7 +2454,6 @@ See "BackEnd\C#_dotNet" folder for code
                         (ii) For the first run, you don't have ubuntu image do docker will download it from "hub.docker.com" [It's where public containers are present and where people pull them from. This is also the place where we will publish our custom images and other devs working wiht us will pull them from here. We can also run these custom images on whatever cloud server we are using in production! - So. basically GitHub for images.]
             (ii) - docker container ls : show all running containers
                  - docker container ls -a : show all containers (even stopped ones)
-                 - docker container ls -a : show all containers (even stopped ones) 
                  - docker images / docker image ls : show all images on your machine  
             (iii) docker start/ stop <container name> : start/ stop OLD (already existing) containers 
             (iv) - docker exec <container name> <command to run> : to run a command in the container, get the results and then the terminal gets back to the main machine (outside docker)
@@ -2379,6 +2546,10 @@ See "BackEnd\C#_dotNet" folder for code
 
             docker compose up -d  
                   Spins up all the containers in detached mode (runs them in the background).
+
+      Note: There is also a part 2 with some advanced topics, do that too if need be! (Ref: https://youtu.be/xPT8mXa-sJg?si=LtUpqCZrve1dz_KV)
+/********************** Docker Ends *****************************/
+
 
 
 
