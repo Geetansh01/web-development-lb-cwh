@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chit Chat</title>
+</head>
+<body>
+    <h1>Bharat Chat</h1>
+    <input type="text" id="message_field">
+    <button id="send_btn">SEND</button>
+    <div id="all_messages"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        // whenever the "socket" (i.e the server) emits a "user-message" event, run the provided callback 
+        socket.on("message-from-server", (message)=>{
+                console.log("Message from server socket: ", message);
+
+                let p = document.createElement("p");
+                p.innerText = message;
+                document.getElementById("all_messages").append(p); 
+        })
+        
+        let message_field = document.getElementById("message_field");
+        let send_btn = document.getElementById("send_btn");
+
+        send_btn.addEventListener("click", ()=>{
+            let user_message = message_field.value;
+            // console.log("hERE", user_message);
+            socket.emit("user-message", user_message);
+        })
+
+
+    </script>
+</body>
+</html>

@@ -2548,7 +2548,40 @@ See "BackEnd\C#_dotNet" folder for code
                   Spins up all the containers in detached mode (runs them in the background).
 
       Note: There is also a part 2 with some advanced topics, do that too if need be! (Ref: https://youtu.be/xPT8mXa-sJg?si=LtUpqCZrve1dz_KV)
+
 /********************** Docker Ends *****************************/
+
+/********************** Socket.IO Start*****************************/
+      Ref: https://youtu.be/UUddpbgPEJM?si=EJ2NTb3hWkiZsxj-
+
+      1) Problem: How does a simple HTTP connection work?  
+            The client sends a request to the server, the server sends back a response, and the connection is closed.  
+            If the client sends another request, the server responds and the connection is closed again.  
+
+            Now, consider building a real-time chat application with 2 clients and 1 server.  
+            Client 1 can send a message for Client 2 to the server. But how will the server deliver it to Client 2?  
+
+            1) Method 1 (Polling):  
+                  Client 2 asks the server every 1 second if there is a new message.  
+                  The problem is that with thousands of clients, this creates unnecessary overhead for the server.
+
+            2)  Method 2 (WebSocket Connection):  
+                  Here, the client sends the server a simple HTTP request, but with an Upgrade header asking the server to upgrade this connection to a WebSocket connection.  
+                  The server accepts, and now the connection does not close.  
+                  At this point, there is a bidirectional connection between the client and the server, so either side can send messages to the other.
+
+      3) Using Socket.IO
+            1) In backend server (see "BackEnd/SocketIO/server.js")
+
+            2) On frontend (See "BackEnd/SocketIO/public/index.html") :
+                  (i) Now on the server we have installed Socket.IO npm package but what about frontend. Well, we will add this line in our frontend code: 
+
+                      <script src="/socket.io/socket.io.js"></script>
+
+                  - What this will do is get a script (Since src is "/socket.io/socket.io.js", it is requesting the script from the same url that loaded it i.e our backend). 
+                  - The Socket.io code in our "BackEnd/SocketIO/server.js" is reponsible for sending this script.
+
+/********************** Socket.IO Ends *****************************/
 
 
 
