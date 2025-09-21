@@ -2583,7 +2583,27 @@ See "BackEnd\C#_dotNet" folder for code
 
 /********************** Socket.IO Ends *****************************/
 
+/********************** FastAPI Starts *****************************/
+      Ref(Video): https://youtu.be/Lu8lXXlstvM?si=FiiPAbuMlEm54ud3
+      Official Docs: https://fastapi.tiangolo.com/
 
+      1) To be able to run fastAPI backend, we need a Web Server (just like NodeJS is the Web Server for an express backend). This will be Uvicorn. So, run: 
+            pip install fastapi uvicorn
+
+      2) Pydantic: a Python package for Data Validation (gets installed with uvicorn) 
+      3) Running the uvicorn server (OPen terminal in "BackEnd\fastAPI" folder). Now run:
+
+            uvicorn main:app --reload
+
+            Here, (i) app: the fastAPI object you made in "BackEnd\fastAPI\main.py" using "app = FastAPI()".
+                  (ii) --reload: means the server will restart whenever you make any changes and save
+
+      4) Swagger: a tool that you otherwise have to separately configure but comes built in with fastAPI. Just go to "http://localhost:8000/docs" and you can visualize all the APIs of your backend.
+            1) So, say you have a POST API in your backend, you don’t need Postman to test it, just go to "http://localhost:8000/docs" and make a POST request with Swagger!
+      5) PostgreSQL and SQLAlchemy: we are using PostgreSQL DB in this project. We are also using SQLAlchemy as the ORM. SQLAlchemy supports many SQL based RDBMSes 
+            1) One of the main abilities of SQLAlchemy is to abstract away database-specific details, allowing developers to switch between different database systems with minimal code changes. 
+
+      Resume from: 1:08:39
 
 
 
