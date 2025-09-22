@@ -2602,8 +2602,62 @@ See "BackEnd\C#_dotNet" folder for code
             1) So, say you have a POST API in your backend, you don’t need Postman to test it, just go to "http://localhost:8000/docs" and make a POST request with Swagger!
       5) PostgreSQL and SQLAlchemy: we are using PostgreSQL DB in this project. We are also using SQLAlchemy as the ORM. SQLAlchemy supports many SQL based RDBMSes 
             1) One of the main abilities of SQLAlchemy is to abstract away database-specific details, allowing developers to switch between different database systems with minimal code changes. 
+            2) psycopg: this is the driver for PostgreSQL needed in SQLAlchemy to work with PostgreSQL. If, say, you are working with MySQL, you would need MySQL's driver in SQLAlchemy. So, run:
+                  pip install sqlalchemy psycopg
+      
+      6) So we have 2 files:
+            1) models.py ("BackEnd/fastAPI/models.py"): This is where pydantic classes are present. Take the "Product" class for example, the purpose of this pydantic class is to enable validations on all the fields of "Product"
+            2) database_models.py ("BackEnd/fastAPI/database_models.py"): This is where SQLalchemy models are present. As we are using SQLAlchemy as an ORM, where would we define the object-relational mapping such as table name, which key will be primary key etc? In this file! 
+            3) "2)" specifies the mapping part but how do we tell SQLAlchemy that it has to make all the tables? We do that by following line in "BackEnd/fastAPI/main.py":
 
-      Resume from: 1:08:39
+                  database_models.Base.metadata.create_all(bind=engine)
+
+            4) Dependency injection in FastAPI (See "BackEnd/fastAPI/main.py"):
+                  1) creating a session object, then running the route handler, then closing the connection as in:
+
+                        @app.get("/products")
+                        def get_all_products():
+                              db = session()
+                                    ...
+                              db.close()
+                              return products
+
+                        is very repetitive when done for all the route handlers. 
+                  2) Rather we can use dependency injection provided by fastAPI as follows:
+
+                        def get_db():
+                              db = session()
+                              try:
+                                    yield db
+                              finally:
+                                    db.close()
+
+                        @app.get("/products")
+                        def get_all_products(db: Session = Depends(get_db)):
+                              # Query the DB
+                              db_products = db.query(database_models.Product).all()
+                              return db_products
+
+                        (i) Here, "db: Session = Depends(get_db)" says that "get_all_products()" function needs the "db" object to run from the "get_db()" function.
+                        (ii) Also, the way dependency injection works in fastAPI, "get_db()" will "yield" the db object to  "get_all_products()" and stop there. Once  "get_all_products()" is done i.e the request has been served, "get_db()" will run from after the "yield db" line and ultimately, the "db.close()" will run. [You can read up on how the "yield" keyword works in python and how fastAPI uses it.]
+                        (iii) So, why try-finally, why not just:
+
+                              def get_db():
+                                    db = session()
+                                    yield db
+                                    db.close()
+
+                              Well, it works fine if everything goes good in the route handler i.e "get_all_products()". But if an exception arises in the route handler, "db.close()" would never run -> Connection leak 💀
+                                          
+
+      Resume from: 1:40:00
+
+
+
+                  
+
+
+
 
 
 
