@@ -2106,6 +2106,64 @@
 
 /**********************Temporary break from CWH course*****************************/
 
+/********************** TanStack Query/ React Query Starts *****************************/
+      Ref: https://youtu.be/mPaCnwpFvZY?si=uQacvy-FMr1xTpyR
+
+      0) TanStack Query/ React Query in a nutshell:
+            - It provides a hook that contains react state for: "data", "loading", "errors" etc. all in a single hook.
+            - Normally, you would make a "loading" state in react that would render a loading icon when your app is fetching data from the server. Then once the datahas been received, you would update the "loading" state to remove the loading icon. Let's say 15 minutes have passed, now the data no the server might be updated so you again set the "loading" state to true and refetch the data. 
+            - In addition to this, if the fetch fails, you have to retry.
+            - So, basically, this all is boilerplate code that needs to be repeated whenever your app is fetching data from a server.
+            - TanStack provides all of this builtin in a single hook.
+      
+      📒Note: More details and where to use Redux/ Context Provider instead:
+            🌍 Two Worlds of State
+
+            In frontend apps, you deal with two kinds of state:
+
+            1. UI / Client State
+                  * Things that live only in the frontend.
+                  * Examples: is a modal open, current page, dark mode, form input, cart before checkout.
+                  * Best tools: React state, Context, Redux, Zustand, Jotai, etc.
+
+            2. Server State
+                  * Data that comes from the backend and can change outside your app’s control.
+                  * Examples: products list, user profile, comments, search results.
+
+                  * Challenges:
+                        * Needs fetching
+                        * Can be stale (server updated elsewhere)
+                        * Needs caching
+                        * Needs sync across components
+                        * Needs retries, pagination, optimistic updates
+
+
+            🧩 Where Context / Redux shine
+                  * Great for client state (stuff entirely in frontend).
+                  * You can use them for server state too, but then *you* must build:
+                        * Fetching logic
+                        * Error handling
+                        * Loading states
+                        * Caching & invalidation
+                        * Retry/backoff logic
+                        * Sync between tabs/focus
+
+            That becomes a **lot of boilerplate** → basically reinventing TanStack Query inside Redux/Context.
+
+            🚀 Where TanStack Query shinesß
+                  * It’s specialized for server state.
+                  * Gives you all the messy stuff for free:
+                        * Data fetching & caching
+                        * Auto refetch when data might be stale (window focus, tab refocus, time-based)
+                        * Retry failed requests
+                        * Invalidate queries after mutations (add/update/delete → auto refresh list)
+                        * Pagination, infinite scroll
+                        * DevTools for debugging
+
+            So you don’t have to write the plumbing — just say *“how to fetch this”*.
+
+Resume from: 1:12
+
 /**********************MinIO Starts*****************************/
 Refer the "BackEnd\MinIO" folder
 PLaylist being followed: https://youtube.com/playlist?list=PLFOIsHSSYIK37B3VtACkNksUw8_puUuAC&si=gWm2AzcR02wBXdLz
