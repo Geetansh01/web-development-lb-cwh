@@ -2649,8 +2649,7 @@ See "BackEnd\C#_dotNet" folder for code
 
                               Well, it works fine if everything goes good in the route handler i.e "get_all_products()". But if an exception arises in the route handler, "db.close()" would never run -> Connection leak 💀
                                           
-
-      Resume from: 1:40:00
+/********************** FastAPI Ends *****************************/
 
 
 
