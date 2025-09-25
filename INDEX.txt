@@ -2196,9 +2196,8 @@
                   queryKey: ["todos", id],
                   queryFn: () => getTodos(id),
             });
-
-      Resume from: 20:17
       
+      3) How to handle multiple queries. (See "FrontEnd/TanStackQuery/src/App_3_MultipleQueries.jsx" )
 
 /**********************MinIO Starts*****************************/
 Refer the "BackEnd\MinIO" folder
