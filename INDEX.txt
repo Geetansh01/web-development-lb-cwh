@@ -2162,7 +2162,43 @@
 
             So you don’t have to write the plumbing — just say *“how to fetch this”*.
 
-Resume from: 1:12
+      1) useQuery Hook: this is the main hook provided by TanStack Query. From this, you get many things like:
+            - data : actual datat returned by your query
+            - isPending (Most suitable in most places): "true" if there is no data for the current query in the cache. 
+            - isFetching
+            - isLoading
+            - error : if the query errored out and could not fetch any data
+            - refetch etc...
+            
+            📙 How to use (See "FrontEnd/TanStackQuery/src/App_1_Intro.jsx") [Rename to "/App.jsx" to run it]:
+
+                  const { data, isPending, refetch } = useQuery({
+                        queryKey: ["todos"],
+                        queryFn: getTodos,
+                  });
+            
+            Here: (i) queryKey : this must be UNIQUE, this is how TanStack uniquely identifies this particular query in the entire app.
+                  (ii) queryFn : The function that the query will use to request data.
+
+            See more (Official Docs: https://tanstack.com/query/latest/docs/framework/react/reference/useQuery )
+
+      2)(See "FrontEnd/TanStackQuery/src/App_1_Intro.jsx") [Rename to "/App.jsx" to run it]) Suppose you have a React state variable "id" that stores which post’s comments your app is currently displaying. You would pass this "id" to your API like this:  
+            /comments?postId=${id}  
+
+      Now, your queries are being cached by TanStack Query, so, it needs to know about this "id". Otherwise, it will treat different queries the same and cause problems. For example, these two queries must be treated as separate:  
+            /comments?postId=1  
+            /comments?postId=2  
+
+      To handle this correctly, you need to tell TanStack Query that the query depends on the React state "id", so it can cache them accordingly:
+
+            const [id, setId] = useState(1);
+            const { data, isPending, refetch } = useQuery({
+                  queryKey: ["todos", id],
+                  queryFn: () => getTodos(id),
+            });
+
+      Resume from: 20:17
+      
 
 /**********************MinIO Starts*****************************/
 Refer the "BackEnd\MinIO" folder
