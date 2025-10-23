@@ -2865,6 +2865,34 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
 
 /********************** TypeScript Ends *****************************/
 
+/********************** Axios Starts *****************************/
+      Ref: https://youtu.be/6LyagkoRWYA?si=KBwx-s7CnELb2VjM
+
+      0) Axios: a library for making requests (better alternative to fetchAPI)
+      (See ~/main.js for code)
+      1) GET request using Axios: it will return a promise. Upon resolution, we will get a JSON object with the following attributes:
+            (i) config: this will have stuff like which url was hit, which type of request it was (GET, POST etc.)
+            (ii) data: this is where the response from the API would be
+            ...etc
+      
+      2) Intercepting requests in axios: say you want to run something every time a request is sent.
+            1) There are two main types of Axios interceptors:
+            (i) Request Interceptors: These functions are executed before a request is sent to the server. They can be used to:
+                  - Add authentication tokens (e.g., JWT) to the request headers.
+                  - Modify request parameters or data.
+                  - Set a base URL for all requests.
+                  - Log request details for debugging.
+            
+            (ii) Response Interceptors: These functions are executed after a response is received from the server but before it's passed to the then or catch blocks. They can be used to:
+                  - Globally handle errors (e.g., redirect to login on 401 Unauthorized).
+                  - Transform response data before it reaches the application logic.
+                  - Log response details.
+                  - Implement refresh token logic.
+
+      3) Other Axios functionalities are also there (See "BackEnd/Axios/main.js")
+
+/********************** Axios Ends *****************************/
+
 
 
 
