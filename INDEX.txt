@@ -2860,8 +2860,115 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
             let name = "Geetansh";
       Just remember to use it as "string" in the code ahead. This saves you from having to write types again and again for all the variables you might be declaring.
       3) "Any" type in TS: Basically allows you to skip type checking, usually you should not use it.
-      4) Functions in JS
+      4) Functions in TS: Function declaration is the only place in TS where you have to explicitly define your types because a function takes in a parameter during declaration and at that time TS has no way of knowing it's type. Rest at all places in the code TS will infer the type automatically.
+            (i) Should Function return type be implicit or explicit:
+             - Inferred : If the function is only being used by me in my own codebase
+             - Explicit : If the function is being exported outside and used by others too!
 
+            (ii) Void: a new return type in TS that is not there in JS. The purpose of this is to explicitly tell that this function does not return anything as opposed to a function that returns "undefined". 
+                  - So, this removes the ambiguity between a function that explicitly returns "undefined" and a function that does not return anything at all. (In JS, both of these resolve to returning "undefined").
+            (iii) Function Type in TS
+                  let add: (x: number, y: number) => number;
+                  Here, we are defining a variable "add" of type "Function" that takes in 2 parameters of type "number" and returns a "number".
+                  Now, we can only assign functions of this type to "add", else TS will throw an error.
+
+                  Also see other use in "BackEnd/Typescript/src/index.ts --> // 6: Function Type in TS"
+      5) Type Aliases in TS: to avoid writing complex types again and again, we can define a type alias.
+            📒Note: these Type Aliases are only in TS not in JS, so don't try to check these in code like: typeof <var>ß === "<TypeAlias>" , it won't work! 
+      6)Importing Types
+            With certain TypeScript configurations you can import types directly from a module ( say "./models") like this:
+
+                  import { User, Post } from "./models";
+
+            But it's much safer and more efficient to use the import type syntax:
+
+                  import type { User, Post } from "./models";
+
+            This way TypeScript knows that you're only importing types, and it can drop the imports from the compiled JavaScript code which keeps the compiled JS bundle size small. This syntax also works:
+
+                  import { type User, type Post } from "./models";
+      7) Union types use the pipe symbol (|) and allow you to specify that a value can be one of several types.
+            // userId is a string OR a number
+            let userId: string | number;
+            userId = "user_42";
+            userId = 42;
+      
+            (i) Type Narrowing: TS will automatically narrow down the type based on the checks you do in code. For Ex:
+                  ex: a)function f1(info: string | number){
+                              // info.toLowerCase() // TS Will throw an error here, it may/ maynot be a string here
+                              
+                              // Type Narrowing: TS knows that inside this if block, "info" is string
+                              if(typeof info === "string"){
+                                    info.toLowerCase() // allowed here!
+                              }
+                        }
+
+                      b)function printId(id: number | string) {
+                              if (typeof id === "string") {
+                                    // Here, TS knows that id is a string
+                                    console.log(id.toUpperCase());
+                              } else {
+                                    // Here, TS knows that id is a number
+                                    console.log(id.toFixed(2));
+                              }
+                        }
+      
+      8) Optional Parameters : You can specify function parameters as optional with a question mark (?) after the name:
+            function greet(name: string, title?: string): string {
+                  if (title) {
+                        return `Hello, ${title} ${name}!`;
+                  }
+                  return `Hello, ${name}!`;
+            }
+
+            greet("Gandalf");           // "Hello, Gandalf!"
+            greet("Gandalf", "Wizard"); // "Hello, Wizard Gandalf!"
+
+            📒Note: 
+            1) Optional params have an undefined automatically unioned on the specified type (Eg: "title" above is "string" | "undefined" ). If the value is omitted, it's "undefined" instead of the specified type. So, make sure to handle that "undefined" case too in your function!
+            2) Why was "Optional Parameters" needed? In JS, if you don't pass a parameter to a function, it's "undefined" by default (this is different from other languages where in if a function expects a parameter, you have to pass it else error!). So, this feature is just to mimic that behavior in TS.
+      
+      9) Default Parameters: Default parameters provide fallback values for optional arguments.
+
+            function newCharacter(name: string, role: string = "warrior"): string {
+                  return `${name} is a ${role}`;
+            }
+
+            console.log(newCharacter("Gandalf")); // Gandalf is a warrior
+            console.log(newCharacter("Gandalf", "wizard")); // Gandalf is a wizard
+
+      When you use default parameters, you do not need to mark the parameter as optional by using "?".
+
+      10) Literal Types: Literal types areused for narrowing the possible values of a variable.
+            A string can have an infinite number of values.
+            So what if we want to declare a "direction" variable?
+
+                  function move(direction: string) {
+                        // Implementation...
+                  }
+
+
+            This kinda sucks... direction can be any string! So, we can use Literal Types here:
+
+                  function move(direction: "north") {
+                        // Implementation...
+                  }
+
+            Now direction can only be "north"!
+      
+      11) Arrays in TS (See "BackEnd/Typescript/src/index.ts")
+            (i) Rest parameters: these allow an indefinite number of final arguments, and brings them into the function body as an array. They're denoted by three dots (...) before the parameter name. 
+            📒Note: Don't confuse rest parameters with the similar but different spread syntax.
+
+                  function gatherParty(partyName: string, ...adventurers: string[]): string {
+                        return `${partyName} consists of: ${adventurers.join(", ")}`;
+                  }
+
+                  const msg = gatherParty("The Fellowship", "Frodo", "Sam", "Gandalf");
+                  console.log(msg);
+                  // "The Fellowship consists of: Frodo, Sam, Gandalf"
+
+      Continue from 1:05:58
 
 /********************** TypeScript Ends *****************************/
 
