@@ -97,6 +97,105 @@ console.log(matrix2[0]?.[1])
 let harray: (string | number)[] = [1, "tommy"]
 console.log(harray[1])
 
+/**** Objects in TS ****/
+type car = {
+    name: string,
+    model: string,
+    price: number
+}
+
+let myCar: car = {
+    name: "Maruti Suzuki Celerio",
+    model: "BAC",
+    price: 1000000
+}
+console.log(myCar.name)
+
+// Optional properties in an object: Optional properties can be added to an object type with the ? operator:
+
+type Superhero = {
+  name: string;
+  strength: number;
+  cape?: boolean; // cape is optional. That means that the type of .cape is actually boolean | undefined
+};
+
+//Discriminated Union
+type Circle = {
+    kind: "circle";
+    radius: number;
+};
+
+type Square = {
+    kind: "square";
+    sideLength: number;
+};
+
+type Shape = Circle | Square;
+
+function area(shape: Shape): number {
+    if(shape.kind == "circle"){
+        //Now TS knows it's a "Circle" type
+        return Math.PI * shape.radius ** 2;
+    }
+    //Now TS knows it's a "Square" type
+    return shape.sideLength ** 2;
+}
+
+//Dynamic keys 
+type classMarks = {
+    [key: string]: number;
+    // This means type of "keys" of this object will be "string" and type of their values would be "number"
+    // The specific name "key" doesn't matter, you can have anything, like "[xyz: string]: number;"
+}
+
+let cseA_marks: classMarks = {
+    "Geetansh": 100,
+    "Soham": 90
+}
+
+console.log("Geetansh's marks: " + cseA_marks["Geetansh"])
+
+// Another Syntax to do exactly the same thing as above
+type classMarks2 = Record<string, number>; // a Record in TS is a type that describes an object
+let cseA_marks2: classMarks2 = {
+    "Geetansh": 100,
+    "Soham": 90
+}
+console.log("Geetansh's marks: " + cseA_marks2["Geetansh"])
+
+// Dynamic Default Properties: if you want to require certain properties, use this syntax: 
+type FormData = {
+  [field: string]: string;
+  email: string;
+  password: string;
+};
+
+// The type above says: The object must have an "email" and "password" property, and it can have any number of additional "string" properties.
+
+//Readonly Modifier
+type cat = {
+    readonly name: string
+}
+
+let tom: cat = {
+    name: "Tom the cat"
+}
+// tom.name = "Jerry the cat" // Will give error
+
+// "as const" in TS
+let list = ["Apple", "Mango", "Banana"] as const; // Now, it's type is fixed as "["Apple", "Mango", "Banana"]" and nothing can be changed
+// list.push("Pineapple") // will give error
+// Similarly, it can be used to fix objects!
+
+/**** Sets in TS ****/
+let mySet = new Set<number>();
+mySet.add(1); // Ok
+// mySet.add("Hi"); // Error
+
+/**** Maps in TS ****/
+let myMap = new Map<string, number>();
+myMap.set("Geetansh", 1);
+console.log("Geetansh's number:" + myMap.get("Geetansh"));
 
 
 

@@ -59,4 +59,31 @@ let matrix2 = [[1, 2],
 console.log((_b = matrix2[0]) === null || _b === void 0 ? void 0 : _b[1]);
 let harray = [1, "tommy"];
 console.log(harray[1]);
+let myCar = {
+    name: "Maruti Suzuki Celerio",
+    model: "BAC",
+    price: 1000000
+};
+console.log(myCar.name);
+function area(shape) {
+    if (shape.kind == "circle") {
+        return Math.PI * shape.radius ** 2;
+    }
+    return shape.sideLength ** 2;
+}
+let cseA_marks = {
+    "Geetansh": 100,
+    "Soham": 90
+};
+console.log("Geetansh's marks: " + cseA_marks["Geetansh"]);
+let cseA_marks2 = {
+    "Geetansh": 100,
+    "Soham": 90
+};
+console.log("Geetansh's marks: " + cseA_marks2["Geetansh"]);
+let mySet = new Set();
+mySet.add(1);
+let myMap = new Map();
+myMap.set("Geetansh", 1);
+console.log("Geetansh's number:" + myMap.get("Geetansh"));
 //# sourceMappingURL=index.js.map

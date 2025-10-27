@@ -2968,7 +2968,126 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
                   console.log(msg);
                   // "The Fellowship consists of: Frodo, Sam, Gandalf"
 
-      Continue from 1:05:58
+      12) Object literal types: these allow you to describe the shape of an object. So, instead of an object having type "any", it can have a fixed type with specific properties and their types. This would make autocomplete and intellisense much better!
+            1) Discriminated Unions: A common pattern when working with object literal types is to use a common property to distinguish between different object shapes. This is known as a discriminated union.
+
+                  type Circle = {
+                        kind: "circle";
+                        radius: number;
+                  };
+
+                  type Square = {
+                        kind: "square";
+                        sideLength: number;
+                  };
+
+                  type Shape = Circle | Square;
+
+                  function area(shape: Shape): number {
+                        if(shape.kind == "circle"){
+                              //Now TS knows it's a "Circle" type
+                              return Math.PI * shape.radius ** 2;
+                        }
+                        //Now TS knows it's a "Square" type
+                        return shape.sideLength ** 2;
+                  }
+      
+            2) Dynamic Keys in TS Objects: Sometimes, you won't know all of an object's property names in advance. For example, say you're building a customer management system where employees can add custom key/value pairs to customer records:
+                  - favoriteColor: "blue"
+                  - favoriteFood: "pizza"
+                  - favoriteAnimal: "cat"
+                  - etc
+
+            You can't know what the user will add ahead of time, but you still want to model the data in your program.
+            You can define dynamic keys like so:
+                  type UserMetrics = {
+                        [key: string]: number;
+                  };
+            This type says "this object can have any number of properties if the keys are strings and the values are numbers."
+
+                  1)PropertyKey: With dynamic property keys we've only used the "string" type so far, and most of the time, that's all you need. However, JS also supports number and symbols as property keys. TypeScript actually has a built-in type called "PropertyKey" that represents all possible property key types:
+                        // this is a built-in type
+                        type PropertyKey = string | number | symbol;
+
+                        So, instead of:
+
+                              type InfrastructureTags = {
+                                    [key: string]: any;
+                              };
+
+                        We can allow number and symbol keys (the JS default) like this:
+
+                              type InfrastructureTags = {
+                                    [key: PropertyKey]: any;
+                              };
+
+                              const janesServer: InfrastructureTags = {
+                                    name: "Jane's Server",
+                                    1: 420,
+                                    [Symbol("role")]: "Admin",
+                              };
+
+            3) Readonly Modifier: The readonly modifier is very similar to the const keyword in JS. It's an added feature of TS (i.e NOT present in JS) that lets us mark object properties as read-only, meaning they can't be changed after initialization.  
+            4) "as const" in TS: This is a way to tell the TS compiler to treat an object or array as completely immutable. It makes all properties readonly and narrows their types to literal types.
+
+                  let directions = {
+                        north: "NORTH",
+                        south: "SOUTH",
+                        east: "EAST",
+                        west: "WEST",
+                  } as const;
+
+                  // directions.north = "UP"; // Error: Cannot assign to 'north' because it is a read-only property.    
+
+      13) Sets in TS
+      14) Function Overloading in TS
+      15) Tuples in TS: A tuple is a special kind of array where each position has a specific, known type.
+
+            Ex: const nameAndAge: [string, number] = ["Rose Tyler", 24];
+            
+            📒Note: (i) Tuples in TypeScript are (guh) still arrays under the hood (i.e in JS), so counterintuitively you can still push to them and pop from them. This is a bit of a gotcha! So, to get the actual Tuple-behavior, use "readonly" like so:
+
+                  const nameAndAge: readonly [string, number] = ["Martha Jones", 24]; 
+                  nameAndAge.push("Donna Noble"); // Error: Property 'push' does not exist on type 'readonly [string, number]'.
+
+            1) Named Tuples: we can label tuple elements (sometimes called "named tuples"). So, instead of this:
+                  type UserData = [string, number, boolean];
+
+            We can do this:
+                  type UserDataLabeled = [name: string, age: number, isAdmin: boolean];
+
+            📒Note: labels are quite literally just names for your ceonvenience as a developer, they don't change how the values are accessed. Say I have a named tuple like this:
+
+                  const user: [name: string, age: number] = ["Bilbo", 111];
+
+            And then I try to destructure in reverse order:
+
+                  const [age, name] = user;
+                  console.log(age); // "Bilbo"
+                  console.log(name); // 111
+
+            The variable names I choose when destructuring don't matter: only the positions do.
+
+            2) Optional Elements in Tuples: Like object properties, you can make tuple elements optional using the ? modifier:
+
+                  type HttpResponse = [statusCode: number, data: string, error?: string];
+
+                  // Both of these work!
+                  const successResponse: HttpResponse = [200, "Success!"];
+                  const errorResponse: HttpResponse = [404, "", "Resource not found"];
+            
+            3) Tuple Rest Elements: TypeScript allows tuples to have a variable number of elements of a specific type using rest elements. This is nice when you want a tuple to have a fixed-length beginning but a flexible-length ending:
+
+                  // A tuple with a rest element
+                  type NameAndScores = [string, ...number[]];
+
+                  // All of these are valid
+                  const nameAndScores: NameAndScores = ["Alphonse", 69, 420, 300];
+                  const nameAndScores: NameAndScores = ["Winry", 42];
+                  const nameAndScores: NameAndScores = ["Edward"];
+
+      Continue from 1:51:30
+
 
 /********************** TypeScript Ends *****************************/
 
