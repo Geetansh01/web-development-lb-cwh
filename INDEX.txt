@@ -3086,7 +3086,61 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
                   const nameAndScores: NameAndScores = ["Winry", 42];
                   const nameAndScores: NameAndScores = ["Edward"];
 
-      Continue from 1:51:30
+      16) Intersection of Types in TS: An intersection type combines multiple types into one with the & operator. The resulting intersection type satisfies all the component types simultaneously.
+
+            type Point2D = {
+                  x: number;
+                  y: number;
+            };
+
+            type pointOnZAxis = {
+                  z: number;
+            }
+
+            type Point3D = Point2D & pointOnZAxis;
+
+            // Equivalent to:
+            // type Point3D = {
+            //   x: number;
+            //   y: number;
+            //   z: number;
+            // };
+
+            📒Note: Now you know 2 operators you can use on types: unions (|) and intersections (&)
+      
+      17) The Never Type: In TypeScript, the "never" type represents values that can't occur. More ob this in the video but I am skipping it for now.
+
+            📒Note: Intersecting Incompatible Types
+            When you intersect two types that have incompatible fields, the result is the "never" type. For example:
+
+            type Saiyan = {
+                  name: "goku" | "vegeta";
+                  powerLevel: number;
+            };
+
+            type Human = {
+                  name: "krillin" | "yamcha";
+                  age: number;
+            };
+
+            type SaiyanHuman = Saiyan & Human; // "SaiyanHuman" becomes "never" type
+
+            Now the name property can't possibly satisfy both! Humans must be krillin or yamcha, and Saiyans must be goku or vegeta. So, the name property in SaiyanHuman becomes "never", which in turn makes the entire SaiyanHuman type "never".
+
+      18) Interface VS Types in TS: As it turns out, there are two ways to define object types: the "type" keyword (as we've seen with type aliases) and "interfaces". Both are similar, but there are some differences.
+
+            1) Interfaces can be extended using the "extends" keyword, allowing you to create new interfaces based on existing ones. Type aliases can achieve similar behavior using intersections (&).
+
+            2) Declaration Merging: One unique feature of interfaces is declaration merging. If you declare the same interface multiple times, TypeScript merges them into a single interface. This is not possible with type aliases; redeclaring a type alias with the same name will result in an error.
+
+                  🔴Tip: Declaration Merging can also lead to nasty bugs, so most of the times, just use "type" instead of "interface"
+
+            🍀 TLDR: Just use "type" and don’t use "interface"! 🤣🤣
+
+      19) Enums in TS
+            🔴Tip: Just avoid them, don't use "enums" in TS
+
+      Resume from 2:30:40
 
 
 /********************** TypeScript Ends *****************************/
