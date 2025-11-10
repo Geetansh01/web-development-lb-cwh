@@ -2859,7 +2859,10 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
       2) Type inference in TS: you don't have to specify the type in your code explicitly, TS will infer it correctly almost always. So, this is fine too: 
             let name = "Geetansh";
       Just remember to use it as "string" in the code ahead. This saves you from having to write types again and again for all the variables you might be declaring.
-      3) "Any" type in TS: Basically allows you to skip type checking, usually you should not use it.
+      3) "any" type in TS: Basically allows you to skip type checking, usually you should not use it.
+
+            🟥Note: "unknown" Type: The unknown type can be used for similar to "any", but its a much safer alternative because it forces you to explicitly assert the type before using it in a specific way. So, whenever you think of using "any", consider using "unknown" in it's place.
+
       4) Functions in TS: Function declaration is the only place in TS where you have to explicitly define your types because a function takes in a parameter during declaration and at that time TS has no way of knowing it's type. Rest at all places in the code TS will infer the type automatically.
             (i) Should Function return type be implicit or explicit:
              - Inferred : If the function is only being used by me in my own codebase
@@ -3140,8 +3143,10 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
       19) Enums in TS
             🔴Tip: Just avoid them, don't use "enums" in TS
 
-      Resume from 2:30:40
+      20) Type Assertion: Sometimes you know more about a value's type than TypeScript does... it's rare but it happens.
 
+
+      Resume from 2:50:00
 
 /********************** TypeScript Ends *****************************/
 

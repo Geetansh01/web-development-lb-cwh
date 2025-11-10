@@ -197,5 +197,6 @@ let myMap = new Map<string, number>();
 myMap.set("Geetansh", 1);
 console.log("Geetansh's number:" + myMap.get("Geetansh"));
 
+/**** Type Assertion in TS: "as" keyword ****/
 
 
