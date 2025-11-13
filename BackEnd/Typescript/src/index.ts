@@ -344,3 +344,46 @@ const anmol: Layman = {
     age: 19 
 }
 console.log(anmol.name);
+
+/**** Generics in TS ****/
+function getFirst<T>(arr: T[]): T | undefined {
+  return arr[0];
+}
+
+console.log(getFirst<string>(["Hi", "Hello", "Adios"]));
+console.log(getFirst(["Hi", "Hello", "Adios"])); // You don't even need to specify the <string>, TS is smart enough to infer it.
+
+//"extends" keyword in Generics
+//1: stupid demo just to show what is is
+function sayHi<T extends string>(name: T){ // So, now, T can just be "string" and nothing else
+    console.log(`Hi ${name}`);
+}
+
+sayHi("Geetansh Bhardwaj")
+
+//2: actual use case
+type IHaveName = {
+    name: string;
+}
+function sayHi2<T extends IHaveName>(user: T){ // So, now, T can be any type but should also satisfy "IHaveName" type (i.e should have a "name" of type "string").
+    console.log(`Hi ${user.name}`);
+}
+
+sayHi2({
+    name: "Geetansh Bhardwaj",
+    age: 20
+})
+
+// Type Parameters for Types
+type Marks<T> = {
+    user_marks: T
+}
+
+let marks1: Marks<string> = {
+    user_marks: "100",
+}
+console.log(marks1.user_marks)
+let marks2: Marks<number> = {
+    user_marks: 100,
+}
+console.log(marks2.user_marks)

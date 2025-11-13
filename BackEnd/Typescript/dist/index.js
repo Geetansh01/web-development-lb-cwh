@@ -176,4 +176,28 @@ const anmol = {
     age: 19
 };
 console.log(anmol.name);
+function getFirst(arr) {
+    return arr[0];
+}
+console.log(getFirst(["Hi", "Hello", "Adios"]));
+console.log(getFirst(["Hi", "Hello", "Adios"]));
+function sayHi(name) {
+    console.log(`Hi ${name}`);
+}
+sayHi("Geetansh Bhardwaj");
+function sayHi2(user) {
+    console.log(`Hi ${user.name}`);
+}
+sayHi2({
+    name: "Geetansh Bhardwaj",
+    age: 20
+});
+let marks1 = {
+    user_marks: "100",
+};
+console.log(marks1.user_marks);
+let marks2 = {
+    user_marks: 100,
+};
+console.log(marks2.user_marks);
 //# sourceMappingURL=index.js.map

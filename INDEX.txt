@@ -3200,18 +3200,62 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
             1) Some commonly used utility types are: 
                   1) Partial<T>: Constructs a type with all properties of type "T" set to optional.
                   2) Required<T>: Constructs a type with all properties of type "T" set to required.
-
                   3) Readonly<T>: Constructs a type with all properties of type "T" set to readonly.
                   4) Pick<T, K>: Constructs a type by picking a set of properties K from type "T".
-                        5) Omit<T, K>: Constructs a type by omitting a set of properties type "K" from type "T".
+                  5) Omit<T, K>: Constructs a type by omitting a set of properties type "K" from type "T".
                   6) Record<K, T>: Constructs an object type whose property keys are type "K" and property values are type "T".
-                        7) Exclude<T, U>: Constructs a type by excluding from type "T" all union members that are assignable to U.
-                        8) Extract<T, U>: Constructs a type by extracting from type "T" all union members that are assignable to U.
-                        9) NonNullable<T>: Constructs a type by excluding null and undefined from type "T".
-                        10) ReturnType<T>: Constructs a type consisting of the return type of function type "T".
-                        11) InstanceType<T>: Constructs a type consisting of the instance type of a constructor function type "T".
+      
+      24) Generics in TS: Allow you to create reusable logic that works with many types rather than a single one. Think of a data structure like a Queue or a Stack. They can hold any type of data, so it would be really annoying to reimplement them for every type:
+            NumberQueue
+            StringQueue
+            UserQueue
+            etc.
+            
+            Generics let us create a single Queue<T> type that can work with any type T
 
-            Resume from 3:20:58
+            1) "extends" keyword in Generics: You can use the "extends" keyword to constrain a generic type to a specific subset of types. This is useful when you want to ensure that the generic type has certain properties or methods.
+
+                  Ex: 
+                        type IHaveName = {
+                            name: string;
+                        }
+                        // Below, T can be any type but should also satisfy "IHaveName" type (i.e should have a "name" of type "string").
+                        function sayHi2<T extends IHaveName>(user: T){ 
+                            console.log(`Hi ${user.name}`);
+                        }
+
+                        sayHi2({
+                            name: "Geetansh Bhardwaj",
+                            age: 20
+                        })
+                        // Output: Hi Geetansh Bhardwaj
+
+            2) Type Parameters for Types: Type parameters aren't just limited to functions and methods! You can use type parameters to create generic types as well!
+                  Ex: 
+                        type Marks<T> = {
+                            user_marks: T
+                        }
+
+                        let marks1: Marks<string> = {
+                            user_marks: "100",
+                        }
+                        console.log(marks1.user_marks)
+                        let marks2: Marks<number> = {
+                            user_marks: 100,
+                        }
+                        console.log(marks2.user_marks)
+
+            3) Conditional Types: these allow us to create new types based on conditions within the type system, they take this form (so you can only use the ternary operator here):
+
+                  type NewType = SomeType extends OtherType ? TrueType : FalseType;
+
+            Ex:
+            type IsString<T> = T extends string ? true : false;
+
+            // Usage
+            type Result1 = IsString<"hello">; // true
+            type Result2 = IsString<42>;      // false
+            type Result3 = IsString<string>;  // true
 
 /********************** TypeScript Ends *****************************/
 
