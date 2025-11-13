@@ -2150,7 +2150,7 @@
 
             That becomes a **lot of boilerplate** → basically reinventing TanStack Query inside Redux/Context.
 
-            🚀 Where TanStack Query shinesß
+            🚀 Where TanStack Query shines
                   * It’s specialized for server state.
                   * Gives you all the messy stuff for free:
                         * Data fetching & caching
@@ -3144,9 +3144,74 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
             🔴Tip: Just avoid them, don't use "enums" in TS
 
       20) Type Assertion: Sometimes you know more about a value's type than TypeScript does... it's rare but it happens.
+      21) Non-null Assertion: It's common for TypeScript libraries to assume that a value can be null or undefined even when you know it can't be. You can assert that it's not with the non-null assertion (!) operator. It tells the compiler that a value cannot be null or undefined, even when the type system thinks it might be.
 
+      Ex:
+            interface User {
+                  id: string;
+                  name?: {
+                        first: string;
+                        last: string;
+                  };
+            }
 
-      Resume from 2:50:00
+            // we don't control the User type (its imported from a library)
+            // but we know that we always use the `name` property
+            sentText(user.name!.first);
+
+      📒Note:  Only use non-null assertions when you're crazy-confident that the value can't be null or undefined. Just use a conditional guard clause if there is any uncertainty. This is always safer, albeit more verbose:
+
+            function sendTextSafely(text: string | null) {
+                  if (text === null) {
+                        throw new Error("Text is required");
+                  }
+                  sendText(text);
+            }
+      22) Classes in TS
+            1) Note: "protected" access modifier and "abstract" classes are just in TS not JS, so TS enforces these rules at compile time but the generated JS code will not have any of these.
+
+      23) Utility Types in TS: TS provides several built-in utility types to facilitate common type transformations. These help us to stick to "Single Source of Truth" principle. 
+      Ex: Say you have an interface "User" with many properties and you want to create a new type where all properties are optional. Instead of redefining the entire interface with optional properties, you can use the "Partial" utility type.
+
+            ❌❌BAD CODE❌❌
+                  type User = {
+                        id: number;
+                        name: string;
+                        email: string;
+                  }
+
+                  // Manually creating a type with all properties optional
+                  type UserWithOptionalFields = {
+                        id?: number;
+                        name?: string;
+                        email?: string;
+                  }
+
+                  This is bad because if you change the "User" type later, you have to remember to change "UserWithOptionalFields" too! Refactoring nightmare!
+            ✅✅GOOD CODE✅✅
+                  type User = {
+                        id: number;
+                        name: string;
+                        email: string;
+                  }
+                  // Using Partial utility type
+                  type UserWithOptionalFields = Partial<User>;
+
+            1) Some commonly used utility types are: 
+                  1) Partial<T>: Constructs a type with all properties of type "T" set to optional.
+                  2) Required<T>: Constructs a type with all properties of type "T" set to required.
+
+                  3) Readonly<T>: Constructs a type with all properties of type "T" set to readonly.
+                  4) Pick<T, K>: Constructs a type by picking a set of properties K from type "T".
+                        5) Omit<T, K>: Constructs a type by omitting a set of properties type "K" from type "T".
+                  6) Record<K, T>: Constructs an object type whose property keys are type "K" and property values are type "T".
+                        7) Exclude<T, U>: Constructs a type by excluding from type "T" all union members that are assignable to U.
+                        8) Extract<T, U>: Constructs a type by extracting from type "T" all union members that are assignable to U.
+                        9) NonNullable<T>: Constructs a type by excluding null and undefined from type "T".
+                        10) ReturnType<T>: Constructs a type consisting of the return type of function type "T".
+                        11) InstanceType<T>: Constructs a type consisting of the instance type of a constructor function type "T".
+
+            Resume from 3:20:58
 
 /********************** TypeScript Ends *****************************/
 

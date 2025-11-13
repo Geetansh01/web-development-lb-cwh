@@ -198,5 +198,149 @@ myMap.set("Geetansh", 1);
 console.log("Geetansh's number:" + myMap.get("Geetansh"));
 
 /**** Type Assertion in TS: "as" keyword ****/
+let a: string | number;
 
+// a.toLowerCase(); // Won't work as "a" can be a "number" as well
 
+// Here, we tell TS that we know that "a" is a string. 
+// (a as string).toLocaleLowerCase(); // This will give error bcz of a separate reason: a has not been assigned any value yet!
+
+/**** Classes in TS ****/
+class Hero {
+  name: string;
+  health: number;
+  #id: number;
+
+  constructor(name: string, health: number, id: number) {
+    this.name = name;
+    this.health = health;
+    this.#id = id;
+  }
+
+  attack(damage: number): void {
+    console.log(`${this.name} attacks for ${damage} damage!`);
+    console.log(`${this.name} has ID: ${this.#id}`);
+  }
+
+  getHealth() {
+    return this.health;
+  }
+}
+
+// Create an instance
+const geralt = new Hero("Geralt", 100, 1);
+geralt.attack(25);
+console.log(geralt.getHealth());
+// console.log(geralt.#id); // Can't access private members outside the class
+
+// To create private members the TypeScript-only way, you use the "private" keyword instead of "#". So, while "#" marks a member as private also in JS, the "private" keyword will mark it as private only in TS and not JS (but still your TS code won't compile if you try to access a "private" member outside the class so your code would function the same anyway!)
+class Hero2 {
+    private id: number;
+
+    constructor (id: number){
+        this.id = id;
+    }
+}
+
+const saitama = new Hero2(1);
+// console.log(saitama.id); // Can't access private members outside the class
+
+// Abstract classes in TS
+abstract class Shape2{
+    size: "small" | "medium" | "large";
+
+    constructor(size: "small" | "medium" | "large") {
+        this.size = size;
+    }
+
+    abstract area(): number;
+}
+
+class Circle2 extends Shape2 {
+    constructor (size: "small" | "medium" | "large") {
+        super(size);
+    }
+
+    area(): number {
+        return 100; // Hardcoding area as 100
+    }
+}
+const circle = new Circle2("medium");
+console.log(circle.area());
+
+// Interfaces in TS: an abstract class can have some definitions in it but an "interface" would only have declarations and NO definitions.
+interface Vehicle {
+  make: string;
+  model: string;
+}
+interface Drivable {
+  drive(distance: number): void;
+}
+class ElectricCar implements Vehicle, Drivable {
+  make: string;
+  model: string;
+
+  // not required by the interfaces, but it's
+  // okay to add extra properties
+  private isRunning: boolean = false;
+
+  constructor(make: string, model: string) {
+    this.make = make;
+    this.model = model;
+    this.isRunning = false;
+  }
+
+  drive(distance: number): void {
+    this.isRunning = true;
+    console.log(`Driving ${distance} miles`);
+  }
+}
+
+const myCar2 = new ElectricCar("Tesla", "Model S");
+myCar2.drive(10); // "Testing Tesla Model S"
+
+// Note: You can completely replace the "interface" with a "type" instead with no additional changes
+type Vehicle2 = {
+  make: string;
+  model: string;
+}
+type Drivable2 = {
+  drive(distance: number): void;
+}
+class ElectricCar2 implements Vehicle, Drivable {
+  make: string;
+  model: string;
+
+  // not required by the interfaces, but it's
+  // okay to add extra properties
+  private isRunning: boolean = false;
+
+  constructor(make: string, model: string) {
+    this.make = make;
+    this.model = model;
+    this.isRunning = false;
+  }
+
+  drive(distance: number): void {
+    this.isRunning = true;
+    console.log(`Driving ${distance} miles`);
+  }
+}
+
+const myCar3 = new ElectricCar2("TATA", "Range Rover");
+myCar3.drive(10000); // "Testing Tesla Model S"
+
+/**** Utility Types in TS ****/
+// Pick<T> utility Type
+type King = {
+    name: string,
+    age: number,
+    kingdom: string
+}
+
+type Layman = Pick<King, "name" | "age">;
+const anmol: Layman = {
+    name: "Anmol",
+    age: 19 
+}
+console.log(anmol.name);
