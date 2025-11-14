@@ -2107,97 +2107,176 @@
 /**********************Temporary break from CWH course*****************************/
 
 /********************** TanStack Query/ React Query Starts *****************************/
-      Ref: https://youtu.be/mPaCnwpFvZY?si=uQacvy-FMr1xTpyR
+      Basic Concepts of TanStack Query/ React Query ( https://youtu.be/mPaCnwpFvZY?si=uQacvy-FMr1xTpyR )
 
-      0) TanStack Query/ React Query in a nutshell:
-            - It provides a hook that contains react state for: "data", "loading", "errors" etc. all in a single hook.
-            - Normally, you would make a "loading" state in react that would render a loading icon when your app is fetching data from the server. Then once the datahas been received, you would update the "loading" state to remove the loading icon. Let's say 15 minutes have passed, now the data no the server might be updated so you again set the "loading" state to true and refetch the data. 
-            - In addition to this, if the fetch fails, you have to retry.
-            - So, basically, this all is boilerplate code that needs to be repeated whenever your app is fetching data from a server.
-            - TanStack provides all of this builtin in a single hook.
-      
-      📒Note: More details and where to use Redux/ Context Provider instead:
-            🌍 Two Worlds of State
-
-            In frontend apps, you deal with two kinds of state:
-
-            1. UI / Client State
-                  * Things that live only in the frontend.
-                  * Examples: is a modal open, current page, dark mode, form input, cart before checkout.
-                  * Best tools: React state, Context, Redux, Zustand, Jotai, etc.
-
-            2. Server State
-                  * Data that comes from the backend and can change outside your app’s control.
-                  * Examples: products list, user profile, comments, search results.
-
-                  * Challenges:
-                        * Needs fetching
-                        * Can be stale (server updated elsewhere)
-                        * Needs caching
-                        * Needs sync across components
-                        * Needs retries, pagination, optimistic updates
-
-
-            🧩 Where Context / Redux shine
-                  * Great for client state (stuff entirely in frontend).
-                  * You can use them for server state too, but then *you* must build:
-                        * Fetching logic
-                        * Error handling
-                        * Loading states
-                        * Caching & invalidation
-                        * Retry/backoff logic
-                        * Sync between tabs/focus
-
-            That becomes a **lot of boilerplate** → basically reinventing TanStack Query inside Redux/Context.
-
-            🚀 Where TanStack Query shines
-                  * It’s specialized for server state.
-                  * Gives you all the messy stuff for free:
-                        * Data fetching & caching
-                        * Auto refetch when data might be stale (window focus, tab refocus, time-based)
-                        * Retry failed requests
-                        * Invalidate queries after mutations (add/update/delete → auto refresh list)
-                        * Pagination, infinite scroll
-                        * DevTools for debugging
-
-            So you don’t have to write the plumbing — just say *“how to fetch this”*.
-
-      1) useQuery Hook: this is the main hook provided by TanStack Query. From this, you get many things like:
-            - data : actual datat returned by your query
-            - isPending (Most suitable in most places): "true" if there is no data for the current query in the cache. 
-            - isFetching
-            - isLoading
-            - error : if the query errored out and could not fetch any data
-            - refetch etc...
+            0) TanStack Query/ React Query in a nutshell:
+                  - It provides a hook that contains react state for: "data", "loading", "errors" etc. all in a single hook.
+                  - Normally, you would make a "loading" state in react that would render a loading icon when your app is fetching data from the server. Then once the datahas been received, you would update the "loading" state to remove the loading icon. Let's say 15 minutes have passed, now the data no the server might be updated so you again set the "loading" state to true and refetch the data. 
+                  - In addition to this, if the fetch fails, you have to retry.
+                  - So, basically, this all is boilerplate code that needs to be repeated whenever your app is fetching data from a server.
+                  - TanStack provides all of this builtin in a single hook.
             
-            📙 How to use (See "FrontEnd/TanStackQuery/src/App_1_Intro.jsx") [Rename to "/App.jsx" to run it]:
+            📒Note: More details and where to use Redux/ Context Provider instead:
+                  🌍 Two Worlds of State
 
+                  In frontend apps, you deal with two kinds of state:
+
+                  1. UI / Client State
+                        * Things that live only in the frontend.
+                        * Examples: is a modal open, current page, dark mode, form input, cart before checkout.
+                        * Best tools: React state, Context, Redux, Zustand, Jotai, etc.
+
+                  2. Server State
+                        * Data that comes from the backend and can change outside your app’s control.
+                        * Examples: products list, user profile, comments, search results.
+
+                        * Challenges:
+                              * Needs fetching
+                              * Can be stale (server updated elsewhere)
+                              * Needs caching
+                              * Needs sync across components
+                              * Needs retries, pagination, optimistic updates
+
+
+                  🧩 Where Context / Redux shine
+                        * Great for client state (stuff entirely in frontend).
+                        * You can use them for server state too, but then *you* must build:
+                              * Fetching logic
+                              * Error handling
+                              * Loading states
+                              * Caching & invalidation
+                              * Retry/backoff logic
+                              * Sync between tabs/focus
+
+                  That becomes a **lot of boilerplate** → basically reinventing TanStack Query inside Redux/Context.
+
+                  🚀 Where TanStack Query shines
+                        * It’s specialized for server state.
+                        * Gives you all the messy stuff for free:
+                              * Data fetching & caching
+                              * Auto refetch when data might be stale (window focus, tab refocus, time-based)
+                              * Retry failed requests
+                              * Invalidate queries after mutations (add/update/delete → auto refresh list)
+                              * Pagination, infinite scroll
+                              * DevTools for debugging
+
+                  So you don’t have to write the plumbing — just say *“how to fetch this”*.
+
+            1) useQuery Hook: this is the main hook provided by TanStack Query. From this, you get many things like:
+                  - data : actual datat returned by your query
+                  - isPending (Most suitable in most places): "true" if there is no data for the current query in the cache. 
+                  - isFetching
+                  - isLoading
+                  - error : if the query errored out and could not fetch any data
+                  - refetch etc...
+                  
+                  📙 How to use (See "FrontEnd/TanStackQuery/src/App_1_Intro.jsx") [Rename to "/App.jsx" to run it]:
+
+                        const { data, isPending, refetch } = useQuery({
+                              queryKey: ["todos"],
+                              queryFn: getTodos,
+                        });
+                  
+                  Here: (i) queryKey : this must be UNIQUE, this is how TanStack uniquely identifies this particular query in the entire app.
+                        (ii) queryFn : The function that the query will use to request data.
+
+                  See more (Official Docs: https://tanstack.com/query/latest/docs/framework/react/reference/useQuery )
+
+            2)(See "FrontEnd/TanStackQuery/src/App_1_Intro.jsx") [Rename to "/App.jsx" to run it]) Suppose you have a React state variable "id" that stores which post’s comments your app is currently displaying. You would pass this "id" to your API like this:  
+                  /comments?postId=${id}  
+
+            Now, your queries are being cached by TanStack Query, so, it needs to know about this "id". Otherwise, it will treat different queries the same and cause problems. For example, these two queries must be treated as separate:  
+                  /comments?postId=1  
+                  /comments?postId=2  
+
+            To handle this correctly, you need to tell TanStack Query that the query depends on the React state "id", so it can cache them accordingly:
+
+                  const [id, setId] = useState(1);
                   const { data, isPending, refetch } = useQuery({
-                        queryKey: ["todos"],
-                        queryFn: getTodos,
+                        queryKey: ["todos", id],
+                        queryFn: () => getTodos(id),
                   });
             
-            Here: (i) queryKey : this must be UNIQUE, this is how TanStack uniquely identifies this particular query in the entire app.
-                  (ii) queryFn : The function that the query will use to request data.
+            3) How to handle multiple queries. (See "FrontEnd/TanStackQuery/src/App_3_MultipleQueries.jsx" )
 
-            See more (Official Docs: https://tanstack.com/query/latest/docs/framework/react/reference/useQuery )
+      Advanced Topics of TanStack Query ( https://youtu.be/KkxPtimqaew?si=6mLJ_1hGQH3WzFfR )
+      1) More options in useQuery hook:
+            1)staleTime : The amount of time after which the cached data is considered "stale". Default is 0ms (immediately stale). 
+                  Ex: Say you set it to 5 minutes for data with queryKey "K", this data will be fresh for 5 minutes after fetching. So, if a new request is made with this queryKey after say 10 minutes, TanStack will notice that we are beyond the staleTime and will refetch the data from the server.
 
-      2)(See "FrontEnd/TanStackQuery/src/App_1_Intro.jsx") [Rename to "/App.jsx" to run it]) Suppose you have a React state variable "id" that stores which post’s comments your app is currently displaying. You would pass this "id" to your API like this:  
-            /comments?postId=${id}  
+                  const { data, isPending, refetch } = useQuery({
+                        queryKey: ["todos", id],
+                        queryFn: () => getTodos(id),
+                        staleTime: 500000,
+                  });
 
-      Now, your queries are being cached by TanStack Query, so, it needs to know about this "id". Otherwise, it will treat different queries the same and cause problems. For example, these two queries must be treated as separate:  
-            /comments?postId=1  
-            /comments?postId=2  
+            2) Query Invalidation : This is used when you have made some changes to the data on the server (like added/ updated/ deleted some data) and now you want to refetch the data to get the updated data from the server. This is done using "useQueryClient" hook provided by TanStack Query. This will refetch the data no matter what the "staleTime" is set to.
+                  Ex:
+                        import { useQueryClient } from "@tanstack/react-query";
 
-      To handle this correctly, you need to tell TanStack Query that the query depends on the React state "id", so it can cache them accordingly:
+                        const queryClient = useQueryClient();
 
-            const [id, setId] = useState(1);
-            const { data, isPending, refetch } = useQuery({
-                  queryKey: ["todos", id],
-                  queryFn: () => getTodos(id),
-            });
-      
-      3) How to handle multiple queries. (See "FrontEnd/TanStackQuery/src/App_3_MultipleQueries.jsx" )
+                        // After adding a new todo on the server
+                        await addTodoOnServer(newTodo);
+                        queryClient.invalidateQueries({ queryKey: ["<correct-queryKey-here>"] });
+
+                  Note: invalidateQueries() technically returns a Promise that resolves when all the queries are refetched. So, if you want to wait for the refetch to complete before doing something else, you can await it.
+
+            3) Mutation : This is used to make changes to the data on the server (like add/ update/ delete data). This is done using "useMutation" hook provided by TanStack Query.
+
+                        import { useMutation } from "@tanstack/react-query";
+
+                        const { mutate } = useMutation({ 
+                              mutationFn: (<correct-input-here eg: newTodo>) => {
+                                    // The actual mutation function that performs the mutation (e.g., creating, updating, or deleting data).
+                              }, 
+                              onMutate: (variables) => {
+                                    // A function that executes before the actual mutation function (mutationFn) is fired. 
+                                    return <old-data>;
+                              },
+                              onError: (error, variables, context) => {
+                                    // Runs when an error happens!
+                              },
+                              onSuccess: (data, variables, context) => {
+                                    // Runs when mutation is successful!
+                              },
+                              onSettled: (data, error, variables, context) => {
+                                    // Error or success... doesn't matter! This always runs at the end.
+                              },
+                        })
+
+                  Here: The different parameters in the callback functions above are:
+                        (i) data: The data returned from the mutationFn after a successful mutation.
+                        (ii) variables: This is whatever you passed to mutate() function when you called it. 
+                              Ex: mutate(newTodo) --> here, "newTodo" is the "variables"
+                        (iii) context: This is whatever the onMutate function returned. You can use this to pass some data from onMutate to onError/ onSuccess/ onSettled functions. Here, it is "context.<old-data>".
+                              - This is useful for things like optimistic updates, where you want to update the UI immediately before the mutation completes, and then revert if there’s an error. The flow goes like this:
+                                    (i) in onMutate, get the old data from tanstack's cache
+                                    (ii) update the cache with optimistic data
+                                    (iii) return the old data from onMutate as "context" so that it is available in onError
+                                    (iv) in onError, revert the cache to old data using the "context" parameter
+                              Eg:
+                                    onMutate: async (newTodo) => {
+                                          const previousTodos = queryClient.getQueryData(["todos"]);
+
+                                          // Optimistically update to the new value
+                                          queryClient.setQueryData(["todos"], (oldTodos) => [
+                                                ...oldTodos,
+                                                newTodo,
+                                          ]);
+
+                                          return { previousTodos };
+                                    },
+                                    onError: (error, newTodo, context) => {
+                                          queryClient.setQueryData(["todos"], context.previousTodos);
+                                    },
+            
+            ✏️TLDR: useQuery is for getting the data from the server, useMutation is for changing the data on the server!
+
+
+      Continue from 29:46
+                  
+
 
 /**********************MinIO Starts*****************************/
 Refer the "BackEnd\MinIO" folder
