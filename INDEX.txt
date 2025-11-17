@@ -2273,8 +2273,19 @@
             
             ✏️TLDR: useQuery is for getting the data from the server, useMutation is for changing the data on the server!
 
+            4) Dynamic Queries: It is just a way to define your queryOptions in a separate file and not directly in the useQuery hook. The video explains it in great detail in hwo to write a very clean dynamic queryOptions file in TypeScript. Watch the video for the template if needed. (from 29:50 onwards)
 
-      Continue from 29:46
+            5) Infinite Querying: When a backend endpoint can possibly return a large list of items, it’s common to split the results into pages and load them one at a time. This is called "pagination". 
+
+                  📒Note: - It is the backend endpoint's responsibility to support pagination in the first place. 
+                          - IF the backend endpoint supports pagination, TanStack Query provides a special hook called "useInfiniteQuery" to implement infinite querying in the frontend.
+                              Ex: Page 1: items 1-10
+                                  Page 2: items 11-20
+                                  Page 3: items 21-30
+                                  and so on...
+
+
+      Continue from 48:55
                   
 
 
