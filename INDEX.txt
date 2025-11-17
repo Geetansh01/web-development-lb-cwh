@@ -2284,9 +2284,17 @@
                                   Page 3: items 21-30
                                   and so on...
 
+            6) prefetching queries: You can prefetch queries using the "queryClient.prefetchQuery" method. This is useful when you want to load data in the background before it’s needed to simulate faster load times for the user.
+                  Ex: fetching the data when mouse enters a button rather than when the button is clicked. Based on the assumption that user will click the button if mouse enters it. 
 
-      Continue from 48:55
-                  
+                  const queryClient = useQueryClient();
+                  const prefetchData = () => {
+                        queryClient.prefetchQuery(getUserQueryOptions());
+                  }
+
+                  <button onMouseEnter={prefetchData} >
+                        Click Me to get User Data
+                  </button>
 
 
 /**********************MinIO Starts*****************************/
