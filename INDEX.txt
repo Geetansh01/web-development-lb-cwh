@@ -3385,6 +3385,105 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
 
 /********************** Axios Ends *****************************/
 
+/********************** GraphQL Starts *****************************/
+      Ref: https://youtu.be/WtkKwO1viI8?si=caPWkNKej-lLgM6T
+
+      0) Problem with REST APIs: Overfetching and Underfetching of data
+            (i) Overfetching: when the client receives more data than it actually needs. This can lead to inefficiencies, especially on mobile networks where bandwidth is limited.
+                  Ex: Client need only the username, it calls /users/id API and gets the entire user object with all details like email, address, phone number etc. which it does not need.
+            (ii) Underfetching: when the client does not receive enough data in a single request, leading to multiple round-trips to the server to fetch all the required data.
+
+      1) GraphQL: GraphQL is a query language + a specification
+                  It is NOT:
+                        - a server
+                        - a framework
+                        - a networking protocol
+                        - a replacement for HTTP
+
+            GraphQL is a language and a contract for how clients can ask for data and how servers must respond. Just like SQL is a language to query a DB, GraphQL is a language to query APIs.
+
+      2) Apollo: It acts as the Ecosystem / Framework for implementing GraphQL. It has 2 main components:
+            (i) Apollo Server: to build a GraphQL server that will respond to GraphQL queries
+            (ii) Apollo Client: to interact with a GraphQL server from the client side
+
+            Two terms: 
+                  (i) Query: to read/ fetch data from the server
+                  (ii) Mutation: to write/ modify data on the server   
+
+      3) Setting up a GraphQL server using Apollo Server (See "BackEnd/GraphQL/index.js" for code)
+            1) Define your schema: using GraphQL Schema Definition Language (SDL)
+            2) Define your resolvers: functions that fetch the data for each field in your schema
+
+                  const server = new ApolloServer({
+                        typeDefs: `
+                              type Todo {
+                                    id: ID!
+                                    title: String!
+                                    completed: Boolean
+                              }
+
+                              type Query {
+                                    getTodos: [Todo]
+                              }
+                        `,
+                        resolvers: {
+                            Query: {
+                                getTodos: () => {
+                                    return [
+                                        { id: '1', title: 'Learn GraphQL', completed: false },
+                                        { id: '2', title: 'Build a GraphQL Server', completed: true },
+                                    ];
+                                }
+                            }
+                        },
+                  });
+
+                  Here: (i) typeDefs is the schema
+                              - So, we have a "Todo" type with fields "id", "title", "completed"
+                              - We have a "Query" type with a field "getTodos" that is a list of "Todo" items
+
+                              📒Note: (From ChatGPT) In typeDefs, "Query" must be named exactly "Query". It’s a reserved root type name in GraphQL. You cannot rename it.
+                                    GraphQL schemas define these root operation types:
+                                          - Query → for reading/fetching. So, all entry points for read operations will be under this "Query" type.
+                                          - Mutation → for writing/updating.
+                                          - Subscription → for real-time pushes.
+                                    These names are special and GraphQL expects them.
+
+                        (ii) resolvers is the set of functions that fetch data for each field in the schema
+                              - So, in resolvers above, we have defined a function that defines what data to return when a GraphQL query for "getTodos" is made like so (See http://localhost:8000/graphql -> A great UI provided by Apollo Server for testing GraphQL APIs):
+                                    
+                                    Query:
+                                    query getAllTodos {
+                                      getTodos {
+                                        title,
+                                        id
+                                      }
+                                    }
+
+                                    Response:
+                                    {
+                                      "data": {
+                                        "getTodos": [
+                                          {
+                                            "title": "Learn GraphQL",
+                                            "id": "1"
+                                          },
+                                          {
+                                            "title": "Build a GraphQL Server",
+                                            "id": "2"
+                                          }
+                                        ]
+                                      }
+                                    }
+
+            3) Create an Apollo Server instance: pass in your schema and resolvers
+            4) Start the server: listen on a port for incoming requests      
+
+      Continue from 28:00
+ 
+/********************** GraphQL Ends *****************************/
+
+
 
 
 
