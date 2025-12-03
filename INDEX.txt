@@ -3410,7 +3410,7 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
                   (i) Query: to read/ fetch data from the server
                   (ii) Mutation: to write/ modify data on the server   
 
-      3) Setting up a GraphQL server using Apollo Server (See "BackEnd/GraphQL/index.js" for code)
+      3) Setting up a GraphQL server using Apollo Server (See "BackEnd/GraphQL/Server/index.js" for code)
             1) Define your schema: using GraphQL Schema Definition Language (SDL)
             2) Define your resolvers: functions that fetch the data for each field in your schema
 
@@ -3477,9 +3477,15 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
                                     }
 
             3) Create an Apollo Server instance: pass in your schema and resolvers
-            4) Start the server: listen on a port for incoming requests      
+            4) Start the server: listen on a port for incoming requests  
 
-      Continue from 28:00
+      GraphQL in FrontEnd: I am using React for FrontEnd here
+      4) Setting up a GraphQL client using Apollo Client (See "BackEnd/GraphQL/Client/src/main.jsx or App.jsx" for code)
+            1) Method 1: making graphql requests using plain JS
+                  - The main disadvantage is that you have to manually handle things like state management (say updating the React UI when new data comes in) etc. 
+
+            2) Method 2: using Apollo's "ApolloProvider" component to wrap your React app.
+                  - Similar to React's Context.Provider, ApolloProvider wraps your React app and places Apollo Client on the context, enabling you to access it from anywhere in your component tree.
  
 /********************** GraphQL Ends *****************************/
 
