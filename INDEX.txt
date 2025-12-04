@@ -3489,6 +3489,35 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
  
 /********************** GraphQL Ends *****************************/
 
+/********************** System Design Starts *****************************/
+      Ref: https://takeuforward.org/system-design/complete-system-design-roadmap-with-videos-for-sdes/
+
+      /**** Module 1 : Basics ****/
+            /**** What is System Design? ****/
+            Say you have a Pizza shop. Now, can we scale it?
+                  1) Things to consider:
+                        (i) Scalability
+                              - Vertical Scaling
+                              - Preprocessing : preparing pizza bases beforehand so orders can be served faster
+                              - Backups : Having backup chefs that you don’t pay regularly but only call them in when your main chef is ill and just pay the backup chef for that day
+                              - Horizontal Scaling
+                              - Micro Services architecture : Break the system into distinct services:
+                                                                  (i) Team A of chefs specilizing in garlic bread
+                                                                  (ii) Team B of chefs specilizing in pizza making
+      
+                        (ii) Fault Tolerance
+                              - Distributed system :  Opening more shops elsewhere, so if one shop loses elctricity, others can still serve the orders and business never goes down. 
+                              - Load Balancer : to route request intelligently between the different shops
+
+                        - Extensibility: How can the system be flexible to change. "Decoupling the system" is one way to achieve that. 
+                              - Decoupling the system : Consider Pizza Shop & Delivery Agent, these are 2 different systems, so decouple them i.e different mangers for both etc. So, delivery agent doesn’t care what he is delivering, he just wants to deliver it fast. Similarly, Pizza shop doesn’t care how the order reaches the cutomer, they just make the order good and fast.
+
+                        - Logging and metrics calculations (Analytics, Auditing, Reporting, Machine Learning) : In case of any failure, you should have logs that you can refer to. You should also analyze your data to be able to make decisions like which products are doing better and how to allocate resources etc.
+
+                  📒Note : LLD (Low Level Design) vs HLD (High Level Design)
+                        (i) LLD is when you start talking about how you will implement whatever architecture you designed in code, what classes, objects, hashing what to improve performance etc.
+                        (ii) HLD is design on a high level: a load balancer, multiple servers, backups, caches etc.
+                        
 
 
 
