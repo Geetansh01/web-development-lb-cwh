@@ -3517,15 +3517,57 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
                   📒Note : LLD (Low Level Design) vs HLD (High Level Design)
                         (i) LLD is when you start talking about how you will implement whatever architecture you designed in code, what classes, objects, hashing what to improve performance etc.
                         (ii) HLD is design on a high level: a load balancer, multiple servers, backups, caches etc.
+
+            /**** Horizontal vs. Vertical Scaling ****/
+                  Scalability: being able to handle more requests
+                        (i) Vertical Scaling: Buy Bigger Machine
+                        (ii) Horizontal Scaling: Buy More Machines
+
+                  Comparison:
+
+                  | Feature                | Horizontal Scaling                                                                 | Vertical Scaling                                  |
+                  |------------------------|------------------------------------------------------------------------------------|---------------------------------------------------|
+                  | 1) Load Balancing      | Required                                                                           | Not required (single machine)                     |
+                  | 2) Resilience          | If one machine fails, others can handle                                            | Single point of failure                           |
+                  | 3) Communication       | Uses Network calls (RPC) for communication between machines (Slow)                 | Uses Inter-process Communication (IPC) (Fast)     |
+                  | 4) Data Consistency    | Data consistency is challenging across distributed systems                         | Easy, as there is just a single machine           |
+                  | 5) Scalability         | Scales well as users increase; linearly add more servers as users increase         | Hardware limitation; can't keep making machine bigger forever |
+
+                  📒Note: Data Consistency: Means the data is same across all places it appears (say, across different nodes in a distributed system.)
+
+            /**** What is Capacity Estimation? ****/
+                  Ques1: Estimate YouTube's DAILY video storage requirement (So, how much more storage they need per day)?
+                  Points for System Design Interview that should be considered which are different from your simple Guesstimation Questions: 
+                        1) YouTube will not store a video at just one place, they will store multiple copies (So if One datacentre is destroyed, data is still safe)
+                        2) YouTube will store the same video in multiple formats like 1080p, 720p, 360p, 480p, 144p etc.
+
+                  Ques2: Estimate cache requirements for video metadata.
+                  Ques3: Estimate number of processors required to process videos.
+                  Ans Points: 1) Here, you need to find you requirement in MB/s. Say It comes out to be 40 MB/s. This means "We need to process 40 MB of data per second."
+                                    -Why in MB/s?: Because processing power of a CPU is also in MB/s (in real life it's in MB/nanosecs but that is fine). So, Now that we have our requirement in MB/s, we can find the number of CPUs we need if we know the processing power of 1 CPU in MB/s.
+                              2) Say processing power of 1 CPU is: 1 MB/s (Just Saying). Now, in 1 second: 
+                                    - Work you need to do: 40 MB
+                                    - Work you can do with 1 processor: 1 MB
+                                    - So, number of processors you need: 40/1 = 40 processors!
+                              3) Say you are trying to estimate the processing time of a CPU for 1 MB data, don't directly state a number, break it down like: 
+                                    - Read Operation: 10 ms
+                                    - Processing: 20 ms
+                                    - Write Operation: 20 ms (Deliberately taken it x2 of Read Operation bcz for writing, you might have to acquire mutex locks etc.)
+
+                                    How you take these (👆) assumptions really matters. See "SystemDesign/Module1/3_WhatIsCapacityEstimation/NumberForSysDesEstimationQuestions.png" for some values to remember.
+
+                              📒Note: Here, I am considering that 1 CPU has just 1 core!
+                              
+
+
+
+
+                       
+
+
                         
 
 
-
-
                   
-
-
-
-
 
 
