@@ -3558,6 +3558,10 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
 
                               📒Note: Here, I am considering that 1 CPU has just 1 core!
                               
+            /**** MUST-DO Questions for [DBMS, CN, OS] Interviews: SDE Core Sheet ****/
+                  Ref: https://takeuforward.org/interviews/must-do-questions-for-dbms-cn-os-interviews-sde-core-sheet/
+
+                  Continue From Question: What is fragmentation? Types of fragmentation. 
 
 
 
