@@ -2106,6 +2106,197 @@
 
 /**********************Temporary break from CWH course*****************************/
 
+/********************** TanStack Query/ React Query Starts *****************************/
+      Basic Concepts of TanStack Query/ React Query ( https://youtu.be/mPaCnwpFvZY?si=uQacvy-FMr1xTpyR )
+
+            0) TanStack Query/ React Query in a nutshell:
+                  - It provides a hook that contains react state for: "data", "loading", "errors" etc. all in a single hook.
+                  - Normally, you would make a "loading" state in react that would render a loading icon when your app is fetching data from the server. Then once the datahas been received, you would update the "loading" state to remove the loading icon. Let's say 15 minutes have passed, now the data no the server might be updated so you again set the "loading" state to true and refetch the data. 
+                  - In addition to this, if the fetch fails, you have to retry.
+                  - So, basically, this all is boilerplate code that needs to be repeated whenever your app is fetching data from a server.
+                  - TanStack provides all of this builtin in a single hook.
+            
+            📒Note: More details and where to use Redux/ Context Provider instead:
+                  🌍 Two Worlds of State
+
+                  In frontend apps, you deal with two kinds of state:
+
+                  1. UI / Client State
+                        * Things that live only in the frontend.
+                        * Examples: is a modal open, current page, dark mode, form input, cart before checkout.
+                        * Best tools: React state, Context, Redux, Zustand, Jotai, etc.
+
+                  2. Server State
+                        * Data that comes from the backend and can change outside your app’s control.
+                        * Examples: products list, user profile, comments, search results.
+
+                        * Challenges:
+                              * Needs fetching
+                              * Can be stale (server updated elsewhere)
+                              * Needs caching
+                              * Needs sync across components
+                              * Needs retries, pagination, optimistic updates
+
+
+                  🧩 Where Context / Redux shine
+                        * Great for client state (stuff entirely in frontend).
+                        * You can use them for server state too, but then *you* must build:
+                              * Fetching logic
+                              * Error handling
+                              * Loading states
+                              * Caching & invalidation
+                              * Retry/backoff logic
+                              * Sync between tabs/focus
+
+                  That becomes a **lot of boilerplate** → basically reinventing TanStack Query inside Redux/Context.
+
+                  🚀 Where TanStack Query shines
+                        * It’s specialized for server state.
+                        * Gives you all the messy stuff for free:
+                              * Data fetching & caching
+                              * Auto refetch when data might be stale (window focus, tab refocus, time-based)
+                              * Retry failed requests
+                              * Invalidate queries after mutations (add/update/delete → auto refresh list)
+                              * Pagination, infinite scroll
+                              * DevTools for debugging
+
+                  So you don’t have to write the plumbing — just say *“how to fetch this”*.
+
+            1) useQuery Hook: this is the main hook provided by TanStack Query. From this, you get many things like:
+                  - data : actual datat returned by your query
+                  - isPending (Most suitable in most places): "true" if there is no data for the current query in the cache. 
+                  - isFetching
+                  - isLoading
+                  - error : if the query errored out and could not fetch any data
+                  - refetch etc...
+                  
+                  📙 How to use (See "FrontEnd/TanStackQuery/src/App_1_Intro.jsx") [Rename to "/App.jsx" to run it]:
+
+                        const { data, isPending, refetch } = useQuery({
+                              queryKey: ["todos"],
+                              queryFn: getTodos,
+                        });
+                  
+                  Here: (i) queryKey : this must be UNIQUE, this is how TanStack uniquely identifies this particular query in the entire app.
+                        (ii) queryFn : The function that the query will use to request data.
+
+                  See more (Official Docs: https://tanstack.com/query/latest/docs/framework/react/reference/useQuery )
+
+            2)(See "FrontEnd/TanStackQuery/src/App_1_Intro.jsx") [Rename to "/App.jsx" to run it]) Suppose you have a React state variable "id" that stores which post’s comments your app is currently displaying. You would pass this "id" to your API like this:  
+                  /comments?postId=${id}  
+
+            Now, your queries are being cached by TanStack Query, so, it needs to know about this "id". Otherwise, it will treat different queries the same and cause problems. For example, these two queries must be treated as separate:  
+                  /comments?postId=1  
+                  /comments?postId=2  
+
+            To handle this correctly, you need to tell TanStack Query that the query depends on the React state "id", so it can cache them accordingly:
+
+                  const [id, setId] = useState(1);
+                  const { data, isPending, refetch } = useQuery({
+                        queryKey: ["todos", id],
+                        queryFn: () => getTodos(id),
+                  });
+            
+            3) How to handle multiple queries. (See "FrontEnd/TanStackQuery/src/App_3_MultipleQueries.jsx" )
+
+      Advanced Topics of TanStack Query ( https://youtu.be/KkxPtimqaew?si=6mLJ_1hGQH3WzFfR )
+      1) More options in useQuery hook:
+            1)staleTime : The amount of time after which the cached data is considered "stale". Default is 0ms (immediately stale). 
+                  Ex: Say you set it to 5 minutes for data with queryKey "K", this data will be fresh for 5 minutes after fetching. So, if a new request is made with this queryKey after say 10 minutes, TanStack will notice that we are beyond the staleTime and will refetch the data from the server.
+
+                  const { data, isPending, refetch } = useQuery({
+                        queryKey: ["todos", id],
+                        queryFn: () => getTodos(id),
+                        staleTime: 500000,
+                  });
+
+            2) Query Invalidation : This is used when you have made some changes to the data on the server (like added/ updated/ deleted some data) and now you want to refetch the data to get the updated data from the server. This is done using "useQueryClient" hook provided by TanStack Query. This will refetch the data no matter what the "staleTime" is set to.
+                  Ex:
+                        import { useQueryClient } from "@tanstack/react-query";
+
+                        const queryClient = useQueryClient();
+
+                        // After adding a new todo on the server
+                        await addTodoOnServer(newTodo);
+                        queryClient.invalidateQueries({ queryKey: ["<correct-queryKey-here>"] });
+
+                  Note: invalidateQueries() technically returns a Promise that resolves when all the queries are refetched. So, if you want to wait for the refetch to complete before doing something else, you can await it.
+
+            3) Mutation : This is used to make changes to the data on the server (like add/ update/ delete data). This is done using "useMutation" hook provided by TanStack Query.
+
+                        import { useMutation } from "@tanstack/react-query";
+
+                        const { mutate } = useMutation({ 
+                              mutationFn: (<correct-input-here eg: newTodo>) => {
+                                    // The actual mutation function that performs the mutation (e.g., creating, updating, or deleting data).
+                              }, 
+                              onMutate: (variables) => {
+                                    // A function that executes before the actual mutation function (mutationFn) is fired. 
+                                    return <old-data>;
+                              },
+                              onError: (error, variables, context) => {
+                                    // Runs when an error happens!
+                              },
+                              onSuccess: (data, variables, context) => {
+                                    // Runs when mutation is successful!
+                              },
+                              onSettled: (data, error, variables, context) => {
+                                    // Error or success... doesn't matter! This always runs at the end.
+                              },
+                        })
+
+                  Here: The different parameters in the callback functions above are:
+                        (i) data: The data returned from the mutationFn after a successful mutation.
+                        (ii) variables: This is whatever you passed to mutate() function when you called it. 
+                              Ex: mutate(newTodo) --> here, "newTodo" is the "variables"
+                        (iii) context: This is whatever the onMutate function returned. You can use this to pass some data from onMutate to onError/ onSuccess/ onSettled functions. Here, it is "context.<old-data>".
+                              - This is useful for things like optimistic updates, where you want to update the UI immediately before the mutation completes, and then revert if there’s an error. The flow goes like this:
+                                    (i) in onMutate, get the old data from tanstack's cache
+                                    (ii) update the cache with optimistic data
+                                    (iii) return the old data from onMutate as "context" so that it is available in onError
+                                    (iv) in onError, revert the cache to old data using the "context" parameter
+                              Eg:
+                                    onMutate: async (newTodo) => {
+                                          const previousTodos = queryClient.getQueryData(["todos"]);
+
+                                          // Optimistically update to the new value
+                                          queryClient.setQueryData(["todos"], (oldTodos) => [
+                                                ...oldTodos,
+                                                newTodo,
+                                          ]);
+
+                                          return { previousTodos };
+                                    },
+                                    onError: (error, newTodo, context) => {
+                                          queryClient.setQueryData(["todos"], context.previousTodos);
+                                    },
+            
+            ✏️TLDR: useQuery is for getting the data from the server, useMutation is for changing the data on the server!
+
+            4) Dynamic Queries: It is just a way to define your queryOptions in a separate file and not directly in the useQuery hook. The video explains it in great detail in hwo to write a very clean dynamic queryOptions file in TypeScript. Watch the video for the template if needed. (from 29:50 onwards)
+
+            5) Infinite Querying: When a backend endpoint can possibly return a large list of items, it’s common to split the results into pages and load them one at a time. This is called "pagination". 
+
+                  📒Note: - It is the backend endpoint's responsibility to support pagination in the first place. 
+                          - IF the backend endpoint supports pagination, TanStack Query provides a special hook called "useInfiniteQuery" to implement infinite querying in the frontend.
+                              Ex: Page 1: items 1-10
+                                  Page 2: items 11-20
+                                  Page 3: items 21-30
+                                  and so on...
+
+            6) prefetching queries: You can prefetch queries using the "queryClient.prefetchQuery" method. This is useful when you want to load data in the background before it’s needed to simulate faster load times for the user.
+                  Ex: fetching the data when mouse enters a button rather than when the button is clicked. Based on the assumption that user will click the button if mouse enters it. 
+
+                  const queryClient = useQueryClient();
+                  const prefetchData = () => {
+                        queryClient.prefetchQuery(getUserQueryOptions());
+                  }
+
+                  <button onMouseEnter={prefetchData} >
+                        Click Me to get User Data
+                  </button>
+
+
 /**********************MinIO Starts*****************************/
 Refer the "BackEnd\MinIO" folder
 PLaylist being followed: https://youtube.com/playlist?list=PLFOIsHSSYIK37B3VtACkNksUw8_puUuAC&si=gWm2AzcR02wBXdLz
@@ -2552,7 +2743,8 @@ See "BackEnd\C#_dotNet" folder for code
 /********************** Docker Ends *****************************/
 
 /********************** Socket.IO Start*****************************/
-      Ref: https://youtu.be/UUddpbgPEJM?si=EJ2NTb3hWkiZsxj-
+      Ref: 1) https://youtu.be/UUddpbgPEJM?si=EJ2NTb3hWkiZsxj- (Basics Only)
+           2) https://youtu.be/ZKEqqIO7n-k?si=0ZYKjDb1LnmZuy8D (Much Better!)
 
       1) Problem: How does a simple HTTP connection work?  
             The client sends a request to the server, the server sends back a response, and the connection is closed.  
@@ -2581,6 +2773,38 @@ See "BackEnd\C#_dotNet" folder for code
                   - What this will do is get a script (Since src is "/socket.io/socket.io.js", it is requesting the script from the same url that loaded it i.e our backend). 
                   - The Socket.io code in our "BackEnd/SocketIO/server.js" is reponsible for sending this script.
 
+      4) Rooms in Socket.IO: using .emit() from the server will send the message to all the sockets. What if we want to:
+            (i) Send a message to only some sockets from the server?
+            (ii) Or, what if we want some clients to join a room and then all the clients in that room only are connected with each other.
+      In this case, we use Rooms.
+
+            1) What is a Room: a Room is just something with a unique name. So, to make a room, you just have to have a unique name. Then everyone in that room will only talk to each other.
+            
+                  🔴Tip: By default, every client has a "unique" socket ID, so every client is initially in a room of its own (with the  same name as its socket ID). You can use a clients socket ID to do (i) and (ii) above in 4)
+
+                  (See entire code in Corresponding Folder)
+                  (i) To send a message to a specific socket: socket.to(<specific_socket_id>).emit(...);
+                  (ii) To join a room: socket.join(room_id);
+      
+      5) emit callbacks in SocketIO: Really cool stuff, this let's you call a function (called the "emit callback" function) from the server on the client [So, basically, you are calling code from the server on the client- something you can't do otherwise but can here because this is a WebSocket connection underneath SocketIO]
+            // client Code
+            socket.emit("join-room", room_id, <callback-here>);
+            📒Note: The callback should be the last parameter in the .emit() call
+
+            // Server Code
+            socket.on("<socket-event-name>", (<other-things>, <callback_from_client>) => {
+                  socket.join(room_id);
+                  <callback_from_client()>; # We are calling the callback received from the client here, it's code will be executed on the client!
+            })
+
+      6) Namespaces in SocketIO: Can be used to separate connections say all users on "/" namespace and all admins on "/admin" namespace. Each namespace has it's own: event handlers, rooms and middlewares.
+
+      (i) Possible use cases: You want to create a special namespace that only authorized users have access to, so the logic related to those users is separated from the rest of the application
+
+      7) Connecting and Disconecting a SocketIO connection 
+            (i) <socket>.emit(...) : will store all messages if you are not connected to the server and send them when the connection is backup
+            (ii) <socket>.volatile.emit(...) : will just forget the message if you can't send it right now!
+
 /********************** Socket.IO Ends *****************************/
 
 /********************** FastAPI Starts *****************************/
@@ -2602,8 +2826,752 @@ See "BackEnd\C#_dotNet" folder for code
             1) So, say you have a POST API in your backend, you don’t need Postman to test it, just go to "http://localhost:8000/docs" and make a POST request with Swagger!
       5) PostgreSQL and SQLAlchemy: we are using PostgreSQL DB in this project. We are also using SQLAlchemy as the ORM. SQLAlchemy supports many SQL based RDBMSes 
             1) One of the main abilities of SQLAlchemy is to abstract away database-specific details, allowing developers to switch between different database systems with minimal code changes. 
+            2) psycopg: this is the driver for PostgreSQL needed in SQLAlchemy to work with PostgreSQL. If, say, you are working with MySQL, you would need MySQL's driver in SQLAlchemy. So, run:
+                  pip install sqlalchemy psycopg
+      
+      6) So we have 2 files:
+            1) models.py ("BackEnd/fastAPI/models.py"): This is where pydantic classes are present. Take the "Product" class for example, the purpose of this pydantic class is to enable validations on all the fields of "Product"
+            2) database_models.py ("BackEnd/fastAPI/database_models.py"): This is where SQLalchemy models are present. As we are using SQLAlchemy as an ORM, where would we define the object-relational mapping such as table name, which key will be primary key etc? In this file! 
+            3) "2)" specifies the mapping part but how do we tell SQLAlchemy that it has to make all the tables? We do that by following line in "BackEnd/fastAPI/main.py":
 
-      Resume from: 1:08:39
+                  database_models.Base.metadata.create_all(bind=engine)
 
+            4) Dependency injection in FastAPI (See "BackEnd/fastAPI/main.py"):
+                  1) creating a session object, then running the route handler, then closing the connection as in:
+
+                        @app.get("/products")
+                        def get_all_products():
+                              db = session()
+                                    ...
+                              db.close()
+                              return products
+
+                        is very repetitive when done for all the route handlers. 
+                  2) Rather we can use dependency injection provided by fastAPI as follows:
+
+                        def get_db():
+                              db = session()
+                              try:
+                                    yield db
+                              finally:
+                                    db.close()
+
+                        @app.get("/products")
+                        def get_all_products(db: Session = Depends(get_db)):
+                              # Query the DB
+                              db_products = db.query(database_models.Product).all()
+                              return db_products
+
+                        (i) Here, "db: Session = Depends(get_db)" says that "get_all_products()" function needs the "db" object to run from the "get_db()" function.
+                        (ii) Also, the way dependency injection works in fastAPI, "get_db()" will "yield" the db object to  "get_all_products()" and stop there. Once  "get_all_products()" is done i.e the request has been served, "get_db()" will run from after the "yield db" line and ultimately, the "db.close()" will run. [You can read up on how the "yield" keyword works in python and how fastAPI uses it.]
+                        (iii) So, why try-finally, why not just:
+
+                              def get_db():
+                                    db = session()
+                                    yield db
+                                    db.close()
+
+                              Well, it works fine if everything goes good in the route handler i.e "get_all_products()". But if an exception arises in the route handler, "db.close()" would never run -> Connection leak 💀
+
+      Alembic and Migrations in FastAPI
+      Ref: https://youtu.be/i9RX03zFDHU?si=ASALG24v036hOKQh
+
+      1) Alembic is a database migration tool, it helps you manage changes to your database overtime in a systematic manner.
+      2) Migration environment in alembic (https://alembic.sqlalchemy.org/en/latest/tutorial.html#the-migration-environment): This is the main environement in alembic that will handle the migrations. You can create a Migration environement using: alembic init <your-migration-environement-name>
+         This will create:
+            (i) alembic.ini file : file that alembic scripts look for when you invoke alembic commands
+                  a) Inside this, we will tell alembic how to connect to our our DB by MODIFYING this genereic line:
+                        sqlalchemy.url = driver://user:pass@localhost/dbname
+            (ii) your-migration-environement-name/ : directory that is the home of your migration environement
+                  a) env.py file : this is the file that is run whenever you run migrations. It uses sqlalchemy to connect to DB and make the changes
+      3) Important commands:
+            See "~/myapp/versions_OLD/" folder for reference. I added the "_OLD" part to keep it separate from "~/myapp/versions/" folder which does not have any handwritten code, rather it has automatically generated migrations (See 4) below): 
+
+            1) alembic revision -m "Create user table" : to create a new alembic revision to create a new "user" table. Here, -m is for message like in git commit. 
+            This will create "BackEnd/fastAPI/myapp/versions/de1bb338be87_create_user_table.py" file:
+
+                  🔴Tip: Alembic migration v/s revision:
+                        - revision : A revision, in Alembic, refers to a specific, version-controlled change to your database schema. Each revision is represented by a unique Python script file generated by Alembic (e.g., ~/versions/abcdef12345_create_user_table.py). This file contains both an upgrade() function, which defines how to apply the schema change, and a downgrade() function, which defines how to reverse it. Revisions are essentially the individual units of change that Alembic tracks, similar to commits in a version control system like Git.
+                        - migration : A migration, in the context of Alembic, refers to the process of applying one or more revisions to your database. When you run "alembic upgrade head", you are performing a migration that applies all pending revisions to bring your database schema up to the latest version. Similarly, alembic downgrade performs a migration to revert changes by applying the downgrade() functions of specific revisions.
+
+                  (i) down_revision : this will point to the previous revision. For the 1st revision, it will be "None".
+                  (ii) upgrade() / downgrade() functions: You can write code in these to tell alembic how to revert to the previous revision (for downgrade()), similarly for upgrade(). Later, we will use sqlalchemy to autogenerate this code but for now, let's code it ourselves.
+            2) - alembic upgrade <revision-id> : to apply a particular revision. 
+               - alembic upgrade head : to apply the most recent revision. 
+            3) - alembic history : to see all the revisions you have applied using alembic till now.
+               - alembic current : to get the current revision you are on (more precisely - the unique hash of the current revision)
+            4) downgrading alembic revision: 
+                  (i) relative migration : operate relative to the current revision
+                        - alembic downgrade -1 : This will downgrade 1 revision back relative to the current revision
+                        - alembic downgrade +1 : This will upgrade 1 revision forward relative to the current revision
+                        - alembic downgrade base :  completely revert all revisions and go back to original state of the DB 
+
+      4) How to autogenerate migrations from SQLAlchemy models : So, we don't want to manually write the revisions (i.e the upgrade(), downgrade() functions), we want it such that when we change a SQLAlchemy model and run a command, it is automatically detected by Alembic what changed and a suitable revision generated and it's migration applied.
+            (i) We have to tell alembic where our ORM models are. For this do: (See "~/myapp/env.py" file) (Official Docs: https://alembic.sqlalchemy.org/en/latest/autogenerate.html#auto-generating-migrations) 
+
+                  from <your sqlalchemy module here that has the "Base"> import Base
+                  target_metadata = Base.metadata
+                              
+            (ii) Now run : alembic revision --autogenerate -m "<your revision message>"
+            Then run : alembic upgrade head
+
+/********************** FastAPI Ends *****************************/
+
+/********************** TypeScript Starts *****************************/
+Ref: https://youtu.be/d56mG7DezGs?si=Kfou9TxtC9XmEiHe ( Only watched till 22:15 after that it's stupid paid buy my course! )
+
+      1) TypeScript(TS) is a Superset of JavaScript(JS), so every JS file is a valid TS file!
+         TS adds things on top of JS, most imp. of these is:
+            (i) Static Typing: declaring the type of your variables at compile time rather than at run time.
+      2) Transpilation: Browsers don’t understand JS, so your TS code first needs to be compiled in JS. 
+                        So, while there is no compilation step in JS, there is in TS.
+      3) Getting started with TS commands:
+            (i) sudo npm i -g  typescript : install typescript npm package globally
+            (ii) tsc <index.ts> :  this will Transpile your index.ts file and produce "index.js"
+
+      4) By Default, the TS compiler uses an older version of EcmaScript standard, so it will produce older JS code. For Ex:
+            index.ts: let a: number = 20;
+            index.js: var a = 20;
+
+            So, "let" is changed to "var" because older EcmaScript Standard is used by default.
+      5) tsc --init : to generate the tsconfig.json file. In this file, you can set the various configurations for TS compiler like which standard to use etc. Some useful settings are:
+            "rootDir": "./src", : The source directory where our source code is (i.e TS files)
+            "outDir": "./dist", : The distributable directory where the compiled JS files will be
+
+                  Now we can just type "tsc" in terminal and it will automatically compile all TS files in the "./src" folder
+
+            "module": "commonjs",
+            "target": "es2016", : target standard. Use older standard to support even older browsers but "es2016" is the safest option.
+            "removeComments": true, : Compiler will remove comments 
+            "noEmitOnError": true, : By default, compiler will still produce JS files even when there are errors in your TS code. This option ensures that it does not do so if there are errors in your TS code.
+            "sourceMap": true, : a file that specifies how each line of our TS code maps to the generated  JS code. It creates a "*.js.map" file. This is not for us, it's for debuggers!
+
+      /**** Debugging TypeScript Applications ****/
+      1) Steps: Choose debugger panel in vscode -> Select create a "launch.json" file and add this " "preLaunchTask": "tsc: build - tsconfig.json" " : this tells VSCode to build this application using the TS Compiler using the "tsconfig.json" configuration. 
+
+Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb 
+      1) Actual benefits of TS (other than static typing and less bugs):
+            (i) Refactoring code is easy: TS: you change a function's definition once (like taking 1 less parameter as input) and you get errors everywhere in your code to change that.
+                                          JS: same as above but the function just changes where you changed it, no errors anywhere else in the code (not talking about runtime, just in VSCode), so now you manually have to find and replace and inevitably, some errors would slip in production.
+            (ii) Much better intellisense and auto-completion (in say VSCode)
+      2) Type inference in TS: you don't have to specify the type in your code explicitly, TS will infer it correctly almost always. So, this is fine too: 
+            let name = "Geetansh";
+      Just remember to use it as "string" in the code ahead. This saves you from having to write types again and again for all the variables you might be declaring.
+      3) "any" type in TS: Basically allows you to skip type checking, usually you should not use it.
+
+            🟥Note: "unknown" Type: The unknown type can be used for similar to "any", but its a much safer alternative because it forces you to explicitly assert the type before using it in a specific way. So, whenever you think of using "any", consider using "unknown" in it's place.
+
+      4) Functions in TS: Function declaration is the only place in TS where you have to explicitly define your types because a function takes in a parameter during declaration and at that time TS has no way of knowing it's type. Rest at all places in the code TS will infer the type automatically.
+            (i) Should Function return type be implicit or explicit:
+             - Inferred : If the function is only being used by me in my own codebase
+             - Explicit : If the function is being exported outside and used by others too!
+
+            (ii) Void: a new return type in TS that is not there in JS. The purpose of this is to explicitly tell that this function does not return anything as opposed to a function that returns "undefined". 
+                  - So, this removes the ambiguity between a function that explicitly returns "undefined" and a function that does not return anything at all. (In JS, both of these resolve to returning "undefined").
+            (iii) Function Type in TS
+                  let add: (x: number, y: number) => number;
+                  Here, we are defining a variable "add" of type "Function" that takes in 2 parameters of type "number" and returns a "number".
+                  Now, we can only assign functions of this type to "add", else TS will throw an error.
+
+                  Also see other use in "BackEnd/Typescript/src/index.ts --> // 6: Function Type in TS"
+      5) Type Aliases in TS: to avoid writing complex types again and again, we can define a type alias.
+            📒Note: these Type Aliases are only in TS not in JS, so don't try to check these in code like: typeof <var>ß === "<TypeAlias>" , it won't work! 
+      6)Importing Types
+            With certain TypeScript configurations you can import types directly from a module ( say "./models") like this:
+
+                  import { User, Post } from "./models";
+
+            But it's much safer and more efficient to use the import type syntax:
+
+                  import type { User, Post } from "./models";
+
+            This way TypeScript knows that you're only importing types, and it can drop the imports from the compiled JavaScript code which keeps the compiled JS bundle size small. This syntax also works:
+
+                  import { type User, type Post } from "./models";
+      7) Union types use the pipe symbol (|) and allow you to specify that a value can be one of several types.
+            // userId is a string OR a number
+            let userId: string | number;
+            userId = "user_42";
+            userId = 42;
+      
+            (i) Type Narrowing: TS will automatically narrow down the type based on the checks you do in code. For Ex:
+                  ex: a)function f1(info: string | number){
+                              // info.toLowerCase() // TS Will throw an error here, it may/ maynot be a string here
+                              
+                              // Type Narrowing: TS knows that inside this if block, "info" is string
+                              if(typeof info === "string"){
+                                    info.toLowerCase() // allowed here!
+                              }
+                        }
+
+                      b)function printId(id: number | string) {
+                              if (typeof id === "string") {
+                                    // Here, TS knows that id is a string
+                                    console.log(id.toUpperCase());
+                              } else {
+                                    // Here, TS knows that id is a number
+                                    console.log(id.toFixed(2));
+                              }
+                        }
+      
+      8) Optional Parameters : You can specify function parameters as optional with a question mark (?) after the name:
+            function greet(name: string, title?: string): string {
+                  if (title) {
+                        return `Hello, ${title} ${name}!`;
+                  }
+                  return `Hello, ${name}!`;
+            }
+
+            greet("Gandalf");           // "Hello, Gandalf!"
+            greet("Gandalf", "Wizard"); // "Hello, Wizard Gandalf!"
+
+            📒Note: 
+            1) Optional params have an undefined automatically unioned on the specified type (Eg: "title" above is "string" | "undefined" ). If the value is omitted, it's "undefined" instead of the specified type. So, make sure to handle that "undefined" case too in your function!
+            2) Why was "Optional Parameters" needed? In JS, if you don't pass a parameter to a function, it's "undefined" by default (this is different from other languages where in if a function expects a parameter, you have to pass it else error!). So, this feature is just to mimic that behavior in TS.
+      
+      9) Default Parameters: Default parameters provide fallback values for optional arguments.
+
+            function newCharacter(name: string, role: string = "warrior"): string {
+                  return `${name} is a ${role}`;
+            }
+
+            console.log(newCharacter("Gandalf")); // Gandalf is a warrior
+            console.log(newCharacter("Gandalf", "wizard")); // Gandalf is a wizard
+
+      When you use default parameters, you do not need to mark the parameter as optional by using "?".
+
+      10) Literal Types: Literal types areused for narrowing the possible values of a variable.
+            A string can have an infinite number of values.
+            So what if we want to declare a "direction" variable?
+
+                  function move(direction: string) {
+                        // Implementation...
+                  }
+
+
+            This kinda sucks... direction can be any string! So, we can use Literal Types here:
+
+                  function move(direction: "north") {
+                        // Implementation...
+                  }
+
+            Now direction can only be "north"!
+      
+      11) Arrays in TS (See "BackEnd/Typescript/src/index.ts")
+            (i) Rest parameters: these allow an indefinite number of final arguments, and brings them into the function body as an array. They're denoted by three dots (...) before the parameter name. 
+            📒Note: Don't confuse rest parameters with the similar but different spread syntax.
+
+                  function gatherParty(partyName: string, ...adventurers: string[]): string {
+                        return `${partyName} consists of: ${adventurers.join(", ")}`;
+                  }
+
+                  const msg = gatherParty("The Fellowship", "Frodo", "Sam", "Gandalf");
+                  console.log(msg);
+                  // "The Fellowship consists of: Frodo, Sam, Gandalf"
+
+      12) Object literal types: these allow you to describe the shape of an object. So, instead of an object having type "any", it can have a fixed type with specific properties and their types. This would make autocomplete and intellisense much better!
+            1) Discriminated Unions: A common pattern when working with object literal types is to use a common property to distinguish between different object shapes. This is known as a discriminated union.
+
+                  type Circle = {
+                        kind: "circle";
+                        radius: number;
+                  };
+
+                  type Square = {
+                        kind: "square";
+                        sideLength: number;
+                  };
+
+                  type Shape = Circle | Square;
+
+                  function area(shape: Shape): number {
+                        if(shape.kind == "circle"){
+                              //Now TS knows it's a "Circle" type
+                              return Math.PI * shape.radius ** 2;
+                        }
+                        //Now TS knows it's a "Square" type
+                        return shape.sideLength ** 2;
+                  }
+      
+            2) Dynamic Keys in TS Objects: Sometimes, you won't know all of an object's property names in advance. For example, say you're building a customer management system where employees can add custom key/value pairs to customer records:
+                  - favoriteColor: "blue"
+                  - favoriteFood: "pizza"
+                  - favoriteAnimal: "cat"
+                  - etc
+
+            You can't know what the user will add ahead of time, but you still want to model the data in your program.
+            You can define dynamic keys like so:
+                  type UserMetrics = {
+                        [key: string]: number;
+                  };
+            This type says "this object can have any number of properties if the keys are strings and the values are numbers."
+
+                  1)PropertyKey: With dynamic property keys we've only used the "string" type so far, and most of the time, that's all you need. However, JS also supports number and symbols as property keys. TypeScript actually has a built-in type called "PropertyKey" that represents all possible property key types:
+                        // this is a built-in type
+                        type PropertyKey = string | number | symbol;
+
+                        So, instead of:
+
+                              type InfrastructureTags = {
+                                    [key: string]: any;
+                              };
+
+                        We can allow number and symbol keys (the JS default) like this:
+
+                              type InfrastructureTags = {
+                                    [key: PropertyKey]: any;
+                              };
+
+                              const janesServer: InfrastructureTags = {
+                                    name: "Jane's Server",
+                                    1: 420,
+                                    [Symbol("role")]: "Admin",
+                              };
+
+            3) Readonly Modifier: The readonly modifier is very similar to the const keyword in JS. It's an added feature of TS (i.e NOT present in JS) that lets us mark object properties as read-only, meaning they can't be changed after initialization.  
+            4) "as const" in TS: This is a way to tell the TS compiler to treat an object or array as completely immutable. It makes all properties readonly and narrows their types to literal types.
+
+                  let directions = {
+                        north: "NORTH",
+                        south: "SOUTH",
+                        east: "EAST",
+                        west: "WEST",
+                  } as const;
+
+                  // directions.north = "UP"; // Error: Cannot assign to 'north' because it is a read-only property.    
+
+      13) Sets in TS
+      14) Function Overloading in TS
+      15) Tuples in TS: A tuple is a special kind of array where each position has a specific, known type.
+
+            Ex: const nameAndAge: [string, number] = ["Rose Tyler", 24];
+            
+            📒Note: (i) Tuples in TypeScript are (guh) still arrays under the hood (i.e in JS), so counterintuitively you can still push to them and pop from them. This is a bit of a gotcha! So, to get the actual Tuple-behavior, use "readonly" like so:
+
+                  const nameAndAge: readonly [string, number] = ["Martha Jones", 24]; 
+                  nameAndAge.push("Donna Noble"); // Error: Property 'push' does not exist on type 'readonly [string, number]'.
+
+            1) Named Tuples: we can label tuple elements (sometimes called "named tuples"). So, instead of this:
+                  type UserData = [string, number, boolean];
+
+            We can do this:
+                  type UserDataLabeled = [name: string, age: number, isAdmin: boolean];
+
+            📒Note: labels are quite literally just names for your ceonvenience as a developer, they don't change how the values are accessed. Say I have a named tuple like this:
+
+                  const user: [name: string, age: number] = ["Bilbo", 111];
+
+            And then I try to destructure in reverse order:
+
+                  const [age, name] = user;
+                  console.log(age); // "Bilbo"
+                  console.log(name); // 111
+
+            The variable names I choose when destructuring don't matter: only the positions do.
+
+            2) Optional Elements in Tuples: Like object properties, you can make tuple elements optional using the ? modifier:
+
+                  type HttpResponse = [statusCode: number, data: string, error?: string];
+
+                  // Both of these work!
+                  const successResponse: HttpResponse = [200, "Success!"];
+                  const errorResponse: HttpResponse = [404, "", "Resource not found"];
+            
+            3) Tuple Rest Elements: TypeScript allows tuples to have a variable number of elements of a specific type using rest elements. This is nice when you want a tuple to have a fixed-length beginning but a flexible-length ending:
+
+                  // A tuple with a rest element
+                  type NameAndScores = [string, ...number[]];
+
+                  // All of these are valid
+                  const nameAndScores: NameAndScores = ["Alphonse", 69, 420, 300];
+                  const nameAndScores: NameAndScores = ["Winry", 42];
+                  const nameAndScores: NameAndScores = ["Edward"];
+
+      16) Intersection of Types in TS: An intersection type combines multiple types into one with the & operator. The resulting intersection type satisfies all the component types simultaneously.
+
+            type Point2D = {
+                  x: number;
+                  y: number;
+            };
+
+            type pointOnZAxis = {
+                  z: number;
+            }
+
+            type Point3D = Point2D & pointOnZAxis;
+
+            // Equivalent to:
+            // type Point3D = {
+            //   x: number;
+            //   y: number;
+            //   z: number;
+            // };
+
+            📒Note: Now you know 2 operators you can use on types: unions (|) and intersections (&)
+      
+      17) The Never Type: In TypeScript, the "never" type represents values that can't occur. More ob this in the video but I am skipping it for now.
+
+            📒Note: Intersecting Incompatible Types
+            When you intersect two types that have incompatible fields, the result is the "never" type. For example:
+
+            type Saiyan = {
+                  name: "goku" | "vegeta";
+                  powerLevel: number;
+            };
+
+            type Human = {
+                  name: "krillin" | "yamcha";
+                  age: number;
+            };
+
+            type SaiyanHuman = Saiyan & Human; // "SaiyanHuman" becomes "never" type
+
+            Now the name property can't possibly satisfy both! Humans must be krillin or yamcha, and Saiyans must be goku or vegeta. So, the name property in SaiyanHuman becomes "never", which in turn makes the entire SaiyanHuman type "never".
+
+      18) Interface VS Types in TS: As it turns out, there are two ways to define object types: the "type" keyword (as we've seen with type aliases) and "interfaces". Both are similar, but there are some differences.
+
+            1) Interfaces can be extended using the "extends" keyword, allowing you to create new interfaces based on existing ones. Type aliases can achieve similar behavior using intersections (&).
+
+            2) Declaration Merging: One unique feature of interfaces is declaration merging. If you declare the same interface multiple times, TypeScript merges them into a single interface. This is not possible with type aliases; redeclaring a type alias with the same name will result in an error.
+
+                  🔴Tip: Declaration Merging can also lead to nasty bugs, so most of the times, just use "type" instead of "interface"
+
+            🍀 TLDR: Just use "type" and don’t use "interface"! 🤣🤣
+
+      19) Enums in TS
+            🔴Tip: Just avoid them, don't use "enums" in TS
+
+      20) Type Assertion: Sometimes you know more about a value's type than TypeScript does... it's rare but it happens.
+      21) Non-null Assertion: It's common for TypeScript libraries to assume that a value can be null or undefined even when you know it can't be. You can assert that it's not with the non-null assertion (!) operator. It tells the compiler that a value cannot be null or undefined, even when the type system thinks it might be.
+
+      Ex:
+            interface User {
+                  id: string;
+                  name?: {
+                        first: string;
+                        last: string;
+                  };
+            }
+
+            // we don't control the User type (its imported from a library)
+            // but we know that we always use the `name` property
+            sentText(user.name!.first);
+
+      📒Note:  Only use non-null assertions when you're crazy-confident that the value can't be null or undefined. Just use a conditional guard clause if there is any uncertainty. This is always safer, albeit more verbose:
+
+            function sendTextSafely(text: string | null) {
+                  if (text === null) {
+                        throw new Error("Text is required");
+                  }
+                  sendText(text);
+            }
+      22) Classes in TS
+            1) Note: "protected" access modifier and "abstract" classes are just in TS not JS, so TS enforces these rules at compile time but the generated JS code will not have any of these.
+
+      23) Utility Types in TS: TS provides several built-in utility types to facilitate common type transformations. These help us to stick to "Single Source of Truth" principle. 
+      Ex: Say you have an interface "User" with many properties and you want to create a new type where all properties are optional. Instead of redefining the entire interface with optional properties, you can use the "Partial" utility type.
+
+            ❌❌BAD CODE❌❌
+                  type User = {
+                        id: number;
+                        name: string;
+                        email: string;
+                  }
+
+                  // Manually creating a type with all properties optional
+                  type UserWithOptionalFields = {
+                        id?: number;
+                        name?: string;
+                        email?: string;
+                  }
+
+                  This is bad because if you change the "User" type later, you have to remember to change "UserWithOptionalFields" too! Refactoring nightmare!
+            ✅✅GOOD CODE✅✅
+                  type User = {
+                        id: number;
+                        name: string;
+                        email: string;
+                  }
+                  // Using Partial utility type
+                  type UserWithOptionalFields = Partial<User>;
+
+            1) Some commonly used utility types are: 
+                  1) Partial<T>: Constructs a type with all properties of type "T" set to optional.
+                  2) Required<T>: Constructs a type with all properties of type "T" set to required.
+                  3) Readonly<T>: Constructs a type with all properties of type "T" set to readonly.
+                  4) Pick<T, K>: Constructs a type by picking a set of properties K from type "T".
+                  5) Omit<T, K>: Constructs a type by omitting a set of properties type "K" from type "T".
+                  6) Record<K, T>: Constructs an object type whose property keys are type "K" and property values are type "T".
+      
+      24) Generics in TS: Allow you to create reusable logic that works with many types rather than a single one. Think of a data structure like a Queue or a Stack. They can hold any type of data, so it would be really annoying to reimplement them for every type:
+            NumberQueue
+            StringQueue
+            UserQueue
+            etc.
+            
+            Generics let us create a single Queue<T> type that can work with any type T
+
+            1) "extends" keyword in Generics: You can use the "extends" keyword to constrain a generic type to a specific subset of types. This is useful when you want to ensure that the generic type has certain properties or methods.
+
+                  Ex: 
+                        type IHaveName = {
+                            name: string;
+                        }
+                        // Below, T can be any type but should also satisfy "IHaveName" type (i.e should have a "name" of type "string").
+                        function sayHi2<T extends IHaveName>(user: T){ 
+                            console.log(`Hi ${user.name}`);
+                        }
+
+                        sayHi2({
+                            name: "Geetansh Bhardwaj",
+                            age: 20
+                        })
+                        // Output: Hi Geetansh Bhardwaj
+
+            2) Type Parameters for Types: Type parameters aren't just limited to functions and methods! You can use type parameters to create generic types as well!
+                  Ex: 
+                        type Marks<T> = {
+                            user_marks: T
+                        }
+
+                        let marks1: Marks<string> = {
+                            user_marks: "100",
+                        }
+                        console.log(marks1.user_marks)
+                        let marks2: Marks<number> = {
+                            user_marks: 100,
+                        }
+                        console.log(marks2.user_marks)
+
+            3) Conditional Types: these allow us to create new types based on conditions within the type system, they take this form (so you can only use the ternary operator here):
+
+                  type NewType = SomeType extends OtherType ? TrueType : FalseType;
+
+            Ex:
+            type IsString<T> = T extends string ? true : false;
+
+            // Usage
+            type Result1 = IsString<"hello">; // true
+            type Result2 = IsString<42>;      // false
+            type Result3 = IsString<string>;  // true
+
+/********************** TypeScript Ends *****************************/
+
+/********************** Axios Starts *****************************/
+      Ref: https://youtu.be/6LyagkoRWYA?si=KBwx-s7CnELb2VjM
+
+      0) Axios: a library for making requests (better alternative to fetchAPI)
+      (See ~/main.js for code)
+      1) GET request using Axios: it will return a promise. Upon resolution, we will get a JSON object with the following attributes:
+            (i) config: this will have stuff like which url was hit, which type of request it was (GET, POST etc.)
+            (ii) data: this is where the response from the API would be
+            ...etc
+      
+      2) Intercepting requests in axios: say you want to run something every time a request is sent.
+            1) There are two main types of Axios interceptors:
+            (i) Request Interceptors: These functions are executed before a request is sent to the server. They can be used to:
+                  - Add authentication tokens (e.g., JWT) to the request headers.
+                  - Modify request parameters or data.
+                  - Set a base URL for all requests.
+                  - Log request details for debugging.
+            
+            (ii) Response Interceptors: These functions are executed after a response is received from the server but before it's passed to the then or catch blocks. They can be used to:
+                  - Globally handle errors (e.g., redirect to login on 401 Unauthorized).
+                  - Transform response data before it reaches the application logic.
+                  - Log response details.
+                  - Implement refresh token logic.
+
+      3) Other Axios functionalities are also there (See "BackEnd/Axios/main.js")
+
+/********************** Axios Ends *****************************/
+
+/********************** GraphQL Starts *****************************/
+      Ref: https://youtu.be/WtkKwO1viI8?si=caPWkNKej-lLgM6T
+
+      0) Problem with REST APIs: Overfetching and Underfetching of data
+            (i) Overfetching: when the client receives more data than it actually needs. This can lead to inefficiencies, especially on mobile networks where bandwidth is limited.
+                  Ex: Client need only the username, it calls /users/id API and gets the entire user object with all details like email, address, phone number etc. which it does not need.
+            (ii) Underfetching: when the client does not receive enough data in a single request, leading to multiple round-trips to the server to fetch all the required data.
+
+      1) GraphQL: GraphQL is a query language + a specification
+                  It is NOT:
+                        - a server
+                        - a framework
+                        - a networking protocol
+                        - a replacement for HTTP
+
+            GraphQL is a language and a contract for how clients can ask for data and how servers must respond. Just like SQL is a language to query a DB, GraphQL is a language to query APIs.
+
+      2) Apollo: It acts as the Ecosystem / Framework for implementing GraphQL. It has 2 main components:
+            (i) Apollo Server: to build a GraphQL server that will respond to GraphQL queries
+            (ii) Apollo Client: to interact with a GraphQL server from the client side
+
+            Two terms: 
+                  (i) Query: to read/ fetch data from the server
+                  (ii) Mutation: to write/ modify data on the server   
+
+      3) Setting up a GraphQL server using Apollo Server (See "BackEnd/GraphQL/Server/index.js" for code)
+            1) Define your schema: using GraphQL Schema Definition Language (SDL)
+            2) Define your resolvers: functions that fetch the data for each field in your schema
+
+                  const server = new ApolloServer({
+                        typeDefs: `
+                              type Todo {
+                                    id: ID!
+                                    title: String!
+                                    completed: Boolean
+                              }
+
+                              type Query {
+                                    getTodos: [Todo]
+                              }
+                        `,
+                        resolvers: {
+                            Query: {
+                                getTodos: () => {
+                                    return [
+                                        { id: '1', title: 'Learn GraphQL', completed: false },
+                                        { id: '2', title: 'Build a GraphQL Server', completed: true },
+                                    ];
+                                }
+                            }
+                        },
+                  });
+
+                  Here: (i) typeDefs is the schema
+                              - So, we have a "Todo" type with fields "id", "title", "completed"
+                              - We have a "Query" type with a field "getTodos" that is a list of "Todo" items
+
+                              📒Note: (From ChatGPT) In typeDefs, "Query" must be named exactly "Query". It’s a reserved root type name in GraphQL. You cannot rename it.
+                                    GraphQL schemas define these root operation types:
+                                          - Query → for reading/fetching. So, all entry points for read operations will be under this "Query" type.
+                                          - Mutation → for writing/updating.
+                                          - Subscription → for real-time pushes.
+                                    These names are special and GraphQL expects them.
+
+                        (ii) resolvers is the set of functions that fetch data for each field in the schema
+                              - So, in resolvers above, we have defined a function that defines what data to return when a GraphQL query for "getTodos" is made like so (See http://localhost:8000/graphql -> A great UI provided by Apollo Server for testing GraphQL APIs):
+                                    
+                                    Query:
+                                    query getAllTodos {
+                                      getTodos {
+                                        title,
+                                        id
+                                      }
+                                    }
+
+                                    Response:
+                                    {
+                                      "data": {
+                                        "getTodos": [
+                                          {
+                                            "title": "Learn GraphQL",
+                                            "id": "1"
+                                          },
+                                          {
+                                            "title": "Build a GraphQL Server",
+                                            "id": "2"
+                                          }
+                                        ]
+                                      }
+                                    }
+
+            3) Create an Apollo Server instance: pass in your schema and resolvers
+            4) Start the server: listen on a port for incoming requests  
+
+      GraphQL in FrontEnd: I am using React for FrontEnd here
+      4) Setting up a GraphQL client using Apollo Client (See "BackEnd/GraphQL/Client/src/main.jsx or App.jsx" for code)
+            1) Method 1: making graphql requests using plain JS
+                  - The main disadvantage is that you have to manually handle things like state management (say updating the React UI when new data comes in) etc. 
+
+            2) Method 2: using Apollo's "ApolloProvider" component to wrap your React app.
+                  - Similar to React's Context.Provider, ApolloProvider wraps your React app and places Apollo Client on the context, enabling you to access it from anywhere in your component tree.
+ 
+/********************** GraphQL Ends *****************************/
+
+/********************** System Design Starts *****************************/
+      Ref: https://takeuforward.org/system-design/complete-system-design-roadmap-with-videos-for-sdes/
+
+      /**** Module 1 : Basics ****/
+            /**** What is System Design? ****/
+            Say you have a Pizza shop. Now, can we scale it?
+                  1) Things to consider:
+                        (i) Scalability
+                              - Vertical Scaling
+                              - Preprocessing : preparing pizza bases beforehand so orders can be served faster
+                              - Backups : Having backup chefs that you don’t pay regularly but only call them in when your main chef is ill and just pay the backup chef for that day
+                              - Horizontal Scaling
+                              - Micro Services architecture : Break the system into distinct services:
+                                                                  (i) Team A of chefs specilizing in garlic bread
+                                                                  (ii) Team B of chefs specilizing in pizza making
+      
+                        (ii) Fault Tolerance
+                              - Distributed system :  Opening more shops elsewhere, so if one shop loses elctricity, others can still serve the orders and business never goes down. 
+                              - Load Balancer : to route request intelligently between the different shops
+
+                        - Extensibility: How can the system be flexible to change. "Decoupling the system" is one way to achieve that. 
+                              - Decoupling the system : Consider Pizza Shop & Delivery Agent, these are 2 different systems, so decouple them i.e different mangers for both etc. So, delivery agent doesn’t care what he is delivering, he just wants to deliver it fast. Similarly, Pizza shop doesn’t care how the order reaches the cutomer, they just make the order good and fast.
+
+                        - Logging and metrics calculations (Analytics, Auditing, Reporting, Machine Learning) : In case of any failure, you should have logs that you can refer to. You should also analyze your data to be able to make decisions like which products are doing better and how to allocate resources etc.
+
+                  📒Note : LLD (Low Level Design) vs HLD (High Level Design)
+                        (i) LLD is when you start talking about how you will implement whatever architecture you designed in code, what classes, objects, hashing what to improve performance etc.
+                        (ii) HLD is design on a high level: a load balancer, multiple servers, backups, caches etc.
+
+            /**** Horizontal vs. Vertical Scaling ****/
+                  Scalability: being able to handle more requests
+                        (i) Vertical Scaling: Buy Bigger Machine
+                        (ii) Horizontal Scaling: Buy More Machines
+
+                  Comparison:
+
+                  | Feature                | Horizontal Scaling                                                                 | Vertical Scaling                                  |
+                  |------------------------|------------------------------------------------------------------------------------|---------------------------------------------------|
+                  | 1) Load Balancing      | Required                                                                           | Not required (single machine)                     |
+                  | 2) Resilience          | If one machine fails, others can handle                                            | Single point of failure                           |
+                  | 3) Communication       | Uses Network calls (RPC) for communication between machines (Slow)                 | Uses Inter-process Communication (IPC) (Fast)     |
+                  | 4) Data Consistency    | Data consistency is challenging across distributed systems                         | Easy, as there is just a single machine           |
+                  | 5) Scalability         | Scales well as users increase; linearly add more servers as users increase         | Hardware limitation; can't keep making machine bigger forever |
+
+                  📒Note: Data Consistency: Means the data is same across all places it appears (say, across different nodes in a distributed system.)
+
+            /**** What is Capacity Estimation? ****/
+                  Ques1: Estimate YouTube's DAILY video storage requirement (So, how much more storage they need per day)?
+                  Points for System Design Interview that should be considered which are different from your simple Guesstimation Questions: 
+                        1) YouTube will not store a video at just one place, they will store multiple copies (So if One datacentre is destroyed, data is still safe)
+                        2) YouTube will store the same video in multiple formats like 1080p, 720p, 360p, 480p, 144p etc.
+
+                  Ques2: Estimate cache requirements for video metadata.
+                  Ques3: Estimate number of processors required to process videos.
+                  Ans Points: 1) Here, you need to find you requirement in MB/s. Say It comes out to be 40 MB/s. This means "We need to process 40 MB of data per second."
+                                    -Why in MB/s?: Because processing power of a CPU is also in MB/s (in real life it's in MB/nanosecs but that is fine). So, Now that we have our requirement in MB/s, we can find the number of CPUs we need if we know the processing power of 1 CPU in MB/s.
+                              2) Say processing power of 1 CPU is: 1 MB/s (Just Saying). Now, in 1 second: 
+                                    - Work you need to do: 40 MB
+                                    - Work you can do with 1 processor: 1 MB
+                                    - So, number of processors you need: 40/1 = 40 processors!
+                              3) Say you are trying to estimate the processing time of a CPU for 1 MB data, don't directly state a number, break it down like: 
+                                    - Read Operation: 10 ms
+                                    - Processing: 20 ms
+                                    - Write Operation: 20 ms (Deliberately taken it x2 of Read Operation bcz for writing, you might have to acquire mutex locks etc.)
+
+                                    How you take these (👆) assumptions really matters. See "SystemDesign/Module1/3_WhatIsCapacityEstimation/NumberForSysDesEstimationQuestions.png" for some values to remember.
+
+                              📒Note: Here, I am considering that 1 CPU has just 1 core!
+                              
+            /**** MUST-DO Questions for [DBMS, CN, OS] Interviews: SDE Core Sheet ****/
+                  Ref: https://takeuforward.org/interviews/must-do-questions-for-dbms-cn-os-interviews-sde-core-sheet/
+
+                  Continue From Question: What is fragmentation? Types of fragmentation. 
+
+
+
+
+                       
+
+
+                        
+
+
+                  
 
 

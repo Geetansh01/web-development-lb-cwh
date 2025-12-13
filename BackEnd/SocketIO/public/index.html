@@ -4,15 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chit Chat</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <h1>Bharat Chat</h1>
-    <input type="text" id="message_field">
-    <button id="send_btn">SEND</button>
-    <div id="all_messages"></div>
+    <div>
+        <h1>Bharat Chat</h1>
+        <input type="text" id="message_field">
+        <button id="send_btn">Send to All</button>
+    </div>
+    
+    <div class="send_to_specific_client">
+        <input type="text" id="client_id_field" placeholder="client-id/ room-id">
+        <input type="text" id="message_field_2" placeholder="message">
+        <button id="send_btn_2">Send to Specific Clients/ Room</button>
+    </div>
+ 
+    <div class="join_a_specific_room">
+        <input type="text" id="join_a_specific_room_field" placeholder="room-id">
+        <button id="send_btn_3">Join a Specific Room</button>
+    </div>
 
+    <div id="all_messages"></div>
+    
     <script src="/socket.io/socket.io.js"></script>
     <script>
+
+        /* This is "/" namespace */
         const socket = io();
         // whenever the "socket" (i.e the server) emits a "user-message" event, run the provided callback 
         socket.on("message-from-server", (message)=>{
@@ -28,10 +45,58 @@
 
         send_btn.addEventListener("click", ()=>{
             let user_message = message_field.value;
-            // console.log("hERE", user_message);
             socket.emit("user-message", user_message);
         })
 
+        // Send to specific clients only
+        let send_btn_2 = document.getElementById("send_btn_2");
+        let message_field_2 = document.getElementById("message_field_2");
+        let client_id_field = document.getElementById("client_id_field");
+
+        send_btn_2.addEventListener("click", ()=>{
+            let client_id = client_id_field.value;
+            if(client_id.trim() === "") return; // Do Nothing if no client-id specified
+            let user_message = message_field_2.value;
+            socket.emit("user-message-to-specific-client", client_id, user_message);
+        })
+
+        // Join a specific room + Emit Callbacks in socketIO
+        let send_btn_3 = document.getElementById("send_btn_3");
+        let room_field = document.getElementById("join_a_specific_room_field");
+
+        send_btn_3.addEventListener("click", ()=>{
+            let room_id = room_field.value;
+            if(room_id.trim() === "") return // Do nothing
+            socket.emit("join-room", room_id, (message) => {
+                let p = document.createElement("p");
+                p.innerText = message;
+                document.getElementById("all_messages").append(p); 
+            });
+        })
+
+
+        /* Connecting and Disconnecting a SocketIO Connection */
+        document.addEventListener("keydown", (event)=>{
+            if(event.target.matches("input")) return; // If you are in an "input" field, do nothing
+
+            if(event.key === 'c') socket.connect(); // Connect socket Connection on pressing key "c"
+            if(event.key === 'd') socket.disconnect();
+        }) 
+
+        // Try to Ping the server every 1 sec, if the Socket Connection is there, the Server log would show counts every 1 sec 
+        let count = 0;
+        setInterval(()=>{
+            // socket.emit("ping", ++count);
+            socket.volatile.emit("ping", ++count); 
+        }, 1000)
+
+        /* This is "/admin" namespace */
+        const adminSocket = io("http://localhost:3000/admin", {auth : {token: 'MyAuthToken'}})
+        adminSocket.on("connect_error", (error) => {
+            let p = document.createElement("p");
+            p.innerText = error;
+            document.getElementById("all_messages").append(p); 
+        })
 
     </script>
 </body>
