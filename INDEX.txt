@@ -3489,6 +3489,27 @@ Ref: https://youtu.be/K01hLNDdqg4?si=FPFlM7dsVs__uNEb
  
 /********************** GraphQL Ends *****************************/
 
+/********************** Prisma Starts *****************************/
+Ref: https://youtu.be/RebA5J-rlwg?si=p1pe8Zljp5epzftt
+Also See "BackEnd/Prisma" Folder
+
+      /***** Instroduction *****/
+      0) It's an ORM
+      1) Main Files after setup (follow Official docs for setup):
+            (i) prisma/schema.prisma : This is a new "Prisma" format (it's not any coding language, it's not JS, not TS etc, it's prisma's own way of soring information).
+            (ii) src/script.ts : this is where my main code is. 2 ways to run this file:
+                  i) cd into src and run "npx tsx script.ts"
+                  ii) use the script in "package.json" that I set and run "npm run dev-start" (run this from root folder i.e Prisma/ OR it seems to work even if your terminal is in some folder because i think it always runs from project root i.e where "package.json" is placed)
+
+      2) All functions provided by prisma are asynchronous, so for a great experience, use them with asyn-await.
+      3) Prisma ORM Workflow:
+            i) It works on the "migrations" principle -> this allows you to track changes to your database easily.
+            ii) So, you update "prisma/schema.prisma". Run migrations. Now your DB is in sync with your schema. 
+            iii) Now run "npx prisma generate" 
+                  - this is to generate a fresh Prisma Client so you can get suggestions for newly added fields from your schema when you are coding.
+      
+/********************** Prisma Ends *****************************/
+
 /********************** System Design Starts *****************************/
       Ref: https://takeuforward.org/system-design/complete-system-design-roadmap-with-videos-for-sdes/
 

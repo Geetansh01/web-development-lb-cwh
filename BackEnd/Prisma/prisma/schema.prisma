@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Every model maps to a table in the SQL DB (Here, PostgreSQL)
+model User {
+  id    String @id @default(uuid()) // Every Model in the Schema must have an ID
+  age   Int
+  name  String
+  email String @unique
+  role  Role   @default(BASIC)
+
+  // 1 : M Relation ; 1 user writes many posts
+  writtenPosts Post[] @relation("writtenPosts") //Posts written by this person
+
+  // 1 : M Relation ; 1 user favorites many posts (A user can only favorite his own posts!)
+  favoritePosts Post[] @relation("favoritePosts") //Posts in this persons favorite
+
+  userPreferences   UserPreferences? @relation(fields: [userPreferencesID], references: [id])
+  userPreferencesID String?          @unique
+
+  // @id or @default were "field-level attributes" but we can also have block level attributes. These have 2 @'s for them
+  @@unique([age, name])
+  @@index([email]) // This is indexing and useful for query performance on emails
+}
+
+model UserPreferences {
+  id           String  @id @default(uuid())
+  emailUpdates Boolean // Does the user want to receive email updates?
+
+  // 1 : 1 relation ; 1 user can have 1 preference and vice-a-versa
+  user User?
+}
+
+// Post as in "Blog Post" or "Social Media Post"
+model Post {
+  id            String   @id @default(uuid())
+  title         String
+  rating        Float
+  averageRating Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // 1 : M Relation ; 1 user writes many posts
+  author   User   @relation("writtenPosts", fields: [authorId], references: [id])
+  authorId String
+
+  // 1 : M Relation ; 1 user favorites many posts (A user can only favorite his own posts!)
+  favoritedBy       User?   @relation("favoritePosts", fields: [favoritedByUserId], references: [id])
+  favoritedByUserId String?
+
+  // M : M relation ; A post can have many categories and A category can have many posts under it. (For a M : M relationship, you have to make a table for the relation - no need to do that explicitly here, Prisma will handle that)
+  categories Category[]
+}
+
+model Category {
+  id    String @id @default(uuid())
+  name  String
+  // M : M relation ; A post can have many categories and A category can have many posts under it
+  posts Post[]
+}
+
+// If you have a field that can only have pre-defined set of values, you can make an "enum" 
+enum Role {
+  BASIC
+  ADMIN
+}
