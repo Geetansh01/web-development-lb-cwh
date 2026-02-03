@@ -3510,6 +3510,17 @@ Also See "BackEnd/Prisma" Folder
       
 /********************** Prisma Ends *****************************/
 
+/********************** DevOps Starts *****************************/
+
+/********** Hitesh Choudhary Playlist **************/
+Ref: https://youtube.com/playlist?list=PLRAV69dS1uWSNLlI_I2xSDdghk3Y0zGml&si=o3EtwlS9U3_HPnur
+
+Ref (Chai aur Code Docs): https://docs.chaicode.com/youtube/chai-aur-devops/welcome/
+
+      1) Nginx: it is a web server.
+
+/********************** DevOps Ends *****************************/
+
 /********************** System Design Starts *****************************/
       Ref: https://takeuforward.org/system-design/complete-system-design-roadmap-with-videos-for-sdes/
 
