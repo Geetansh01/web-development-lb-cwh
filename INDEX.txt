@@ -3595,6 +3595,47 @@ Ref (Chai aur Code Docs): https://docs.chaicode.com/youtube/chai-aur-devops/welc
 
                   Continue From Question: What is fragmentation? Types of fragmentation. 
 
+            /**** What are Database Indexes? ****/
+                  - You have already done indexing in DB in your DBMS subject I guess (or maybe it was OS idk). It's that same thing, used to make queries fast in a DB. The concept is mostly the same in SQL and NoSQL DBs.
+
+            /**** NoSQL DBs VS SQL DBs ****/
+                  1) Advantages of NoSQL DBs/When You need NoSQL DBs:
+                        i) SQL DBs have normalisation at heart, so something complex like address would be in a separate table with different columns like street, state, country etc. But, most of the times, all of this data is inserted and retrieved at once (inserted when user signs up, retrieved every time he opens his profile). So, why not store everything together? In a SQL DB, there would be a User table and a join with the Address table every time you want to get the user data, but in a NoSQL DB, you can just store everything together in one document and retrieve it in one go without any joins. So, NoSQL DBs are better when you have data that is mostly inserted and retrieved together.
+                        
+                        ii) Flexible Schema: NoSQL DBs are better when you have a lot of unstructured data.
+
+                        iii) Horizontal Scalability: NoSQL DBs are designed to scale horizontally (something to do with - data in these can be easily stored in separate partitions). By doing this, NoSQL DBs prioritize availability (1 partition fails but others still up). So, NoSQL DBs allow "availability over consistency" (Why so is not fully clear yet to me, will come back to it later).
+
+                  2) Disadvantages of NoSQL DBs:
+                        i) Consistency Issues: NoSQL DBs often sacrifice consistency (differnet partitions show different data for same user_id). They work on the model of eventual consistency (which means that while they will eventually become consistent, there may be times when they are not). So:
+                              - NoSQL don't guarantee ACID properties (C is for consistency). But SQL BDs do guarantee ACID properties.
+                              - Thus, NoSQL DBs are not good if your app has too many Updates (Update = Delete + Insert) because of consistency issues. Different people will see different stuff - confusing 🫤. 
+
+                        ii) NoSQL DBs are not read optimized. Say your document structure in NoSQL DB is like:
+                              {
+                                    id: 12321
+                                    name: "Geetansh Bhardwaj",
+                                    email: "a@b.com",
+                                    password: "hashed_password",
+                                    address: {
+                                          street: "123 Main St",
+                                          city: "Anytown",
+                                    }
+                                    age: 21
+                              }
+
+                        Now I write a query to get all the ages, the DB will have to read the entire document (and that too for all users) to get the age field, which is inefficient. In SQL DBs, you can just read the "age" column from the "users" table without having to read the entire row.
+
+                        iii) Joins in NoSQL DBs are not efficient. In NoSQL, Joins are just read all the documents, get the relevant field and match. In SQL DBs, Joins are optimized and efficient. 
+
+            /**** What is Cache ****/
+                  Ref: https://takeuforward.org/operating-system/what-is-cache
+
+                  1) The underlying principle of cache memory is the locality of reference, which can be divided into two types:
+
+                        i) Spatial Locality: Refers to the tendency of the CPU to access adjacent memory locations. If a program accesses a memory location, it is likely to access neighboring locations in the near future.
+                        ii) Temporal Locality: Refers to the tendency of the CPU to repeatedly access the same memory locations within a short time period. This indicates that recently accessed data is likely to be accessed again soon.
+            
 
 
 
