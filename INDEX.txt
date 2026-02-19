@@ -3636,15 +3636,67 @@ Ref (Chai aur Code Docs): https://docs.chaicode.com/youtube/chai-aur-devops/welc
                         i) Spatial Locality: Refers to the tendency of the CPU to access adjacent memory locations. If a program accesses a memory location, it is likely to access neighboring locations in the near future.
                         ii) Temporal Locality: Refers to the tendency of the CPU to repeatedly access the same memory locations within a short time period. This indicates that recently accessed data is likely to be accessed again soon.
             
+            /**** What is Load Balancing (LB) ****/
+                  1) Goal: Distribute traffic across identical servers. 
+                  - Mostly used with stateless systems (or atleast it is easier to implement with stateless systems) because in stateful systems.
+                        Eg: Multiple servers S1, S2, S3, all are equivalent and any request can be served by any of them. So, we can easily distribute the load between them. 
 
+                  Ways to implement Load Balancing:
+                        1) Simple hashing ( Ref: https://youtu.be/K0Ta65OqQkY?si=2H3xDlREVXlMKNi0 ) : You have N servers. You also have a uniformly random hash function "H". Now, when a request comes in with id "id" (we are also assuming that the request ids are uniformly random) you would:
+                              i) Hash the id: H(id) -> gives you a number
+                              ii) Modulo the hash with N: H(id) mod N -> gives you a number between 0 and N-1 which is the server number you will route the request to.
 
+                              - Now, imagine you were serving 100% requests and you have 4 servers. So right now, each server takes 25% requests. Now, say your app goes viral and load is increasing, you decide to add 1 more server (so now you have 5 servers).
+                              So, each server now would server 20% of the requests. But, there is a huge problem! ‼️‼️
+                              - Request Sticking: earlier, with 4 servers, say a request with id 123 always came to server no. 1, call it S1. So, instead of fetching the details for this id from DB, S1 cached the details of id 123. But now, after adding S5, id 123 is no longer coming to S1, maybe it now goes to S2. So, the cache of S1 for id 123 is completely useless. 
+                                    i) Let's calculate how much request reassignemnt have happened after we added S5:
+                                          +5% : S1 looses 5% of requests and now handles 20% (earlier it was ahndling 25%)
+                                          +5% : S2 gets the lost ones of S1. S2 is not at 25% + 5% = 30%
+                                          +10% : S2 looses 10% of requests and now handles 20% (earlier it was handling 30%)
+                                          +10% : S3 gets the lost ones of S2. S3 is not at 25% + 10% = 35%
+                                          +15% : S3 looses 15% of requests and now handles 20% (earlier it was handling 35%)
+                                          +15% : S4 gets the lost ones of S3. S4 is not at 25% + 15% = 40%
+                                          +20% : S4 looses 20% of requests and now handles 20% (earlier it was handling 40%)
+                                          +20% : S5 gets the lost ones of S4. S5 is at 20% (earlier it was handling 0%)
 
-                       
+                                          So, Total Request Reassignment = 5% + 5% + 10% + 10% + 15% + 15% + 20% + 20% = 100% (All requests are reassigned, which is really bad for cache performance)
 
+                                          📕 Conclusion: Our "Simple hashing" method completely failed when system was scaled horizontally. Entire cache was rendered useless. We need a better strategy.
 
-                        
+                        2) Consistent Hashing ( Ref: https://youtu.be/zaRkONvyGr8?si=jYjQFQQPKxxrPBJj ): To solve the above problem, we can use consistent hashing. Here is how it works:
+                              i) Earlier, in "Simple hashing", we took modulo with M (where M = N = no. of servers). 
+                              Now, M = a very large constant number (say 2^32). We will take modulo with M instead of N. M = size of hash space.
 
+                              You can imagine the entire hash space as a circle where 0 and M-1 are adjacent. Now, we will hash the servers as well. 
 
+                              ii) Earler, only request ids were being hashed and modded. Now, each server will also be given an id, call it "sid". Now, this "sid" will also be hashed using the same hash function "H" and modded with M to get a point on the circle. So, we will have points on the circle for each server. Now, when a request comes in, we hash it and get a point on the circle. We will route the request to the first server that comes after this point in the clockwise direction.
+                              
+                              iii) In this way, even when new servers are added, only a small portion of the requests will be reassigned to different servers, thus improving cache performance significantly.
+
+                              iv) Theoretically, the "Load Factor" = 1/N. But consider the event that a server fails, so all its request would go to the next server, say S, in the ring, potentially increasing the load on that by a huge amount. 
+                              
+                              To solve this problem, we can use "Virtual Nodes". Here, instead of hashing each server once, we hash it multiple times to get multiple points on the circle for each server. So, if a server fails, its load will be distributed among multiple servers in the ring, thus preventing any single server from being overwhelmed. There are 2 ways of implementing this:
+                                    1) Use K different hash functions to hash each server K times. So, you will have K points on the circle for each server.
+                                    2) Use a single hash function but concatenate the server id with a number from 1 to K to get K different inputs for the hash function. So, you will have K points on the circle for each server.
+
+                                    🟨 Note: "2)" is better and is used in practice because designing K hash functions while maintaining random uniformity and consistency is hard. Generating K replica ids is easy: xxx gives K replicas xxx + '1', xxx + '2', ..., xxx + 'K'. Then you take these replicas and generate K points on the ring with the same hash function.
+
+            /**** What is Sharding ****/
+                  1) Goal: Distribute data across machines.
+                        - Each shard holds a subset of the data.
+                        - A request must go to the correct shard.
+                        - Shards are not interchangeable.
+
+                  🟨 Note: a DB is not a stateFUL system, so applying load balancing (LB) is difficult. For reads only you may apply LB. But for writes, their are consistency issues. Say user id 123 writes to DB1 but these writes now need to propagate to DB2, DB3 (assuming you have multiple replicas of the DB as DB1, DB2 etc and are LB b/w them).
+
+                  2) 2 types of Sharding:
+                        i) Horizontal Sharding: Distributing data across multiple servers/shards (Database servers) based on a shard key. So, it's partitioning based on rows.
+                        ii) Vertical Sharding: Distributing data across multiple shards based on columns.
+
+                  3) Key problems to consider:
+                        i) Cross-shard Joins: very expensive
+
+                        Continue from: 4:50 in https://youtu.be/5faMjKuB9bc?si=6e1xbkfgE9FSZJaV
                   
 
 
