@@ -3519,6 +3519,18 @@ Ref (Chai aur Code Docs): https://docs.chaicode.com/youtube/chai-aur-devops/welc
 
       1) Nginx: it is a web server.
 
+/********** GitHub Actions (GHA) Starts **************/
+Ref: https://youtu.be/R8_veQiYBjI?si=Gqp5uyBHRNBz6mVs
+
+      1) GHA is a tool to automate "developer workflows". Now, these "workflows" can be anything, one of them is "CI/CD workflow". 
+      2) Github events: when something happens IN or TO your repository, it's an even.
+            Eg: a PR, a new Issue, a contributor joining etc...
+         Actions / Github actions are automated responses to such events.
+
+      Continue from 23:03 of the video
+
+/********** GitHub Actions Ends **************/
+
 /********************** DevOps Ends *****************************/
 
 /********************** System Design Starts *****************************/
@@ -3636,6 +3648,7 @@ Ref (Chai aur Code Docs): https://docs.chaicode.com/youtube/chai-aur-devops/welc
                         i) Spatial Locality: Refers to the tendency of the CPU to access adjacent memory locations. If a program accesses a memory location, it is likely to access neighboring locations in the near future.
                         ii) Temporal Locality: Refers to the tendency of the CPU to repeatedly access the same memory locations within a short time period. This indicates that recently accessed data is likely to be accessed again soon.
             
+      /**** Module 2 : Load Balancing ****/
             /**** What is Load Balancing (LB) ****/
                   1) Goal: Distribute traffic across identical servers. 
                   - Mostly used with stateless systems (or atleast it is easier to implement with stateless systems) because in stateful systems.
@@ -3695,8 +3708,57 @@ Ref (Chai aur Code Docs): https://docs.chaicode.com/youtube/chai-aur-devops/welc
 
                   3) Key problems to consider:
                         i) Cross-shard Joins: very expensive
+                        ii) Inflexibility/ Fixed no. of shards: Once you have a shard, say S, it is fixed. Now say this shard had data for user ids 1-100. Now say these users are very active and generating a lot of load, but the users in shard S2 (with user ids 101-200) are not generating much load. So, you want to move some users from S to S2 to balance the load, but that is really difficult because of all the changes in routing logic, data movement etc.
+                        
+                              Solution: 1) Consistent hashing. It is implemented in an in-memory DB called "memcached".
+                                        2) Hierarchial Sharding: Here, every shard is further broken down into "mini-shards" and there is a shard manager per shard that keeps track of which mini-shard has which data.
 
-                        Continue from: 4:50 in https://youtu.be/5faMjKuB9bc?si=6e1xbkfgE9FSZJaV
-                  
+                        iii) What happens if a shard fails?
+                              Solution: 1) Master-slave architecture: 1 Master and multiple slaves copying him. Whenever there is a write, it goes to the master and then propagates to the slaves. Read requests can go to any of the slaves. 
+                              
+                              - If master fails, one of the slaves can be promoted to master and we are good to go. So we have good single point of failure handling here.
 
+            /**** Module 3 : Bloom Filters ****/
+
+                  /**** What is Bloom Filter ****/
+                        Ref: https://youtu.be/bgzUdBVr5tE?si=7BnsXh7WOGDjBvTG
+
+                        1) General Idea: Say you want to compare two strings for equality. The naive way is O(m+n). Even datastructures like Tries are there which have theoretically great complexity but not that great in practice. Rather, consider this idea:
+                              - Say the two strings to be compared are X and Y. Now, we will have 3 hash functions H1, H2, H3. 
+                              - We will hash X with these 3 hash functions to get 3 hash values: H1(X), H2(X), H3(X). 
+                              - So, for us, X is represented by these 3 hash values i.e X = (H1(X), H2(X), H3(X))
+                              - Similarly, we will hash Y with the same 3 hash functions to get Y = (H1(Y), H2(Y), H3(Y))
+                              - Now, if X and Y are equal, there is very high PROBABILITY that (H1(X), H2(X), H3(X)) = (H1(Y), H2(Y), H3(Y)). So, we can compare the hash values instead of the strings. This is the basic idea behind Bloom Filters.
+
+                        2) Bloom Filter Datastructure: The array based implementation you can see from the Ref. Key things to remember:
+                              i) Bloom Filters can guarantee that the string has not been searched before
+                              ii) Bloom Filters cannot guarantee that the string has been searched before (because of hash collisions).
+                              iii)  Let:
+                                          • m = number of bits in the Bloom filter
+                                          • k = number of hash functions you pass a string through
+                                          • n = number of inserted elements (here, inserted strings)
+
+                                    Probability a specific bit is not set to 1 after all n inserts
+                                          For one hash of one element, prob a given bit is not set to 1: 1 - 1/m.
+                                          For k hashes of one element: (1−1/m)^k 
+                                          For n elements (k hashes each): P(bit is 0) = (1−1/m)^(kn) 
+                                          So: P(bit is 1) = 1−(1−1/m)^(kn) 
+                                    
+                                    Now, false positive probability for a bloom filter i.e the probability that bloom filter says "string is present" when it is actually not present:
+                                          - For a query string not in the set, it will be reported “present” if all k hashed bit positions are 1 for this string: 
+                                                P(false positive) = (P(bit is 1))^k = [1−(1−1/m)^(kn)]^k 
+
+                                          🟨 Final expression to remember: P(false positive for a string in bloom filter) = [1−(1−1/m)^(kn)]^k 
+                                          🟨 From the above expression, if:
+                                                i) If m --> ∞, P(false positive) --> 0
+                                                ii) If m --> 1, P(false positive) --> 1
+                                          🟨 If you graph the P(false positive) against k, it will not decrease forever as you increase k, rather there is an optimal value of k (you can derive that by differentiating the expression with respect to k) which is:
+                                                k = (m/n) * ln(2)
+
+To Be Continued...
+/********************** System Design Ends *****************************/
+
+
+
+                                          
 
