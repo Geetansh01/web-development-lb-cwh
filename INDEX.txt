@@ -3527,8 +3527,6 @@ Ref: https://youtu.be/R8_veQiYBjI?si=Gqp5uyBHRNBz6mVs
             Eg: a PR, a new Issue, a contributor joining etc...
          Actions / Github actions are automated responses to such events.
 
-      Continue from 23:03 of the video
-
 /********** GitHub Actions Ends **************/
 
 /********************** DevOps Ends *****************************/
@@ -3718,44 +3716,93 @@ Ref: https://youtu.be/R8_veQiYBjI?si=Gqp5uyBHRNBz6mVs
                               
                               - If master fails, one of the slaves can be promoted to master and we are good to go. So we have good single point of failure handling here.
 
-            /**** Module 3 : Bloom Filters ****/
+      /**** Module 3 : Bloom Filters ****/
 
-                  /**** What is Bloom Filter ****/
-                        Ref: https://youtu.be/bgzUdBVr5tE?si=7BnsXh7WOGDjBvTG
+            /**** What is Bloom Filter ****/
+                  Ref: https://youtu.be/bgzUdBVr5tE?si=7BnsXh7WOGDjBvTG
 
-                        1) General Idea: Say you want to compare two strings for equality. The naive way is O(m+n). Even datastructures like Tries are there which have theoretically great complexity but not that great in practice. Rather, consider this idea:
-                              - Say the two strings to be compared are X and Y. Now, we will have 3 hash functions H1, H2, H3. 
-                              - We will hash X with these 3 hash functions to get 3 hash values: H1(X), H2(X), H3(X). 
-                              - So, for us, X is represented by these 3 hash values i.e X = (H1(X), H2(X), H3(X))
-                              - Similarly, we will hash Y with the same 3 hash functions to get Y = (H1(Y), H2(Y), H3(Y))
-                              - Now, if X and Y are equal, there is very high PROBABILITY that (H1(X), H2(X), H3(X)) = (H1(Y), H2(Y), H3(Y)). So, we can compare the hash values instead of the strings. This is the basic idea behind Bloom Filters.
+                  1) General Idea: Say you want to compare two strings for equality. The naive way is O(m+n). Even datastructures like Tries are there which have theoretically great complexity but not that great in practice. Rather, consider this idea:
+                        - Say the two strings to be compared are X and Y. Now, we will have 3 hash functions H1, H2, H3. 
+                        - We will hash X with these 3 hash functions to get 3 hash values: H1(X), H2(X), H3(X). 
+                        - So, for us, X is represented by these 3 hash values i.e X = (H1(X), H2(X), H3(X))
+                        - Similarly, we will hash Y with the same 3 hash functions to get Y = (H1(Y), H2(Y), H3(Y))
+                        - Now, if X and Y are equal, there is very high PROBABILITY that (H1(X), H2(X), H3(X)) = (H1(Y), H2(Y), H3(Y)). So, we can compare the hash values instead of the strings. This is the basic idea behind Bloom Filters.
 
-                        2) Bloom Filter Datastructure: The array based implementation you can see from the Ref. Key things to remember:
-                              i) Bloom Filters can guarantee that the string has not been searched before
-                              ii) Bloom Filters cannot guarantee that the string has been searched before (because of hash collisions).
-                              iii)  Let:
-                                          • m = number of bits in the Bloom filter
-                                          • k = number of hash functions you pass a string through
-                                          • n = number of inserted elements (here, inserted strings)
+                  2) Bloom Filter Datastructure: The array based implementation you can see from the Ref. Key things to remember:
+                        i) Bloom Filters can guarantee that the string has not been searched before
+                        ii) Bloom Filters cannot guarantee that the string has been searched before (because of hash collisions).
+                        iii)  Let:
+                                    • m = number of bits in the Bloom filter
+                                    • k = number of hash functions you pass a string through
+                                    • n = number of inserted elements (here, inserted strings)
 
-                                    Probability a specific bit is not set to 1 after all n inserts
-                                          For one hash of one element, prob a given bit is not set to 1: 1 - 1/m.
-                                          For k hashes of one element: (1−1/m)^k 
-                                          For n elements (k hashes each): P(bit is 0) = (1−1/m)^(kn) 
-                                          So: P(bit is 1) = 1−(1−1/m)^(kn) 
-                                    
-                                    Now, false positive probability for a bloom filter i.e the probability that bloom filter says "string is present" when it is actually not present:
-                                          - For a query string not in the set, it will be reported “present” if all k hashed bit positions are 1 for this string: 
-                                                P(false positive) = (P(bit is 1))^k = [1−(1−1/m)^(kn)]^k 
+                              Probability a specific bit is not set to 1 after all n inserts
+                                    For one hash of one element, prob a given bit is not set to 1: 1 - 1/m.
+                                    For k hashes of one element: (1−1/m)^k 
+                                    For n elements (k hashes each): P(bit is 0) = (1−1/m)^(kn) 
+                                    So: P(bit is 1) = 1−(1−1/m)^(kn) 
+                              
+                              Now, false positive probability for a bloom filter i.e the probability that bloom filter says "string is present" when it is actually not present:
+                                    - For a query string not in the set, it will be reported “present” if all k hashed bit positions are 1 for this string: 
+                                          P(false positive) = (P(bit is 1))^k = [1−(1−1/m)^(kn)]^k 
 
-                                          🟨 Final expression to remember: P(false positive for a string in bloom filter) = [1−(1−1/m)^(kn)]^k 
-                                          🟨 From the above expression, if:
-                                                i) If m --> ∞, P(false positive) --> 0
-                                                ii) If m --> 1, P(false positive) --> 1
-                                          🟨 If you graph the P(false positive) against k, it will not decrease forever as you increase k, rather there is an optimal value of k (you can derive that by differentiating the expression with respect to k) which is:
-                                                k = (m/n) * ln(2)
+                                    🟨 Final expression to remember: P(false positive for a string in bloom filter) = [1−(1−1/m)^(kn)]^k 
+                                    🟨 From the above expression, if:
+                                          i) If m --> ∞, P(false positive) --> 0
+                                          ii) If m --> 1, P(false positive) --> 1
+                                    🟨 If you graph the P(false positive) against k, it will not decrease forever as you increase k, rather there is an optimal value of k (you can derive that by differentiating the expression with respect to k) which is:
+                                          k = (m/n) * ln(2)
 
-To Be Continued...
+            /**** What is Data Replication ****/
+
+                  1) You don't always want just 1 DB, that is a single point of failure. So, you want to have multiple replicas of the DB. This is called data replication. Two strategies to attain it:    
+                        i) Synchronus replication: Flow goes like this:
+                              - Client sends a write request to the primary DB.
+                              - The primary DB processes the write and updates its data.
+                              - The primary DB then sends the write to the replicas (secondary DBs).
+                              - The replicas acknowledge the write back to the primary DB.
+                              - The primary DB waits for acknowledgments from all replicas before confirming the write to the client.
+                        
+                        This ensures consistency. Once client gets ACK, even if primary DB fails, replicas have the data.
+
+                        Now, There are 2 options in ii):
+                              a) Master - Slave architecture: Just like described above, 1 master and multiple slaves. Slaves can not accept writes, they just copy the master. But you have single point of failure here - the master.
+
+                              b) master - master architecture: Here, all DBs are equal, they can all accept writes and they replicate to each other to stay in sync. 
+                                    - No single point of failure here, if one master fails, all servers will start writing to the remaining masters.
+
+                                    ‼️ Split brain problem: Say you have 2 masters M1 and M2. Now, say M1 and M2 lose connection with each other but are still up (say the router b/w them failed). Now both will accept writes but no syncing and you will have inconsistent data b/w them. 
+                                          Ex: a client has $100 in account, he withdraws $90 from M1 and $90 from M2, overall withdrawing $180 from an account with just $100!
+
+                                    ✅ Solution: 
+                                          i) This problem can be solved with 3 master nodes instead of 2, all connected to all and a very UNREALISTIC assumption: It is impossible for a node to fail and also the connection b/w the other 2 nodes to fail at the same time. (See dig. in video). 
+
+                              🟨 Some algorithms to keep in mind you have distributed systems:
+                                    1) Case 1 - Distributed Consensus Problem: You have multiple masters, each receiving conflicting updates and now you need to agree on a single source of truth. 
+                                          - Algorithms to solve: Paxos, Raft, BFT (Byzantine Fault Tolerance) etc.
+
+                                    2) Case 2 - Distributed transaction: You have different DBs ( or different shards ) say DB1, DB2 etc. These store different data and are NOT replicas of each other. Now, you have a transaction that is distributed like:
+                                          i) Step 1 in DB1
+                                          ii) Then step 2 in DB2
+                                          iii) Then step 3 in DB3
+
+                                          and then the transaction is successful. So, if the step 3 in Db 3 fails, the entire transaction fails and you need to rollback the changes in DB1 and DB2 as well. So, you need a distributed transaction protocol to handle this. 
+                                                - Algorithms to solve: 2PC (Two Phase Commit), 3PC (Three Phase Commit) etc.
+
+                                    3) Case 3 - How to handle multiple transactions inside ONE DB concurrently: You have multiple transactions coming in concurrently to a DB. Now, you need to make sure that the transactions are executed in a way that they don't interfere with each other and the DB remains in a consistent state. 
+                                          - Algorithms to solve: MVCC (Multi Version Concurrency Control) etc.
+
+                        ii) Asynchronous replication: Flow goes like this:
+                              - Client sends a write request to the primary DB.
+                              - The primary DB processes the write and updates its data.
+                              - The primary DB then sends the write to the replicas (secondary DBs).
+                              - The primary DB does not wait for acknowledgments from the replicas before confirming the write to the client.
+                        
+                        This ensures lower latency but can lead to inconsistent data if the primary DB fails before replicas are updated. So now the client gets ACK but update is lost because replicas don't have it yet.
+
+
+ 
+
 /********************** System Design Ends *****************************/
 
 
