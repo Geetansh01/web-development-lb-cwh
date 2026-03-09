@@ -3805,6 +3805,35 @@ Ref: https://youtu.be/R8_veQiYBjI?si=Gqp5uyBHRNBz6mVs
 
 /********************** System Design Ends *****************************/
 
+/********************** Playwright Begins *****************************/
+Ref: https://youtube.com/playlist?list=PLhW3qG5bs-L9sJKoT1LC5grGT77sfW0Z8&si=t9N1FuHrlORlwqGU
+
+      /****** Video 1/2/3 *******/
+      1) What is Playwright?
+      - A FOSS framework for automating web testing. It is developed by Microsoft and is a competitor to Selenium. It allows you to write tests that can interact with web browsers in a way that simulates real user interactions. So you can write tests that click buttons, fill out forms, navigate pages etc. and check if the expected results are there. It supports multiple browsers (Chromium, Firefox, WebKit) and multiple programming languages (JavaScript, TypeScript, Python, Java, C#).
+      - It can also be used for API testing.
+
+      2) Important Playwright Commands:
+            npm init playwright@latest                       ----->   to setup a new playwright project
+
+            npx playwright test                              ----->   runs all tests on all browsers in headless mode
+            npx playwright test --workers 3                  ----->   runs with 3 workers in parallel
+            npx playwright test one.spec.js                  ----->   runs a specific test file
+            npx playwright test one.spec.js two.spec.js      ----->   runs the files specified
+            npx playwright test one two                      ----->   runs files that have one or two in the file name
+            npx playwright test -g "check title"             ----->   runs test with the title
+            npx playwright test --project=chromium           ----->   runs on specific browser
+            npx playwright test --headed                     ----->   runs tests in headed mode
+            npx playwright test --debug                      ----->   debug tests
+            npx playwright test example.spec.js --debug      ----->   debug specific test file
+            npx playwright test example.spec.js:21 --debug   ----->   debug starting from specific line where test(.. starts
+
+      Note: You can also install Playwright as a VS Code extension ( instead of npm init playwright@latest ) and run tests from there, the extension provides a bunch of cool features.
+
+      Continue from Video 4
+
+/********************** Playwright Ends *****************************/
+
 
 
                                           

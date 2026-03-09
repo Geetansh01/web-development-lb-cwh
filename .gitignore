@@ -3,3 +3,8 @@ node_modules/
 .DS_Store
 venv/
 __pycache__/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
