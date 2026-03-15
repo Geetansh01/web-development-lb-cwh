@@ -3808,7 +3808,7 @@ Ref: https://youtu.be/R8_veQiYBjI?si=Gqp5uyBHRNBz6mVs
 /********************** Playwright Begins *****************************/
 Ref: https://youtube.com/playlist?list=PLhW3qG5bs-L9sJKoT1LC5grGT77sfW0Z8&si=t9N1FuHrlORlwqGU
 
-      /****** Video 1/2/3 *******/
+      /****** Video 1/2/3/4 *******/
       1) What is Playwright?
       - A FOSS framework for automating web testing. It is developed by Microsoft and is a competitor to Selenium. It allows you to write tests that can interact with web browsers in a way that simulates real user interactions. So you can write tests that click buttons, fill out forms, navigate pages etc. and check if the expected results are there. It supports multiple browsers (Chromium, Firefox, WebKit) and multiple programming languages (JavaScript, TypeScript, Python, Java, C#).
       - It can also be used for API testing.
@@ -3830,7 +3830,17 @@ Ref: https://youtube.com/playlist?list=PLhW3qG5bs-L9sJKoT1LC5grGT77sfW0Z8&si=t9N
 
       Note: You can also install Playwright as a VS Code extension ( instead of npm init playwright@latest ) and run tests from there, the extension provides a bunch of cool features.
 
-      Continue from Video 4
+      /****** Video 5 *******/
+      Recording your tests:
+            1) Codegen (also called "Test Generator"): a tool that can be used to record test and generate test scripts.
+                  - This tool will open 2 windows:
+                        i) A browser window that interacts with the website
+                        ii) Playwright inspector: can be used to record tests as well as debug tests.
+
+                  - command: npx playwright codegen < url optional, opens home page of browser if url not provided >  
+                        i) Now, whatever you do in the browser window will be recorded and the corresponding test script will be generated in the Playwright inspector. You can also edit the generated test script in the Playwright inspector and run it from there to see the changes reflected in the browser window!!
+
+Continue from video 6.
 
 /********************** Playwright Ends *****************************/
 
