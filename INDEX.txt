@@ -3876,6 +3876,19 @@ Continue from video 6.
 
 /********************** Playwright Ends *****************************/
 
+/********************** Playwright+Java Begins *****************************/
+      /****** Video 1/2 *******/
+            1) Key commands:
+                  - mvn clean install
+                  - mvn clean test
+                  - [Using intelliJ]: run TestNG tests, IntelliJ supports them natively
+                  - mvn clean test -DsuiteXmlFile="testng.xml" : To run the TestNG test via testng.xml file via maven
+                        - OR just right click the testng.xml file in intelliJ and run it
+
+Continue from 33:04
+ 
+/********************** Playwright+Java Ends *****************************/
+
 
 
                                           
