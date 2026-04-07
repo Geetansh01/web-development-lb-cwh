@@ -3716,7 +3716,7 @@ Ref: https://youtu.be/R8_veQiYBjI?si=Gqp5uyBHRNBz6mVs
                               
                               - If master fails, one of the slaves can be promoted to master and we are good to go. So we have good single point of failure handling here.
 
-      /**** Module 3 : Bloom Filters ****/
+      /**** Module 3 : DataStores ****/
 
             /**** What is Bloom Filter ****/
                   Ref: https://youtu.be/bgzUdBVr5tE?si=7BnsXh7WOGDjBvTG
@@ -3800,7 +3800,39 @@ Ref: https://youtu.be/R8_veQiYBjI?si=Gqp5uyBHRNBz6mVs
                         
                         This ensures lower latency but can lead to inconsistent data if the primary DB fails before replicas are updated. So now the client gets ACK but update is lost because replicas don't have it yet.
 
+            /**** How are NoSQL databases optimized? ****/
+                  1) So you have a client, a server and a DB. Client sends a request to server which then sends to DB and the DB sends acknowledgement back to the server. 
+                 
+                  🟥 Question: How do you scale it?
+                        i) Every call from server to DB and back is a network call which includes headers and data from the server + acknowledgement (ack) from the DB. So, we can:
+                              
+                              🟩 Ans 1: Condense data queries into a single query: Send more data in a single query and get 1 ack back from the server.
 
+                        ii) Let's focus on the DB. There are a lot of read-writes happening there. Can we optimize that? We have two options:
+                              a) B+ Tree: Read: O(log n), Write: O(log n)
+                              b) Log DataStructure (just like a Linked List): Read: O(n), Write: O(1): Nah! we can't have that slow reads
+
+                        🟩 Ans 2: LSM tree (Log-Structured Merge Tree)
+                              c) Log DataStructure (just like a Linked List) + Sorted array: Write: O(1) (write to Log), Read: O(log n) (binary search on sorted array)
+                                    - This seems good but we would also need to factor in the complexity of converting the Log to a sorted array, where should we do this, definitely not on server bcz the whole point is to get O(1) writes. On the DB then. The entire flow would be:
+                                          i) Client sends request to say add new Data X to server
+                                          ii) Server appends X to Log in Server (O(1)). Server keeps appending to Log until it reaches a certain size. Once it reaches that size, the new data is sent in one request to the DB (thus following 🟩 Ans 1 as well) and the Log is cleared. 
+                                          iii) The DB now receives the new data and sorts it. 
+                                                Note: a) Say earlier the data in DB was: 3, 10, 12, 20....(1000 entries) 
+                                                      b) Now the Log comes as: 2, 15, 18 (only 3 entries)
+                                                      c) Now, the DB will not merge the Log with the sorted array! This would be inefficient as the DB would have to sort 1003 entries just because 3 new data came in. Instead it would just sort this and keep it as separate chunk. So we now have sorted chunks:
+                                                            - Sorted Array 1: 3, 10, 12, 20....(1000 entries)
+                                                            - Sorted Array 2: 2, 15, 18 (only 3 entries)
+                                          iv) When a read request comes in, the DB will do binary search on all the sorted chunks and get the result. So, the read complexity is O(K log n) where K is the number of sorted chunks. The data would be found in one of the chunks.
+
+                                          📒Note: If there are a high number of sorted chunks, that too is a problem. So we can use a hybrid aproach of cleverly merging some of the chunks as long as the operation of merging itself is not too expensive. There can also be other add-ons like using bloom filter per chunk to check whether a data value is present in a chunk or not before trying to search the chunk.
+                                    
+                                    🟧 1) General idea to takeaway for LSM trees: You want fast writes so use Log datastructure. But then reads would be too slow so you also keep sorted chunks.
+                                       2) Key terms: i) Sorted String Table (SSTable): the sorted chunks in the DB. 
+                                                     ii) Compaction: the process of merging the sorted chunks in the DB to keep the number of chunks manageable.
+
+            /**** What are Location-based Databases? ****/
+                  Continue from 6:37 in video (or from start if you forget everything).
  
 
 /********************** System Design Ends *****************************/
